@@ -1,5 +1,5 @@
 package br.com.contmatic.modelo.pessoa;
 
-public class TelefoneCelular {
+public class Celular {
 
 }

@@ -51,7 +51,7 @@ public class AgenciaTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(Agencia.class).addTemplate("menorIgualTamanhoNumero").inherits("valido", new Rule() {{
-            add("numero", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesNumericas.MAX_NUMERO_AGENCIA), false));
+            add("numero", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesNumericas.MAX_NUMERO_AGENCIA + 1), false));
         }});
         
         Fixture.of(Agencia.class).addTemplate("comCaractereInvalidoNumero").inherits("valido", new Rule() {{

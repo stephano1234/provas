@@ -5,7 +5,6 @@ import javax.validation.constraints.*;
 import br.com.contmatic.utilidades.ConstantesNumericas;
 import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
 import br.com.contmatic.utilidades.MensagensErro;
-import br.com.contmatic.utilidades.validacoes.NaoVazio;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -14,15 +13,13 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class TelefoneFixo {
 
-    @NotNull(message = MensagensErro.VALOR_NULO)
-    @NaoVazio(message = MensagensErro.STRING_VAZIO)
+    @NotNull(message = MensagensErro.VALOR_NULO)   
     @Size(max = ConstantesNumericas.DDD, message = MensagensErro.STRING_MAX)
     @Size(min = ConstantesNumericas.DDD, message = MensagensErro.STRING_MIN)
     @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_INVALIDO)
     private String ddd;
     
     @NotNull(message = MensagensErro.VALOR_NULO)
-    @NaoVazio(message = MensagensErro.STRING_VAZIO)
     @Size(max = ConstantesNumericas.NUMERO_TELEFONE, message = MensagensErro.STRING_MAX)
     @Size(min = ConstantesNumericas.NUMERO_TELEFONE, message = MensagensErro.STRING_MIN)
     @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_INVALIDO)

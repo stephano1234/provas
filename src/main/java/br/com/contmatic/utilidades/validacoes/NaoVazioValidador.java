@@ -6,8 +6,6 @@ import javax.validation.ConstraintValidatorContext;
 import com.google.common.base.Preconditions;
 
 public class NaoVazioValidador implements ConstraintValidator<NaoVazio, String> {
-
-    boolean semErro = true;
     
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
@@ -16,7 +14,7 @@ public class NaoVazioValidador implements ConstraintValidator<NaoVazio, String> 
             return !value.isEmpty();
         }
         catch (NullPointerException pass) {
-            return semErro;
+            return true;
         }
     }
 }

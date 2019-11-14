@@ -35,13 +35,10 @@ public class BancoTest {
     private Banco banco;
     
     private Banco outroBanco;
-        
-    private static BancoTemplateFixtureFactory bancoTemplateFixtureFactory;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        bancoTemplateFixtureFactory = new BancoTemplateFixtureFactory();    
-        bancoTemplateFixtureFactory.load();
+        new BancoTemplateFixtureFactory().load();      
     }
 
     @AfterClass

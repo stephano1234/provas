@@ -45,7 +45,7 @@ public class BancoTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(Banco.class).addTemplate("menorIgualTamanhoCodigo").inherits("valido", new Rule() {{
-            add("codigo", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesNumericas.MAX_CODIGO_BANCO), false));
+            add("codigo", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesNumericas.MAX_CODIGO_BANCO + 1), false));
         }});
         
         Fixture.of(Banco.class).addTemplate("comCaractereInvalidoCodigo").inherits("valido", new Rule() {{
@@ -75,7 +75,7 @@ public class BancoTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(Banco.class).addTemplate("menorIgualTamanhoNome").inherits("valido", new Rule() {{
-            add("nome", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesNumericas.CAMPO_REGULAR), false));
+            add("nome", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesNumericas.CAMPO_REGULAR + 1), false));
         }});
         
         Fixture.of(Banco.class).addTemplate("somenteEspacoNome").inherits("valido", new Rule() {{

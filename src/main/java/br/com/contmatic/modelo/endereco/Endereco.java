@@ -6,7 +6,7 @@ import javax.validation.constraints.*;
 import br.com.contmatic.utilidades.ConstantesNumericas;
 import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
 import br.com.contmatic.utilidades.MensagensErro;
-import br.com.contmatic.utilidades.validacoes.NaoApenasEspaco;
+import br.com.contmatic.utilidades.validacoes.NaoApenas;
 import br.com.contmatic.utilidades.validacoes.NaoVazio;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -17,21 +17,19 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class Endereco {
 
     @NotNull(message = MensagensErro.VALOR_NULO)
-    @NaoVazio(message = MensagensErro.STRING_VAZIO)
     @Size(max = ConstantesNumericas.CEP, message = MensagensErro.STRING_MAX)
     @Size(min = ConstantesNumericas.CEP, message = MensagensErro.STRING_MIN)
     @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_INVALIDO)
     private String cep;
     
-    @NotNull(message = MensagensErro.VALOR_NULO)
     @NaoVazio(message = MensagensErro.STRING_VAZIO)
     @Size(max = ConstantesNumericas.MAX_NUMERO_ENDERECO, message = MensagensErro.STRING_MAX)
-    
+    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_INVALIDO)
     private String numero;
     
     @NaoVazio(message = MensagensErro.STRING_VAZIO)
     @Size(max = ConstantesNumericas.CAMPO_REGULAR, message = MensagensErro.STRING_MAX)
-    @NaoApenasEspaco(message = MensagensErro.STRING_APENAS_ESPACO)
+    @NaoApenas
     @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_CARACTERE_ESPECIAL, message = MensagensErro.STRING_INVALIDO)
     private String complemento;
     
@@ -129,10 +127,10 @@ public class Endereco {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("cep", cep)
-                .append("numero", numero)
-                .append("complemento", complemento)
+                .append("numero", (numero != null) ? numero : "S/N")
+                .append("complemento", (complemento != null) ? complemento : "Sem informações adicionais do endereço")
                 .append("logradouro", logradouro)
-                .append("telefoneFixo", telefoneFixo)
+                .append("telefoneFixo", (telefoneFixo != null) ? telefoneFixo : "Sem telefone fixo atrelado a este endereço")
                 .append("tipoEndereco", tipoEndereco)
                 .toString();
     }

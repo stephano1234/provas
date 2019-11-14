@@ -54,7 +54,7 @@ public class ContaTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(Conta.class).addTemplate("menorIgualTamanhoNumero").inherits("valido", new Rule() {{
-            add("numero", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesNumericas.MAX_NUMERO_CONTA), false));
+            add("numero", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesNumericas.MAX_NUMERO_CONTA + 1), false));
         }});
         
         Fixture.of(Conta.class).addTemplate("comCaractereInvalidoNumero").inherits("valido", new Rule() {{

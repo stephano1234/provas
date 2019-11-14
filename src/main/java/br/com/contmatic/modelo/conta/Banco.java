@@ -5,7 +5,7 @@ import javax.validation.constraints.*;
 import br.com.contmatic.utilidades.ConstantesNumericas;
 import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
 import br.com.contmatic.utilidades.MensagensErro;
-import br.com.contmatic.utilidades.validacoes.NaoApenasEspaco;
+import br.com.contmatic.utilidades.validacoes.NaoApenas;
 import br.com.contmatic.utilidades.validacoes.NaoVazio;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -24,7 +24,7 @@ public class Banco {
     @NotNull(message = MensagensErro.VALOR_NULO)
     @NaoVazio(message = MensagensErro.STRING_VAZIO)
     @Size(max = ConstantesNumericas.CAMPO_REGULAR, message = MensagensErro.STRING_MAX)
-    @NaoApenasEspaco(message = MensagensErro.STRING_APENAS_ESPACO)
+    @NaoApenas
     private String nome;
     
     public Banco(String codigo, String nome) {

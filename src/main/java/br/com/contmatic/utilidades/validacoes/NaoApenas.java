@@ -2,6 +2,9 @@ package br.com.contmatic.utilidades.validacoes;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+
+import br.com.contmatic.utilidades.MensagensErro;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -10,14 +13,16 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({ FIELD })
 @Retention(RUNTIME)
-@Constraint(validatedBy = NaoApenasEspacoValidador.class)
-public @interface NaoApenasEspaco {
+@Constraint(validatedBy = NaoApenasValidador.class)
+public @interface NaoApenas {
     
-    String message() default "Valor inv�lido";
+    String message() default MensagensErro.STRING_APENAS_ESPACO;
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
+    
+    String regexp() default "\\s";
 
     String value() default "";
 }
