@@ -1,7 +1,7 @@
 package br.com.contmatic.modelo.endereco;
 
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaErro;
-
+import static br.com.contmatic.utilidades.VerificadoresRegras.verificaToStringJSONSTYLE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -270,15 +270,7 @@ public class CidadeTest {
     
     @Test
     public void metodo_toString_deve_gerar_representacao_do_objeto_em_json_com_todos_os_atributos_da_classe() {
-        StringBuilder formatoEsperado = new StringBuilder();
-        assertThat(cidade.toString().charAt(0), is(equalTo('{')));
-        for (int i = 0; i < Cidade.class.getDeclaredFields().length; i++) {      
-            formatoEsperado.append("\"").append(Cidade.class.getDeclaredFields()[i].getName()).append("\":");         
-            assertTrue(cidade.toString().contains(formatoEsperado.toString()));
-            formatoEsperado.delete(0, formatoEsperado.length());          
-            formatoEsperado.append(",");
-        }
-        assertThat(cidade.toString().charAt(cidade.toString().length() - 1), is(equalTo('}')));
+        assertTrue(verificaToStringJSONSTYLE(cidade));
     }
     
 }

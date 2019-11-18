@@ -1,6 +1,7 @@
 package br.com.contmatic.modelo.conta;
 
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaErro;
+import static br.com.contmatic.utilidades.VerificadoresRegras.verificaToStringJSONSTYLE;
 import static br.com.contmatic.utilidades.VerificadoresRegras.procuraAlgumErro;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -286,15 +287,7 @@ public class ContaTest {
     
     @Test
     public void metodo_toString_deve_gerar_representacao_do_objeto_em_json_com_todos_os_atributos_da_classe() {
-        StringBuilder formatoEsperado = new StringBuilder();
-        assertThat(conta.toString().charAt(0), is(equalTo('{')));
-        for (int i = 0; i < Conta.class.getDeclaredFields().length; i++) {      
-            formatoEsperado.append("\"").append(Conta.class.getDeclaredFields()[i].getName()).append("\":");         
-            assertTrue(conta.toString().contains(formatoEsperado.toString()));
-            formatoEsperado.delete(0, formatoEsperado.length());          
-            formatoEsperado.append(",");
-        }
-        assertThat(conta.toString().charAt(conta.toString().length() - 1), is(equalTo('}')));
+        assertTrue(verificaToStringJSONSTYLE(conta));
     }
     
 }

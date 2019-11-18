@@ -1,7 +1,7 @@
 package br.com.contmatic.modelo.conta;
 
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaErro;
-
+import static br.com.contmatic.utilidades.VerificadoresRegras.verificaToStringJSONSTYLE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -268,15 +268,7 @@ public class BancoTest {
     
     @Test
     public void metodo_toString_deve_gerar_representacao_do_objeto_em_json_com_todos_os_atributos_da_classe() {
-        StringBuilder formatoEsperado = new StringBuilder();
-        assertThat(banco.toString().charAt(0), is(equalTo('{')));
-        for (int i = 0; i < Banco.class.getDeclaredFields().length; i++) {      
-            formatoEsperado.append("\"").append(Banco.class.getDeclaredFields()[i].getName()).append("\":");         
-            assertTrue(banco.toString().contains(formatoEsperado.toString()));
-            formatoEsperado.delete(0, formatoEsperado.length());          
-            formatoEsperado.append(",");
-        }
-        assertThat(banco.toString().charAt(banco.toString().length() - 1), is(equalTo('}')));
+        assertTrue(verificaToStringJSONSTYLE(banco));
     }
     
 }

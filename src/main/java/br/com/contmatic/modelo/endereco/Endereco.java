@@ -127,7 +127,7 @@ public class Endereco {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
                 .append("cep", cep)
-                .append("numero", (numero != null) ? numero : "S/N")
+                .append("numero", (numero != null) ? numero : "Sem número")
                 .append("complemento", (complemento != null) ? complemento : "Sem informações adicionais do endereço")
                 .append("logradouro", logradouro)
                 .append("telefoneFixo", (telefoneFixo != null) ? telefoneFixo : "Sem telefone fixo atrelado a este endereço")
