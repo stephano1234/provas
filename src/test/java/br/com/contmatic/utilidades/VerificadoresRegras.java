@@ -2,6 +2,8 @@ package br.com.contmatic.utilidades;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,6 +13,8 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 import org.apache.commons.collections4.map.LinkedMap;
+
+import com.google.common.base.Preconditions;
 
 public class VerificadoresRegras {
 
@@ -54,10 +58,10 @@ public class VerificadoresRegras {
             }
             try {
                 if (campo.get(objetoTestado).getClass().isEnum()) {
-                    formatoEsperado.append(transformaCaractereAcentoEmCodUnicode(campo.get(objetoTestado).getClass().getSuperclass().getMethod("name").invoke(campo.get(objetoTestado)).toString())).append("\",");
+                    formatoEsperado.append(transformaCaractereEmUnicode(campo.get(objetoTestado).getClass().getSuperclass().getMethod("name").invoke(campo.get(objetoTestado)).toString())).append("\",");
                 }
                 else {
-                    formatoEsperado.append(transformaCaractereAcentoEmCodUnicode(campo.get(objetoTestado).toString())).append("\",");
+                    formatoEsperado.append(transformaCaractereEmUnicode(campo.get(objetoTestado).toString())).append("\",");
                 }
             }
             catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
@@ -79,7 +83,7 @@ public class VerificadoresRegras {
         return objetoTestado.toString().equals(formatoEsperado.toString());
     }
     
-    public static String transformaCaractereAcentoEmCodUnicode(String string) {
+    public static String transformaCaractereEmUnicode(String string) {
         String letrasAcentuadas = "ÁáÉéÍíÓóÚúÀàÂâÊêÔôÃãÕõªºç";
         Map<String, String> tabelaAcentos = new LinkedMap<String, String>();
         tabelaAcentos.put("Á", "\\u00C1");
@@ -116,6 +120,43 @@ public class VerificadoresRegras {
             }
         }
         return stringTransformada.toString();
+    }
+    
+    public static boolean verificaConstrutor(Object objeto, Object[] valores, Class<?> ...tiposArgumentos) {
+        Preconditions.checkArgument(valores.length == tiposArgumentos.length, "Deve haver um valor para cada tipo de argumento do construtor e vice-versa.");
+        try {
+            Object objetoCriadoPeloConstrutor = objeto.getClass().getDeclaredConstructor(tiposArgumentos).newInstance(valores);
+            Method[] getters = trazMetodosGetters(objeto);
+            Set<Object> retornosGetter = new HashSet<Object>();
+            for (Method getter : getters) {
+                retornosGetter.add(getter.invoke(objetoCriadoPeloConstrutor));
+            }
+            for (Object valor : valores) {
+                if (!retornosGetter.contains(valor)) {
+                    return false;
+                }
+            }
+        } 
+        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException | NoSuchMethodException e) {
+            e.printStackTrace();
+            return false;
+        }       
+        return true;
+    }
+    
+    public static Method[] trazMetodosGetters(Object objeto) {
+        Method[] metodosGet = new Method[objeto.getClass().getDeclaredFields().length];
+        String[] nomesMetodosGet = new String[objeto.getClass().getDeclaredFields().length];
+        for (int i = 0; i < nomesMetodosGet.length; i++) {
+            nomesMetodosGet[i] = "get" + objeto.getClass().getDeclaredFields()[i].getName().substring(0, 1).toUpperCase() + objeto.getClass().getDeclaredFields()[i].getName().substring(1, objeto.getClass().getDeclaredFields()[i].getName().length());
+            try {
+                metodosGet[i] = objeto.getClass().getDeclaredMethod(nomesMetodosGet[i]);
+            } 
+            catch (NoSuchMethodException | SecurityException e) {
+                e.printStackTrace();
+            }
+        }       
+        return metodosGet;
     }
     
 }

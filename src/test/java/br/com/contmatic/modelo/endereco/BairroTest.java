@@ -1,5 +1,6 @@
 package br.com.contmatic.modelo.endereco;
 
+import static br.com.contmatic.utilidades.VerificadoresRegras.verificaConstrutor;
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaErro;
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaToStringJSONSTYLE;
 import static br.com.contmatic.utilidades.VerificadoresRegras.procuraAlgumErro;
@@ -10,11 +11,8 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
-
-import java.lang.reflect.InvocationTargetException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -190,33 +188,9 @@ public class BairroTest {
     //construtor
     
     @Test
-    public void deve_haver_construtor_publico_com_argumento_do_tipo_String_Cidade() {
-        try {
-            Bairro.class.getDeclaredConstructor(String.class, Cidade.class).newInstance("Pompéia", cidade);
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-    }
-    
-    @Test
-    public void o_construtor_deve_alimentar_o_nome_da_nova_instancia() {
-        try {
-            assertThat(Bairro.class.getDeclaredConstructor(String.class, Cidade.class).newInstance("Pompéia", cidade).getNome(), is(equalTo("Pompéia")));
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-    }
-    
-    @Test
-    public void o_construtor_deve_alimentar_o_cidade_da_nova_instancia() {
-        try {
-            assertThat(Bairro.class.getDeclaredConstructor(String.class, Cidade.class).newInstance("São João", cidade).getCidade(), is(equalTo(cidade)));
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
+    public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
+        Object[] valores = {"Itaim Bibi", cidade};
+        assertTrue(verificaConstrutor(bairro, valores, String.class, Cidade.class));
     }
     
     //equals e hashcode

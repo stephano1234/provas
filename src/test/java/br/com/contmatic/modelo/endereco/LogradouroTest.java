@@ -1,5 +1,6 @@
 package br.com.contmatic.modelo.endereco;
 
+import static br.com.contmatic.utilidades.VerificadoresRegras.verificaConstrutor;
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaErro;
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaToStringJSONSTYLE;
 import static br.com.contmatic.utilidades.VerificadoresRegras.procuraAlgumErro;
@@ -10,11 +11,8 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
-
-import java.lang.reflect.InvocationTargetException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -190,33 +188,9 @@ public class LogradouroTest {
     //construtor
     
     @Test
-    public void deve_haver_construtor_publico_com_argumento_do_tipo_String_Bairro() {
-        try {
-            Logradouro.class.getDeclaredConstructor(String.class, Bairro.class).newInstance("Rua Maria José Cruz", bairro);
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-    }
-    
-    @Test
-    public void o_construtor_deve_alimentar_o_nome_da_nova_instancia() {
-        try {
-            assertThat(Logradouro.class.getDeclaredConstructor(String.class, Bairro.class).newInstance("Rua Maria José Cruz", bairro).getNome(), is(equalTo("Rua Maria José Cruz")));
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-    }
-    
-    @Test
-    public void o_construtor_deve_alimentar_o_bairro_da_nova_instancia() {
-        try {
-            assertThat(Logradouro.class.getDeclaredConstructor(String.class, Bairro.class).newInstance("Rua Maria José Cruz", bairro).getBairro(), is(equalTo(bairro)));
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
+    public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
+        Object[] valores = {"Rua Calimã", bairro};
+        assertTrue(verificaConstrutor(logradouro, valores, String.class, Bairro.class));
     }
     
     //equals e hashcode

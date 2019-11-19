@@ -3,11 +3,8 @@ package br.com.contmatic.modelo.conta;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
-
-import java.lang.reflect.InvocationTargetException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -53,18 +50,6 @@ public class TipoContaTest {
     @Test
     public void deve_haver_metodo_get_publico_para_cada_atributo() {
         assertPojoMethodsFor(TipoConta.class).testing(Method.GETTER).areWellImplemented();
-    }
-    
-    //construtor
-    
-    @Test
-    public void deve_haver_construtor_privado() {
-        try {
-            TipoConta.class.getDeclaredConstructor(String.class).newInstance("sghedh");
-            fail();
-        } 
-        catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {  
-        }
     }
     
 }

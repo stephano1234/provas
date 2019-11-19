@@ -1,18 +1,17 @@
 package br.com.contmatic.modelo.endereco;
 
+import static br.com.contmatic.utilidades.VerificadoresRegras.verificaConstrutor;
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaErro;
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaToStringJSONSTYLE;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
-
-import java.lang.reflect.InvocationTargetException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -193,33 +192,9 @@ public class TelefoneFixoTest {
     //construtor
     
     @Test
-    public void deve_haver_construtor_publico_com_argumento_do_tipo_String_String() {
-        try {
-            TelefoneFixo.class.getDeclaredConstructor(String.class, String.class).newInstance("45", "08004444");
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-    }
-    
-    @Test
-    public void o_construtor_deve_alimentar_o_ddd_da_nova_instancia() {
-        try {
-            assertThat(TelefoneFixo.class.getDeclaredConstructor(String.class, String.class).newInstance("45", "08004444").getDdd(), is(equalTo("45")));
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-    }
-    
-    @Test
-    public void o_construtor_deve_alimentar_o_numero_da_nova_instancia() {
-        try {
-            assertThat(TelefoneFixo.class.getDeclaredConstructor(String.class, String.class).newInstance("45", "08004444").getNumero(), is(equalTo("08004444")));
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
+    public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
+        Object[] valores = {"00", "00000000"};
+        assertTrue(verificaConstrutor(telefoneFixo, valores, String.class, String.class));
     }
     
     //equals e hashcode

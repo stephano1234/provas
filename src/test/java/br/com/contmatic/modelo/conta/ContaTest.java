@@ -1,5 +1,6 @@
 package br.com.contmatic.modelo.conta;
 
+import static br.com.contmatic.utilidades.VerificadoresRegras.verificaConstrutor;
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaErro;
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaToStringJSONSTYLE;
 import static br.com.contmatic.utilidades.VerificadoresRegras.procuraAlgumErro;
@@ -10,11 +11,8 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
-
-import java.lang.reflect.InvocationTargetException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -187,33 +185,9 @@ public class ContaTest {
     //construtor
     
     @Test
-    public void deve_haver_construtor_publico_com_argumento_do_tipo_String_Agencia() {
-        try {
-            Conta.class.getDeclaredConstructor(String.class, Agencia.class, TipoConta.class).newInstance("1234567", agencia, TipoConta.CONTA_CORRENTE);
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-    }
-    
-    @Test
-    public void o_construtor_deve_alimentar_o_numero_da_nova_instancia() {
-        try {
-            assertThat(Conta.class.getDeclaredConstructor(String.class, Agencia.class, TipoConta.class).newInstance("1234567", agencia, TipoConta.CONTA_CORRENTE).getNumero(), is(equalTo("1234567")));
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-    }
-    
-    @Test
-    public void o_construtor_deve_alimentar_o_agencia_da_nova_instancia() {
-        try {
-            assertThat(Conta.class.getDeclaredConstructor(String.class, Agencia.class, TipoConta.class).newInstance("1234567", agencia, TipoConta.CONTA_CORRENTE).getAgencia(), is(equalTo(agencia)));
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
+    public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
+        Object[] valores = {"123454321", agencia, TipoConta.CONTA_CORRENTE};
+        assertTrue(verificaConstrutor(conta, valores, String.class, Agencia.class, TipoConta.class));
     }
     
     //equals e hashcode

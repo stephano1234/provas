@@ -1,5 +1,6 @@
 package br.com.contmatic.modelo.endereco;
 
+import static br.com.contmatic.utilidades.VerificadoresRegras.verificaConstrutor;
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaErro;
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaToStringJSONSTYLE;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -8,11 +9,8 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
-
-import java.lang.reflect.InvocationTargetException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -170,33 +168,9 @@ public class CidadeTest {
     //construtor
     
     @Test
-    public void deve_haver_construtor_publico_com_argumento_do_tipo_String_TipoUf() {
-        try {
-            Cidade.class.getDeclaredConstructor(String.class, TipoUf.class).newInstance("São João", TipoUf.AC);
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-    }
-    
-    @Test
-    public void o_construtor_deve_alimentar_o_nome_da_nova_instancia() {
-        try {
-            assertThat(Cidade.class.getDeclaredConstructor(String.class, TipoUf.class).newInstance("São João", TipoUf.AC).getNome(), is(equalTo("São João")));
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-    }
-    
-    @Test
-    public void o_construtor_deve_alimentar_o_tipoUf_da_nova_instancia() {
-        try {
-            assertThat(Cidade.class.getDeclaredConstructor(String.class, TipoUf.class).newInstance("São João", TipoUf.AC).getTipoUf(), is(equalTo(TipoUf.AC)));
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
+    public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
+        Object[] valores = {"Goiania", TipoUf.AC};
+        assertTrue(verificaConstrutor(cidade, valores, String.class, TipoUf.class));
     }
     
     //equals e hashcode

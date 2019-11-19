@@ -1,5 +1,6 @@
 package br.com.contmatic.modelo.endereco;
 
+import static br.com.contmatic.utilidades.VerificadoresRegras.verificaConstrutor;
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaErro;
 import static br.com.contmatic.utilidades.VerificadoresRegras.verificaToStringJSONSTYLE;
 import static br.com.contmatic.utilidades.VerificadoresRegras.procuraAlgumErro;
@@ -10,11 +11,8 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
-
-import java.lang.reflect.InvocationTargetException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -336,53 +334,9 @@ public class EnderecoTest {
     //construtor
     
     @Test
-    public void deve_haver_construtor_publico_com_argumento_do_tipo_String_String_Logradouro_TipoEndereco() {
-        try {
-            Endereco.class.getDeclaredConstructor(String.class, String.class, Logradouro.class, TipoEndereco.class).newInstance("22223333", "701", logradouro, TipoEndereco.COMERCIAL);
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-    }
-    
-    @Test
-    public void o_construtor_deve_alimentar_o_cep_da_nova_instancia() {
-        try {
-            assertThat(Endereco.class.getDeclaredConstructor(String.class, String.class, Logradouro.class, TipoEndereco.class).newInstance("22223333", "701", logradouro, TipoEndereco.COMERCIAL).getCep(), is(equalTo("22223333")));
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-    }
-    
-    @Test
-    public void o_construtor_deve_alimentar_o_numero_da_nova_instancia() {
-        try {
-            assertThat(Endereco.class.getDeclaredConstructor(String.class, String.class, Logradouro.class, TipoEndereco.class).newInstance("22223333", "701", logradouro, TipoEndereco.COMERCIAL).getNumero(), is(equalTo("701")));
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-    }
-    
-    @Test
-    public void o_construtor_deve_alimentar_o_logradouro_da_nova_instancia() {
-        try {
-            assertThat(Endereco.class.getDeclaredConstructor(String.class, String.class, Logradouro.class, TipoEndereco.class).newInstance("22223333", "701", logradouro, TipoEndereco.COMERCIAL).getLogradouro(), is(equalTo(logradouro)));
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-    }
-    
-    @Test
-    public void o_construtor_deve_alimentar_o_tipoEndereco_da_nova_instancia() {
-        try {
-            assertThat(Endereco.class.getDeclaredConstructor(String.class, String.class, Logradouro.class, TipoEndereco.class).newInstance("22223333", "701", logradouro, TipoEndereco.COMERCIAL).getTipoEndereco(), is(equalTo(TipoEndereco.COMERCIAL)));
-        } 
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            fail();
-        }
+    public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
+        Object[] valores = {"21210090", "340", logradouro, TipoEndereco.COMERCIAL};
+        assertTrue(verificaConstrutor(endereco, valores, String.class, String.class, Logradouro.class, TipoEndereco.class));
     }
     
     //equals e hashcode
