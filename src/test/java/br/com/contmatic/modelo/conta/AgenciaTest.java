@@ -103,19 +103,19 @@ public class AgenciaTest {
     @Test
     public void nao_deve_aceitar_valor_com_caractere_invalido_no_numero() {
         agencia = Fixture.from(Agencia.class).gimme("comCaractereInvalidoNumero");
-        assertTrue(verificaErro(agencia, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(agencia, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_numero() {
         agencia = Fixture.from(Agencia.class).gimme("comUmCaractereInvalidoNumero");
-        assertTrue(verificaErro(agencia, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(agencia, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     @Test
     public void deve_aceitar_valor_sem_caractere_invalido_no_numero() {
         agencia = Fixture.from(Agencia.class).gimme("semCaractereInvalidoNumero");
-        assertFalse(verificaErro(agencia, MensagensErro.STRING_INVALIDO));
+        assertFalse(verificaErro(agencia, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
 
     //banco

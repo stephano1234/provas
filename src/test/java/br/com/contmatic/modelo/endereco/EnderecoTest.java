@@ -14,6 +14,9 @@ import static org.junit.Assert.assertTrue;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -23,6 +26,7 @@ import org.junit.Test;
 import br.com.contmatic.modelo.endereco.Logradouro;
 import br.com.contmatic.modelo.endereco.TelefoneFixo;
 import br.com.contmatic.modelo.endereco.TipoEndereco;
+import br.com.contmatic.utilidades.ConstantesTesteNumericas;
 import br.com.contmatic.utilidades.MensagensErro;
 import br.com.contmatic.utilidades.templates.endereco.EnderecoTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.endereco.LogradouroTemplateFixtureFactory;
@@ -42,7 +46,9 @@ public class EnderecoTest {
     
     private Logradouro logradouro;
     
-    private TelefoneFixo telefoneFixo;
+    private Set<TelefoneFixo> telefonesFixo = new HashSet<TelefoneFixo>();
+    
+    private Set<TelefoneFixo> telefonesFixoInvalido = new HashSet<TelefoneFixo>();
     
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -60,7 +66,10 @@ public class EnderecoTest {
         endereco = Fixture.from(Endereco.class).gimme("valido");
         outroEndereco = Fixture.from(Endereco.class).gimme("outroValido");
         logradouro = Fixture.from(Logradouro.class).gimme("valido");
-        telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("valido");
+        for (int i = 0; i < ConstantesTesteNumericas.ELEMENTOS_ARRAY_GERADA; i++) {
+            telefonesFixo.add(Fixture.from(TelefoneFixo.class).gimme("valido"));
+            telefonesFixoInvalido.add(Fixture.from(TelefoneFixo.class).gimme("comUmCaractereInvalidoNumero"));
+        }
     }
 
     @After
@@ -108,19 +117,19 @@ public class EnderecoTest {
     @Test
     public void nao_deve_aceitar_valor_com_caractere_invalido_no_cep() {
         endereco = Fixture.from(Endereco.class).gimme("comCaractereInvalidoCep");
-        assertTrue(verificaErro(endereco, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(endereco, MensagensErro.STRING_NAO_NUMERAL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_cep() {
         endereco = Fixture.from(Endereco.class).gimme("comUmCaractereInvalidoCep");
-        assertTrue(verificaErro(endereco, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(endereco, MensagensErro.STRING_NAO_NUMERAL));
     }
     
     @Test
     public void deve_aceitar_valor_sem_caractere_invalido_no_cep() {
         endereco = Fixture.from(Endereco.class).gimme("semCaractereInvalidoCep");
-        assertFalse(verificaErro(endereco, MensagensErro.STRING_INVALIDO));
+        assertFalse(verificaErro(endereco, MensagensErro.STRING_NAO_NUMERAL));
     }
 
     //numero
@@ -152,19 +161,19 @@ public class EnderecoTest {
     @Test
     public void nao_deve_aceitar_valor_com_caractere_invalido_no_numero() {
         endereco = Fixture.from(Endereco.class).gimme("comCaractereInvalidoNumero");
-        assertTrue(verificaErro(endereco, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(endereco, MensagensErro.STRING_NAO_NUMERAL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_numero() {
         endereco = Fixture.from(Endereco.class).gimme("comUmCaractereInvalidoNumero");
-        assertTrue(verificaErro(endereco, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(endereco, MensagensErro.STRING_NAO_NUMERAL));
     }
     
     @Test
     public void deve_aceitar_valor_sem_caractere_invalido_no_numero() {
         endereco = Fixture.from(Endereco.class).gimme("semCaractereInvalidoNumero");
-        assertFalse(verificaErro(endereco, MensagensErro.STRING_INVALIDO));
+        assertFalse(verificaErro(endereco, MensagensErro.STRING_NAO_NUMERAL));
     }
     
     //complemento
@@ -214,19 +223,19 @@ public class EnderecoTest {
     @Test
     public void nao_deve_aceitar_valor_com_caractere_invalido_no_complemento() {
         endereco = Fixture.from(Endereco.class).gimme("comCaractereInvalidoComplemento");
-        assertTrue(verificaErro(endereco, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(endereco, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_complemento() {
         endereco = Fixture.from(Endereco.class).gimme("comUmCaractereInvalidoComplemento");
-        assertTrue(verificaErro(endereco, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(endereco, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     @Test
     public void deve_aceitar_valor_sem_caractere_invalido_no_complemento() {
         endereco = Fixture.from(Endereco.class).gimme("semCaractereInvalidoComplemento");
-        assertFalse(verificaErro(endereco, MensagensErro.STRING_INVALIDO));
+        assertFalse(verificaErro(endereco, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     //logradouro
@@ -258,14 +267,14 @@ public class EnderecoTest {
     //telefoneFixo
     
     @Test
-    public void nao_deve_aceitar_telefoneFixo_invalido() {
-        endereco.setTelefoneFixo(Fixture.from(TelefoneFixo.class).gimme("comUmCaractereInvalidoNumero"));
+    public void nao_deve_aceitar_set_de_telefoneFixo_invalido() {
+        endereco.setTelefonesFixo(telefonesFixoInvalido);
         assertTrue(procuraAlgumErro(endereco));
     }
     
     @Test
-    public void deve_aceitar_telefoneFixo_valido() {
-        endereco.setTelefoneFixo(telefoneFixo);
+    public void deve_aceitar_set_de_telefoneFixo_valido() {
+        endereco.setTelefonesFixo(telefonesFixo);
         assertFalse(procuraAlgumErro(endereco));
     }
     
@@ -310,9 +319,9 @@ public class EnderecoTest {
     }
     
     @Test
-    public void getTelefoneFixo_deve_trazer_o_valor_armazenado_em_telefoneFixo() {
-        endereco.setTelefoneFixo(telefoneFixo);
-        assertThat(endereco.getTelefoneFixo(), is(equalTo(telefoneFixo)));
+    public void getTelefoneFixo_deve_trazer_o_valor_armazenado_em_telefonesFixo() {
+        endereco.setTelefonesFixo(telefonesFixo);
+        assertThat(endereco.getTelefonesFixo(), is(equalTo(telefonesFixo)));
     }
     
     @Test
@@ -489,14 +498,14 @@ public class EnderecoTest {
     }
     
     @Test
-    public void verifica_existencia_do_texto_que_representa_o_atributo_telefoneFixo_no_texto_gerado_pelo_metodo_toString() {
-        endereco.setTelefoneFixo(telefoneFixo);
-        assertTrue(endereco.toString().contains(telefoneFixo.toString()));
+    public void verifica_existencia_do_texto_que_representa_o_atributo_telefonesFixo_no_texto_gerado_pelo_metodo_toString() {
+        endereco.setTelefonesFixo(telefonesFixo);
+        assertTrue(endereco.toString().contains(telefonesFixo.toString()));
     }
     
     @Test
     public void verifica_texto_gerado_pelo_metodo_toString_quando_atributo_telefoneFixo_nulo() {
-        endereco.setTelefoneFixo(null);
+        endereco.setTelefonesFixo(null);
         assertTrue(endereco.toString().contains("Sem telefone fixo atrelado a este endere\\u00E7o"));
     }
     

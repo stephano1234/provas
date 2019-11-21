@@ -48,7 +48,7 @@ public class VerificadoresRegras {
             campo.setAccessible(true);
             formatoEsperado.append("\"").append(campo.getName()).append("\":\"");
             try {
-                if (campo.get(objetoTestado).toString().charAt(0) == '{') {
+                if (campo.get(objetoTestado).toString().charAt(0) == '{' || campo.get(objetoTestado).toString().charAt(0) == '[') {
                     formatoEsperado.deleteCharAt(formatoEsperado.length() - 1);
                 }
             }
@@ -69,7 +69,7 @@ public class VerificadoresRegras {
                 return false;
             }
             try {
-                if (campo.get(objetoTestado).toString().charAt(0) == '{') {
+                if (campo.get(objetoTestado).toString().charAt(0) == '{' || campo.get(objetoTestado).toString().charAt(0) == '[') {
                     formatoEsperado.deleteCharAt(formatoEsperado.length() - 2);
                 }
             }

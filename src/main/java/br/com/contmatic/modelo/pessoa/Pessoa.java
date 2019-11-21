@@ -25,10 +25,14 @@ public class Pessoa {
     
     private LocalDate dataNascimento;
     
-    private Set<Celular> celularesPessoal;
+    private Set<Celular> celulares;
     
-    private String emailPessoal;
+    private Set<Email> emails;
     
+    private TipoGrauInstrucao tipoGrauInstrucao;
     
+    private TipoEstadoCivil tipoEstadoCivil;
+    
+    private TipoSexo tipoSexo;
     
 }

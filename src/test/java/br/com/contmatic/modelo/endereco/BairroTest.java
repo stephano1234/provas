@@ -120,19 +120,19 @@ public class BairroTest {
     @Test
     public void nao_deve_aceitar_valor_com_caractere_invalido_no_nome() {
         bairro = Fixture.from(Bairro.class).gimme("comCaractereInvalidoNome");
-        assertTrue(verificaErro(bairro, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(bairro, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_nome() {
         bairro = Fixture.from(Bairro.class).gimme("comUmCaractereInvalidoNome");
-        assertTrue(verificaErro(bairro, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(bairro, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     @Test
     public void deve_aceitar_valor_sem_caractere_invalido_no_nome() {
         bairro = Fixture.from(Bairro.class).gimme("semCaractereInvalidoNome");
-        assertFalse(verificaErro(bairro, MensagensErro.STRING_INVALIDO));
+        assertFalse(verificaErro(bairro, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     //cidade

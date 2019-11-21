@@ -94,19 +94,19 @@ public class TelefoneFixoTest {
     @Test
     public void nao_deve_aceitar_valor_com_caractere_invalido_no_ddd() {
         telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("comCaractereInvalidoDdd");
-        assertTrue(verificaErro(telefoneFixo, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(telefoneFixo, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_ddd() {
         telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("comUmCaractereInvalidoDdd");
-        assertTrue(verificaErro(telefoneFixo, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(telefoneFixo, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     @Test
     public void deve_aceitar_valor_sem_caractere_invalido_no_ddd() {
         telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("semCaractereInvalidoDdd");
-        assertFalse(verificaErro(telefoneFixo, MensagensErro.STRING_INVALIDO));
+        assertFalse(verificaErro(telefoneFixo, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     //numero
@@ -150,19 +150,19 @@ public class TelefoneFixoTest {
     @Test
     public void nao_deve_aceitar_valor_com_caractere_invalido_no_numero() {
         telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("comCaractereInvalidoNumero");
-        assertTrue(verificaErro(telefoneFixo, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(telefoneFixo, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_numero() {
         telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("comUmCaractereInvalidoNumero");
-        assertTrue(verificaErro(telefoneFixo, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(telefoneFixo, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     @Test
     public void deve_aceitar_valor_sem_caractere_invalido_no_numero() {
         telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("semCaractereInvalidoNumero");
-        assertFalse(verificaErro(telefoneFixo, MensagensErro.STRING_INVALIDO));
+        assertFalse(verificaErro(telefoneFixo, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     //getter e setter    

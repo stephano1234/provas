@@ -20,7 +20,7 @@ public class Logradouro {
     @NaoVazio(message = MensagensErro.STRING_VAZIO)
     @Size(max = ConstantesNumericas.CAMPO_REGULAR, message = MensagensErro.STRING_MAX)
     @NaoApenas
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_CARACTERE_ESPECIAL, message = MensagensErro.STRING_INVALIDO)
+    @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_CARACTERE_ESPECIAL, message = MensagensErro.STRING_CARACTERE_ESPECIAL)
     private String nome;
     
     @NotNull(message = MensagensErro.VALOR_NULO)

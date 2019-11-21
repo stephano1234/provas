@@ -16,13 +16,13 @@ public class Celular {
     @NotNull(message = MensagensErro.VALOR_NULO)   
     @Size(max = ConstantesNumericas.DDD, message = MensagensErro.STRING_MAX)
     @Size(min = ConstantesNumericas.DDD, message = MensagensErro.STRING_MIN)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_INVALIDO)
+    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_CARACTERE_ESPECIAL)
     private String ddd;
     
     @NotNull(message = MensagensErro.VALOR_NULO)
     @Size(max = ConstantesNumericas.NUMERO_CELULAR, message = MensagensErro.STRING_MAX)
     @Size(min = ConstantesNumericas.NUMERO_CELULAR, message = MensagensErro.STRING_MIN)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_INVALIDO)
+    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_CARACTERE_ESPECIAL)
     private String numero;
     
     @NotNull(message = MensagensErro.VALOR_NULO)

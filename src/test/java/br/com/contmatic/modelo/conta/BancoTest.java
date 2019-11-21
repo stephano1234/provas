@@ -95,19 +95,19 @@ public class BancoTest {
     @Test
     public void nao_deve_aceitar_valor_com_caractere_invalido_no_codigo() {
         banco = Fixture.from(Banco.class).gimme("comCaractereInvalidoCodigo");
-        assertTrue(verificaErro(banco, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(banco, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_codigo() {
         banco = Fixture.from(Banco.class).gimme("comUmCaractereInvalidoCodigo");
-        assertTrue(verificaErro(banco, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(banco, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     @Test
     public void deve_aceitar_valor_sem_caractere_invalido_no_codigo() {
         banco = Fixture.from(Banco.class).gimme("semCaractereInvalidoCodigo");
-        assertFalse(verificaErro(banco, MensagensErro.STRING_INVALIDO));
+        assertFalse(verificaErro(banco, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     //nome

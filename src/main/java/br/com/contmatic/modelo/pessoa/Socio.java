@@ -2,8 +2,6 @@ package br.com.contmatic.modelo.pessoa;
 
 import java.math.BigDecimal;
 
-import java.util.Set;
-
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -34,12 +32,6 @@ public class Socio {
     
     @NotNull(message = MensagensErro.VALOR_NULO)
     private TipoSocio tipoSocio;
-    
-    @Valid
-    private Set<Celular> celularesCorporativo;
-    
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.EMAIL, message = MensagensErro.STRING_INVALIDO)
-    private String emailCorporativo;
     
     public Socio(Pessoa pessoa, Empresa empresa, BigDecimal participacao, TipoSocio tipoSocio) {
         this.pessoa = pessoa;
@@ -80,22 +72,6 @@ public class Socio {
         this.tipoSocio = tipoSocio;
     }
 
-    public Set<Celular> getCelularesCorporativo() {
-        return celularesCorporativo;
-    }
-
-    public void setCelularesCorporativo(Set<Celular> celularesCorporativo) {
-        this.celularesCorporativo = celularesCorporativo;
-    }
-
-    public String getEmailCorporativo() {
-        return emailCorporativo;
-    }
-
-    public void setEmailCorporativo(String emailCorporativo) {
-        this.emailCorporativo = emailCorporativo;
-    }
-
     @Override
     public final int hashCode() {
         return new HashCodeBuilder()
@@ -126,8 +102,6 @@ public class Socio {
                 .append("empresa", empresa)
                 .append("participacao", participacao)
                 .append("tipoSocio", tipoSocio)
-                .append("celularesCorporativo", (celularesCorporativo != null) ? celularesCorporativo : "Celular corporativo não informado")
-                .append("emailCorporativo", (emailCorporativo != null) ? emailCorporativo : "E-mail corporativo não informado")
                 .toString();
     }
     

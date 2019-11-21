@@ -3,21 +3,22 @@ package br.com.contmatic.utilidades;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
-import br.com.contmatic.modelo.conta.Agencia;
-import br.com.contmatic.modelo.conta.Banco;
-import br.com.contmatic.modelo.conta.Conta;
-import br.com.contmatic.modelo.conta.TipoConta;
 import br.com.contmatic.modelo.conta.TodosBancoTest;
 import br.com.contmatic.modelo.endereco.Bairro;
 import br.com.contmatic.modelo.endereco.Cidade;
 import br.com.contmatic.modelo.endereco.TipoUf;
 import br.com.contmatic.modelo.endereco.TodosEnderecoTest;
+import br.com.contmatic.modelo.pessoa.Celular;
+import br.com.contmatic.modelo.pessoa.Email;
+import br.com.contmatic.modelo.pessoa.TipoContatoCelular;
 import br.com.contmatic.utilidades.VerificadoresRegras;
 
 //import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
@@ -25,18 +26,26 @@ import br.com.contmatic.utilidades.VerificadoresRegras;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println(new Conta("12345", new Agencia("1234", new Banco("123", "BVAAA")), TipoConta.CONTA_CORRENTE));
+        Set<Email> s = new HashSet<Email>();
+        Set<Celular> c = new HashSet<Celular>();
+        c.add(new Celular("21", "111111111", TipoContatoCelular.APENAS_LIGACAO));
+        c.add(new Celular("21", "111141111", TipoContatoCelular.APENAS_LIGACAO));
+        s.add(new Email("lalala@gmail.com"));
+        s.add(new Email("oioioi@gmail.com"));
+       
         try {
-            Banco banco = new Banco("123", "       ");
-            assertTrue(!VerificadoresRegras.procuraAlgumErro(banco));
-            System.out.println(banco);
+            s.add(new Email("oioioigmail.com"));
+            c.add(new Celular("1111111", "222222222", TipoContatoCelular.APENAS_LIGACAO));
+            
+            //assertTrue(!VerificadoresRegras.procuraAlgumErro());
+            
         } catch (AssertionError e) {
-            System.out.println("nao armazenou");
+            e.printStackTrace();
+            System.out.println("nao armazenou");            
         }
-        for (int i = 0; i < 1; i++) {
-          
-            System.out.println(RandomizadorStringExpressaoRegular.comUmCaractereInvalido(50, ExpressoesRegularesTesteRegra.APENAS_ESPACO));
-        }
+//        for (int i = 0; i < 1; i++) {          
+//            System.out.println(RandomizadorStringExpressaoRegular.comUmCaractereInvalido(50, ExpressoesRegularesTesteRegra.APENAS_ESPACO));
+//        }
     }
     
     @Test

@@ -1,5 +1,7 @@
 package br.com.contmatic.modelo.endereco;
 
+import java.util.Set;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -19,18 +21,18 @@ public class Endereco {
     @NotNull(message = MensagensErro.VALOR_NULO)
     @Size(max = ConstantesNumericas.CEP, message = MensagensErro.STRING_MAX)
     @Size(min = ConstantesNumericas.CEP, message = MensagensErro.STRING_MIN)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_INVALIDO)
+    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
     private String cep;
     
     @NaoVazio(message = MensagensErro.STRING_VAZIO)
     @Size(max = ConstantesNumericas.MAX_NUMERO_ENDERECO, message = MensagensErro.STRING_MAX)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_INVALIDO)
+    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
     private String numero;
     
     @NaoVazio(message = MensagensErro.STRING_VAZIO)
     @Size(max = ConstantesNumericas.CAMPO_REGULAR, message = MensagensErro.STRING_MAX)
     @NaoApenas
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_CARACTERE_ESPECIAL, message = MensagensErro.STRING_INVALIDO)
+    @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_CARACTERE_ESPECIAL, message = MensagensErro.STRING_CARACTERE_ESPECIAL)
     private String complemento;
     
     @NotNull(message = MensagensErro.VALOR_NULO)
@@ -38,7 +40,7 @@ public class Endereco {
     private Logradouro logradouro;
     
     @Valid
-    private TelefoneFixo telefoneFixo;
+    private Set<TelefoneFixo> telefonesFixo;
     
     @NotNull(message = MensagensErro.VALOR_NULO)
     private TipoEndereco tipoEndereco;
@@ -82,12 +84,12 @@ public class Endereco {
         this.logradouro = logradouro;
     }
 
-    public TelefoneFixo getTelefoneFixo() {
-        return telefoneFixo;
+    public Set<TelefoneFixo> getTelefonesFixo() {
+        return telefonesFixo;
     }
 
-    public void setTelefoneFixo(TelefoneFixo telefoneFixo) {
-        this.telefoneFixo = telefoneFixo;
+    public void setTelefonesFixo(Set<TelefoneFixo> telefonesFixo) {
+        this.telefonesFixo = telefonesFixo;
     }
 
     public TipoEndereco getTipoEndereco() {
@@ -130,7 +132,7 @@ public class Endereco {
                 .append("numero", (numero != null) ? numero : "Sem número")
                 .append("complemento", (complemento != null) ? complemento : "Sem informações adicionais do endereço")
                 .append("logradouro", logradouro)
-                .append("telefoneFixo", (telefoneFixo != null) ? telefoneFixo : "Sem telefone fixo atrelado a este endereço")
+                .append("telefonesFixo", (telefonesFixo != null) ? telefonesFixo : "Sem telefone fixo atrelado a este endereço")
                 .append("tipoEndereco", tipoEndereco)
                 .toString();
     }

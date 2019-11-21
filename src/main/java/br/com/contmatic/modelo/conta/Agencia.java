@@ -18,7 +18,7 @@ public class Agencia {
     @NotNull(message = MensagensErro.VALOR_NULO)
     @NaoVazio(message = MensagensErro.STRING_VAZIO)
     @Size(max = ConstantesNumericas.MAX_NUMERO_AGENCIA, message = MensagensErro.STRING_MAX)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_ESPACO, message = MensagensErro.STRING_INVALIDO)
+    @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_ESPACO, message = MensagensErro.STRING_CARACTERE_ESPECIAL)
     private String numero;
     
     @NotNull(message = MensagensErro.VALOR_NULO)

@@ -120,19 +120,19 @@ public class LogradouroTest {
     @Test
     public void nao_deve_aceitar_valor_com_caractere_invalido_no_nome() {
         logradouro = Fixture.from(Logradouro.class).gimme("comCaractereInvalidoNome");
-        assertTrue(verificaErro(logradouro, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(logradouro, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_nome() {
         logradouro = Fixture.from(Logradouro.class).gimme("comUmCaractereInvalidoNome");
-        assertTrue(verificaErro(logradouro, MensagensErro.STRING_INVALIDO));
+        assertTrue(verificaErro(logradouro, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     @Test
     public void deve_aceitar_valor_sem_caractere_invalido_no_nome() {
         logradouro = Fixture.from(Logradouro.class).gimme("semCaractereInvalidoNome");
-        assertFalse(verificaErro(logradouro, MensagensErro.STRING_INVALIDO));
+        assertFalse(verificaErro(logradouro, MensagensErro.STRING_CARACTERE_ESPECIAL));
     }
     
     //bairro
