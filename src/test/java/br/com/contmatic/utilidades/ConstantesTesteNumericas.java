@@ -6,6 +6,8 @@ public class ConstantesTesteNumericas {
     public static final int VALOR_UNIVERSO_CHAR_GERADOS = 200;
     public static final int PERCENTUAL_NULO_GERADO = 5;
     public static final int ELEMENTOS_ARRAY_GERADA = 5;
+    public static final int INCLUI_STRING_VAZIO = 0;
+    public static final int NAO_INCLUI_STRING_VAZIO = 1;
     
     //geral
     public static final int CAMPO_REGULAR = 100;

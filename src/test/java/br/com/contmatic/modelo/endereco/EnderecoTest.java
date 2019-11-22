@@ -204,19 +204,19 @@ public class EnderecoTest {
     
     @Test
     public void nao_deve_aceitar_valor_com_apenas_espaco_no_complemento() {
-        endereco = Fixture.from(Endereco.class).gimme("somenteEspacoComplemento");
+        endereco = Fixture.from(Endereco.class).gimme("apenasEspacoComplemento");
         assertTrue(verificaErro(endereco, MensagensErro.STRING_APENAS_ESPACO));
     }
     
     @Test
     public void deve_aceitar_valor_com_caractere_nao_espaco_no_complemento() {
-        endereco = Fixture.from(Endereco.class).gimme("comNaoEspacoComplemento");
+        endereco = Fixture.from(Endereco.class).gimme("naoApenasEspacoComplemento");
         assertFalse(verificaErro(endereco, MensagensErro.STRING_APENAS_ESPACO));
     }
     
     @Test
     public void deve_aceitar_valor_com_um_caractere_nao_espaco_no_complemento() {
-        endereco = Fixture.from(Endereco.class).gimme("comUmNaoEspacoComplemento");
+        endereco = Fixture.from(Endereco.class).gimme("umNaoEspacoComplemento");
         assertFalse(verificaErro(endereco, MensagensErro.STRING_APENAS_ESPACO));
     }
     

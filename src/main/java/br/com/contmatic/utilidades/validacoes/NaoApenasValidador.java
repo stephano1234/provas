@@ -7,7 +7,7 @@ import com.google.common.base.Preconditions;
 
 public class NaoApenasValidador implements ConstraintValidator<NaoApenas, String> {
   
-    String regexp;
+    private String regexp;
     
     @Override
     public void initialize(NaoApenas naoApenas) {

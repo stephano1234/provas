@@ -65,7 +65,7 @@ public class EnderecoTemplateFixtureFactory implements TemplateLoader {
         //cep
         
         Fixture.of(Endereco.class).addTemplate("naoNuloCep").inherits("valido", new Rule() {{
-            add("cep", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
+            add("cep", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
         }});
         
         Fixture.of(Endereco.class).addTemplate("maiorTamanhoCep").inherits("valido", new Rule() {{
@@ -73,11 +73,11 @@ public class EnderecoTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(Endereco.class).addTemplate("menorIgualTamanhoCep").inherits("valido", new Rule() {{
-            add("cep", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesTesteNumericas.CEP + 1), false));
+            add("cep", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.CEP + 1), false));
         }});
         
         Fixture.of(Endereco.class).addTemplate("menorTamanhoCep").inherits("valido", new Rule() {{
-            add("cep", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesTesteNumericas.CEP), false));
+            add("cep", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.CEP), false));
         }});
         
         Fixture.of(Endereco.class).addTemplate("maiorIgualTamanhoCep").inherits("valido", new Rule() {{
@@ -85,21 +85,21 @@ public class EnderecoTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(Endereco.class).addTemplate("comCaractereInvalidoCep").inherits("valido", new Rule() {{
-            add("cep", RandomizadorStringExpressaoRegular.comCaractereInvalido(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("cep", RandomizadorStringExpressaoRegular.comCaractereInvalido(RandomUtils.nextInt(ConstantesTesteNumericas.NAO_INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
         }});
         
         Fixture.of(Endereco.class).addTemplate("comUmCaractereInvalidoCep").inherits("valido", new Rule() {{
-            add("cep", RandomizadorStringExpressaoRegular.comUmCaractereInvalido(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("cep", RandomizadorStringExpressaoRegular.comUmCaractereInvalido(RandomUtils.nextInt(ConstantesTesteNumericas.NAO_INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
         }});
         
         Fixture.of(Endereco.class).addTemplate("semCaractereInvalidoCep").inherits("valido", new Rule() {{
-            add("cep", RandomizadorStringExpressaoRegular.semCaractereInvalido(RandomUtils.nextInt(0, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("cep", RandomizadorStringExpressaoRegular.semCaractereInvalido(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
         }});
         
         //numero
         
         Fixture.of(Endereco.class).addTemplate("naoVazioNumero").inherits("valido", new Rule() {{
-            add("numero", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
+            add("numero", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.NAO_INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
         }});
         
         Fixture.of(Endereco.class).addTemplate("maiorTamanhoNumero").inherits("valido", new Rule() {{
@@ -107,25 +107,25 @@ public class EnderecoTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(Endereco.class).addTemplate("menorIgualTamanhoNumero").inherits("valido", new Rule() {{
-            add("numero", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesTesteNumericas.MAX_NUMERO_ENDERECO + 1), false));
+            add("numero", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.MAX_NUMERO_ENDERECO + 1), false));
         }});
         
         Fixture.of(Endereco.class).addTemplate("comCaractereInvalidoNumero").inherits("valido", new Rule() {{
-            add("numero", RandomizadorStringExpressaoRegular.comCaractereInvalido(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("numero", RandomizadorStringExpressaoRegular.comCaractereInvalido(RandomUtils.nextInt(ConstantesTesteNumericas.NAO_INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
         }});
         
         Fixture.of(Endereco.class).addTemplate("comUmCaractereInvalidoNumero").inherits("valido", new Rule() {{
-            add("numero", RandomizadorStringExpressaoRegular.comUmCaractereInvalido(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("numero", RandomizadorStringExpressaoRegular.comUmCaractereInvalido(RandomUtils.nextInt(ConstantesTesteNumericas.NAO_INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
         }});
         
         Fixture.of(Endereco.class).addTemplate("semCaractereInvalidoNumero").inherits("valido", new Rule() {{
-            add("numero", RandomizadorStringExpressaoRegular.semCaractereInvalido(RandomUtils.nextInt(0, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("numero", RandomizadorStringExpressaoRegular.semCaractereInvalido(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
         }});
 
         //complemento
         
         Fixture.of(Endereco.class).addTemplate("naoVazioComplemento").inherits("valido", new Rule() {{
-            add("complemento", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
+            add("complemento", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.NAO_INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
         }});
         
         Fixture.of(Endereco.class).addTemplate("maiorTamanhoComplemento").inherits("valido", new Rule() {{
@@ -133,31 +133,31 @@ public class EnderecoTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(Endereco.class).addTemplate("menorIgualTamanhoComplemento").inherits("valido", new Rule() {{
-            add("complemento", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesTesteNumericas.CAMPO_REGULAR + 1), false));
+            add("complemento", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.CAMPO_REGULAR + 1), false));
         }});
         
-        Fixture.of(Endereco.class).addTemplate("somenteEspacoComplemento").inherits("valido", new Rule() {{
-            add("complemento", RandomizadorStringExpressaoRegular.semCaractereInvalido(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
+        Fixture.of(Endereco.class).addTemplate("apenasEspacoComplemento").inherits("valido", new Rule() {{
+            add("complemento", RandomizadorStringExpressaoRegular.semCaractereInvalido(RandomUtils.nextInt(ConstantesTesteNumericas.NAO_INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
         }});
         
-        Fixture.of(Endereco.class).addTemplate("comNaoEspacoComplemento").inherits("valido", new Rule() {{
-            add("complemento", RandomizadorStringExpressaoRegular.comCaractereInvalido(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
+        Fixture.of(Endereco.class).addTemplate("naoApenasEspacoComplemento").inherits("valido", new Rule() {{
+            add("complemento", RandomizadorStringExpressaoRegular.comCaractereInvalido(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
         }});
         
-        Fixture.of(Endereco.class).addTemplate("comUmNaoEspacoComplemento").inherits("valido", new Rule() {{
-            add("complemento", RandomizadorStringExpressaoRegular.comUmCaractereInvalido(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
+        Fixture.of(Endereco.class).addTemplate("umNaoEspacoComplemento").inherits("valido", new Rule() {{
+            add("complemento", RandomizadorStringExpressaoRegular.comUmCaractereInvalido(RandomUtils.nextInt(ConstantesTesteNumericas.NAO_INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
         }});
         
         Fixture.of(Endereco.class).addTemplate("comCaractereInvalidoComplemento").inherits("valido", new Rule() {{
-            add("complemento", RandomizadorStringExpressaoRegular.comCaractereInvalido(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.SEM_CARACTERE_ESPECIAL));
+            add("complemento", RandomizadorStringExpressaoRegular.comCaractereInvalido(RandomUtils.nextInt(ConstantesTesteNumericas.NAO_INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.SEM_CARACTERE_ESPECIAL));
         }});
         
         Fixture.of(Endereco.class).addTemplate("comUmCaractereInvalidoComplemento").inherits("valido", new Rule() {{
-            add("complemento", RandomizadorStringExpressaoRegular.comUmCaractereInvalido(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.SEM_CARACTERE_ESPECIAL));
+            add("complemento", RandomizadorStringExpressaoRegular.comUmCaractereInvalido(RandomUtils.nextInt(ConstantesTesteNumericas.NAO_INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.SEM_CARACTERE_ESPECIAL));
         }});
         
         Fixture.of(Endereco.class).addTemplate("semCaractereInvalidoComplemento").inherits("valido", new Rule() {{
-            add("complemento", RandomizadorStringExpressaoRegular.semCaractereInvalido(RandomUtils.nextInt(0, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.SEM_CARACTERE_ESPECIAL));
+            add("complemento", RandomizadorStringExpressaoRegular.semCaractereInvalido(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.SEM_CARACTERE_ESPECIAL));
         }});
         
     }
