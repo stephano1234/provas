@@ -12,6 +12,7 @@ public class ConstantesNumericas {
     public static final int NUMERO_TELEFONE = 8;
     
     //pessoa
+    public static final int CPF = 11;
     public static final int NUMERO_CELULAR = 9;
     
     //banco

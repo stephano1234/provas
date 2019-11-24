@@ -56,6 +56,10 @@ public class EmailTemplateFixtureFactory implements TemplateLoader {
             add("endereco", RandomizadorStringExpressaoRegular.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.ARROBA, RandomizadorStringExpressaoRegular.semCaractereNaoEspecificadoExpressaoRegular(1, ExpressoesRegularesTesteRegra.UNDERLINE_TRACO_PONTO) + ExpressoesRegularesTesteRegra.ARROBA));
         }});
         
+        Fixture.of(Email.class).addTemplate("comMaisDeUmArrobaEndereco").inherits("valido", new Rule() {{
+            add("endereco", RandomizadorStringExpressaoRegular.emailAleatorio() + ExpressoesRegularesTesteRegra.ARROBA);
+        }});
+        
         Fixture.of(Email.class).addTemplate("semPontoEndereco").inherits("valido", new Rule() {{
             add("endereco", RandomizadorStringExpressaoRegular.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.PONTO_REGEX, ExpressoesRegularesTesteRegra.APENAS_EXCLUI_CARACTERE));
         }});

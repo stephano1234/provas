@@ -8,6 +8,7 @@ public class ExpressoesRegularesRegraNegocio {
     //permite apenas determinados caracteres
     public static final String APENAS_NUMERAL = "\\d*";
     public static final String APENAS_LETRA_MAIUSCULA = "[A-Z]*";
+    public static final String APENAS_LETRA_ESPACO = "(\\w|[ ])*";
     public static final String SEM_CARACTERE_ESPECIAL = "([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô]|[\\.'ªº]|[-]|\\d|\\s)*";
     
     //regex complexa

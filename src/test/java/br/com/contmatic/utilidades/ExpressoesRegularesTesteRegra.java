@@ -12,6 +12,7 @@ public class ExpressoesRegularesTesteRegra {
     public static final String APENAS_NUMERAL = "\\d*";
     public static final String APENAS_LETRA_MAIUSCULA = "[A-Z]*";
     public static final String APENAS_ESPACO = "\\s*";
+    public static final String APENAS_LETRA_ESPACO = "(\\w|[ ])*";
     public static final String SEM_CARACTERE_ESPECIAL = "([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô]|[\\.'ªº]|[-]|\\d|\\s)*";
     public static final String LETRA_MINUSCULA_SEM_ACENTO_NUMERAL_UNDERLINE_TRACO = "([a-z]|[0-9]|[_]|[-])*";
     public static final String LETRA_MINUSCULA_SEM_ACENTO_NUMERAL_UNDERLINE_TRACO_PONTO = "([a-z]|[0-9]|[\\.]|[_]|[-])*";

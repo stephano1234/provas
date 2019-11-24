@@ -19,6 +19,7 @@ public class ConstantesTesteNumericas {
     public static final int NUMERO_TELEFONE = 8;
     
     //pessoa
+    public static final int CPF = 11;
     public static final int NUMERO_CELULAR = 9;
     public static final int MAX_DEPOIS_PONTO_EMAIL = 6;
     public static final int MIN_DEPOIS_PONTO_EMAIL = 2;

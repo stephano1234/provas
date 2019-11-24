@@ -110,6 +110,12 @@ public class EmailTest {
     }
     
     @Test
+    public void nao_deve_aceitar_valor_com_mais_de_um_arroba_no_endereco() {
+        email = Fixture.from(Email.class).gimme("comMaisDeUmArrobaEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
     public void nao_deve_aceitar_valor_sem_ponto_no_endereco() {
         email = Fixture.from(Email.class).gimme("semPontoEndereco");
         assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
