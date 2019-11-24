@@ -101,19 +101,19 @@ public class BairroTest {
     
     @Test
     public void nao_deve_aceitar_valor_com_apenas_espaco_no_nome() {
-        bairro = Fixture.from(Bairro.class).gimme("somenteEspacoNome");
+        bairro = Fixture.from(Bairro.class).gimme("apenasEspacoNome");
         assertTrue(verificaErro(bairro, MensagensErro.STRING_APENAS_ESPACO));
     }
     
     @Test
     public void deve_aceitar_valor_com_caractere_nao_espaco_no_nome() {
-        bairro = Fixture.from(Bairro.class).gimme("comNaoEspacoNome");
+        bairro = Fixture.from(Bairro.class).gimme("naoApenasEspacoNome");
         assertFalse(verificaErro(bairro, MensagensErro.STRING_APENAS_ESPACO));
     }
     
     @Test
     public void deve_aceitar_valor_com_um_caractere_nao_espaco_no_nome() {
-        bairro = Fixture.from(Bairro.class).gimme("comUmNaoEspacoNome");
+        bairro = Fixture.from(Bairro.class).gimme("umNaoEspacoNome");
         assertFalse(verificaErro(bairro, MensagensErro.STRING_APENAS_ESPACO));
     }
 

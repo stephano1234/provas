@@ -95,19 +95,19 @@ public class BancoTest {
     @Test
     public void nao_deve_aceitar_valor_com_caractere_invalido_no_codigo() {
         banco = Fixture.from(Banco.class).gimme("comCaractereInvalidoCodigo");
-        assertTrue(verificaErro(banco, MensagensErro.STRING_CARACTERE_ESPECIAL));
+        assertTrue(verificaErro(banco, MensagensErro.STRING_COM_ESPACO));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_codigo() {
         banco = Fixture.from(Banco.class).gimme("comUmCaractereInvalidoCodigo");
-        assertTrue(verificaErro(banco, MensagensErro.STRING_CARACTERE_ESPECIAL));
+        assertTrue(verificaErro(banco, MensagensErro.STRING_COM_ESPACO));
     }
     
     @Test
     public void deve_aceitar_valor_sem_caractere_invalido_no_codigo() {
         banco = Fixture.from(Banco.class).gimme("semCaractereInvalidoCodigo");
-        assertFalse(verificaErro(banco, MensagensErro.STRING_CARACTERE_ESPECIAL));
+        assertFalse(verificaErro(banco, MensagensErro.STRING_COM_ESPACO));
     }
     
     //nome
@@ -150,19 +150,19 @@ public class BancoTest {
     
     @Test
     public void nao_deve_aceitar_valor_com_apenas_espaco_no_nome() {
-        banco = Fixture.from(Banco.class).gimme("somenteEspacoNome");
+        banco = Fixture.from(Banco.class).gimme("apenasEspacoNome");
         assertTrue(verificaErro(banco, MensagensErro.STRING_APENAS_ESPACO));
     }
     
     @Test
     public void deve_aceitar_valor_com_caractere_nao_espaco_no_nome() {
-        banco = Fixture.from(Banco.class).gimme("comNaoEspacoNome");
+        banco = Fixture.from(Banco.class).gimme("naoApenasEspacoNome");
         assertFalse(verificaErro(banco, MensagensErro.STRING_APENAS_ESPACO));
     }
     
     @Test
     public void deve_aceitar_valor_com_um_caractere_nao_espaco_no_nome() {
-        banco = Fixture.from(Banco.class).gimme("comUmNaoEspacoNome");
+        banco = Fixture.from(Banco.class).gimme("umNaoEspacoNome");
         assertFalse(verificaErro(banco, MensagensErro.STRING_APENAS_ESPACO));
     }
 

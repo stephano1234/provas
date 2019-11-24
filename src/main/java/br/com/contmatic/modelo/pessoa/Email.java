@@ -4,6 +4,7 @@ import javax.validation.constraints.*;
 
 import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
 import br.com.contmatic.utilidades.MensagensErro;
+import br.com.contmatic.utilidades.validacoes.NaoApenas;
 import br.com.contmatic.utilidades.validacoes.NaoVazio;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -15,7 +16,8 @@ public class Email {
 
     @NotNull(message = MensagensErro.VALOR_NULO)
     @NaoVazio(message = MensagensErro.STRING_VAZIO)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.EMAIL, message = MensagensErro.STRING_CARACTERE_ESPECIAL)
+    @NaoApenas
+    @Pattern(regexp = ExpressoesRegularesRegraNegocio.EMAIL, message = MensagensErro.STRING_NAO_FORMATO_EMAIL)
     private String endereco;
     
     public Email(String endereco) {

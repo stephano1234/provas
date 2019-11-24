@@ -101,19 +101,19 @@ public class LogradouroTest {
     
     @Test
     public void nao_deve_aceitar_valor_com_apenas_espaco_no_nome() {
-        logradouro = Fixture.from(Logradouro.class).gimme("somenteEspacoNome");
+        logradouro = Fixture.from(Logradouro.class).gimme("apenasEspacoNome");
         assertTrue(verificaErro(logradouro, MensagensErro.STRING_APENAS_ESPACO));
     }
     
     @Test
     public void deve_aceitar_valor_com_caractere_nao_espaco_no_nome() {
-        logradouro = Fixture.from(Logradouro.class).gimme("comNaoEspacoNome");
+        logradouro = Fixture.from(Logradouro.class).gimme("naoApenasEspacoNome");
         assertFalse(verificaErro(logradouro, MensagensErro.STRING_APENAS_ESPACO));
     }
     
     @Test
     public void deve_aceitar_valor_com_um_caractere_nao_espaco_no_nome() {
-        logradouro = Fixture.from(Logradouro.class).gimme("comUmNaoEspacoNome");
+        logradouro = Fixture.from(Logradouro.class).gimme("umNaoEspacoNome");
         assertFalse(verificaErro(logradouro, MensagensErro.STRING_APENAS_ESPACO));
     }
 

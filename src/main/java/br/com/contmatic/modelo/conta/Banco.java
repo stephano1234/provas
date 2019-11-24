@@ -18,7 +18,7 @@ public class Banco {
     @NotNull(message = MensagensErro.VALOR_NULO)
     @NaoVazio(message = MensagensErro.STRING_VAZIO)
     @Size(max = ConstantesNumericas.MAX_CODIGO_BANCO, message = MensagensErro.STRING_MAX)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_ESPACO, message = MensagensErro.STRING_CARACTERE_ESPECIAL)
+    @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_ESPACO, message = MensagensErro.STRING_COM_ESPACO)
     private String codigo;
     
     @NotNull(message = MensagensErro.VALOR_NULO)

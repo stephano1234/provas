@@ -93,19 +93,19 @@ public class CidadeTest {
     
     @Test
     public void nao_deve_aceitar_valor_com_apenas_espaco_no_nome() {
-        cidade = Fixture.from(Cidade.class).gimme("somenteEspacoNome");
+        cidade = Fixture.from(Cidade.class).gimme("apenasEspacoNome");
         assertTrue(verificaErro(cidade, MensagensErro.STRING_APENAS_ESPACO));
     }
     
     @Test
     public void deve_aceitar_valor_com_caractere_nao_espaco_no_nome() {
-        cidade = Fixture.from(Cidade.class).gimme("comNaoEspacoNome");
+        cidade = Fixture.from(Cidade.class).gimme("naoApenasEspacoNome");
         assertFalse(verificaErro(cidade, MensagensErro.STRING_APENAS_ESPACO));
     }
     
     @Test
     public void deve_aceitar_valor_com_um_caractere_nao_espaco_no_nome() {
-        cidade = Fixture.from(Cidade.class).gimme("comUmNaoEspacoNome");
+        cidade = Fixture.from(Cidade.class).gimme("umNaoEspacoNome");
         assertFalse(verificaErro(cidade, MensagensErro.STRING_APENAS_ESPACO));
     }
 

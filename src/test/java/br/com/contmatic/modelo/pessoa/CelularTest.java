@@ -94,19 +94,19 @@ public class CelularTest {
     @Test
     public void nao_deve_aceitar_valor_com_caractere_invalido_no_ddd() {
         celular = Fixture.from(Celular.class).gimme("comCaractereInvalidoDdd");
-        assertTrue(verificaErro(celular, MensagensErro.STRING_CARACTERE_ESPECIAL));
+        assertTrue(verificaErro(celular, MensagensErro.STRING_NAO_NUMERAL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_ddd() {
         celular = Fixture.from(Celular.class).gimme("comUmCaractereInvalidoDdd");
-        assertTrue(verificaErro(celular, MensagensErro.STRING_CARACTERE_ESPECIAL));
+        assertTrue(verificaErro(celular, MensagensErro.STRING_NAO_NUMERAL));
     }
     
     @Test
     public void deve_aceitar_valor_sem_caractere_invalido_no_ddd() {
         celular = Fixture.from(Celular.class).gimme("semCaractereInvalidoDdd");
-        assertFalse(verificaErro(celular, MensagensErro.STRING_CARACTERE_ESPECIAL));
+        assertFalse(verificaErro(celular, MensagensErro.STRING_NAO_NUMERAL));
     }
     
     //numero
@@ -150,19 +150,19 @@ public class CelularTest {
     @Test
     public void nao_deve_aceitar_valor_com_caractere_invalido_no_numero() {
         celular = Fixture.from(Celular.class).gimme("comCaractereInvalidoNumero");
-        assertTrue(verificaErro(celular, MensagensErro.STRING_CARACTERE_ESPECIAL));
+        assertTrue(verificaErro(celular, MensagensErro.STRING_NAO_NUMERAL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_numero() {
         celular = Fixture.from(Celular.class).gimme("comUmCaractereInvalidoNumero");
-        assertTrue(verificaErro(celular, MensagensErro.STRING_CARACTERE_ESPECIAL));
+        assertTrue(verificaErro(celular, MensagensErro.STRING_NAO_NUMERAL));
     }
     
     @Test
     public void deve_aceitar_valor_sem_caractere_invalido_no_numero() {
         celular = Fixture.from(Celular.class).gimme("semCaractereInvalidoNumero");
-        assertFalse(verificaErro(celular, MensagensErro.STRING_CARACTERE_ESPECIAL));
+        assertFalse(verificaErro(celular, MensagensErro.STRING_NAO_NUMERAL));
     }
     
     //tipoContatoCelular

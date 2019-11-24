@@ -79,9 +79,131 @@ public class EmailTest {
         assertFalse(verificaErro(email, MensagensErro.STRING_VAZIO));
     }
     
-	
+    @Test
+    public void nao_deve_aceitar_valor_com_apenas_espaco_no_endereco() {
+        email = Fixture.from(Email.class).gimme("apenasEspacoEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_APENAS_ESPACO));
+    }
     
-
+    @Test
+    public void deve_aceitar_valor_com_caractere_nao_espaco_no_endereco() {
+        email = Fixture.from(Email.class).gimme("naoApenasEspacoEndereco");
+        assertFalse(verificaErro(email, MensagensErro.STRING_APENAS_ESPACO));
+    }
+    
+    @Test
+    public void deve_aceitar_valor_com_um_caractere_nao_espaco_no_endereco() {
+        email = Fixture.from(Email.class).gimme("umNaoEspacoEndereco");
+        assertFalse(verificaErro(email, MensagensErro.STRING_APENAS_ESPACO));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_sem_arroba_no_endereco() {
+        email = Fixture.from(Email.class).gimme("semArrobaEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_com_arroba_precedido_ou_sucedido_por_caractere_invalido_no_endereco() {
+        email = Fixture.from(Email.class).gimme("comArrobaEntreCaracteresInvalidosEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_sem_ponto_no_endereco() {
+        email = Fixture.from(Email.class).gimme("semPontoEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void deve_aceitar_valor_valido_no_endereco() {
+        email = Fixture.from(Email.class).gimme("randomValidoEndereco");
+        assertFalse(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_vazio_antes_do_arroba_no_endereco() {
+        email = Fixture.from(Email.class).gimme("naoVazioAntesArrobaEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+   
+    @Test
+    public void nao_deve_aceitar_primeiro_valor_invalido_antes_do_arroba_no_endereco() {
+        email = Fixture.from(Email.class).gimme("primeiroCaractereInvalidoAntesArrobaEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_com_um_caractere_invalido_antes_do_arroba_no_endereco() {
+        email = Fixture.from(Email.class).gimme("comUmCaractereInvalidoAntesArrobaEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void deve_aceitar_valor_valido_antes_do_arroba_no_endereco() {
+        email = Fixture.from(Email.class).gimme("randomValidoAntesArrobaEndereco");
+        assertFalse(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_vazio_depois_do_arroba_antes_do_ponto_obrigatorio_no_endereco() {
+        email = Fixture.from(Email.class).gimme("naoVazioDepoisArrobaAtePontoObrigatorioEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_primeiro_valor_invalido_depois_do_arroba_antes_do_ponto_obrigatorio_no_endereco() {
+        email = Fixture.from(Email.class).gimme("primeiroCaractereInvalidoDepoisArrobaAtePontoObrigatorioEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_com_um_caractere_invalido_depois_do_arroba_antes_do_ponto_obrigatorio_no_endereco() {
+        email = Fixture.from(Email.class).gimme("comUmCaractereInvalidoDepoisArrobaAtePontoObrigatorioEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_sem_ponto_obrigatorio_depois_do_arroba_no_endereco() {
+        email = Fixture.from(Email.class).gimme("semPontoObrigatorioDepoisArrobaEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void deve_aceitar_valor_valido_depois_do_arroba_antes_do_ponto_obrigatorio_no_endereco() {
+        email = Fixture.from(Email.class).gimme("randomValidoDepoisArrobaAtePontoObrigatorioEndereco");
+        assertFalse(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_menor_que_tamanho_depois_do_ponto_obrigatorio_no_endereco() {
+        email = Fixture.from(Email.class).gimme("menorTamanhoDepoisPontoObrigatorioEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_maior_que_tamanho_depois_do_ponto_obrigatorio_no_endereco() {
+        email = Fixture.from(Email.class).gimme("maiorTamanhoDepoisPontoObrigatorioEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void deve_aceitar_valor_dentro_do_tamanho_depois_do_ponto_obrigatorio_no_endereco() {
+        email = Fixture.from(Email.class).gimme("entreMaiorMenorTamanhoDepoisPontoObrigatorioEndereco");
+        assertFalse(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_com_um_caractere_invalido_depois_ponto_obrigatorio_no_endereco() {
+        email = Fixture.from(Email.class).gimme("comUmCaractereInvalidoDepoisPontoObrigatorioEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
+    public void deve_aceitar_valor_valido_depois_do_ponto_obrigatorio_no_endereco() {
+        email = Fixture.from(Email.class).gimme("randomValidoDepoisPontoObrigatorioEndereco");
+        assertFalse(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
     
     //getter e setter    
     

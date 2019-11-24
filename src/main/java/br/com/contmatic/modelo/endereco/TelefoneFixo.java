@@ -16,13 +16,13 @@ public class TelefoneFixo {
     @NotNull(message = MensagensErro.VALOR_NULO)   
     @Size(max = ConstantesNumericas.DDD, message = MensagensErro.STRING_MAX)
     @Size(min = ConstantesNumericas.DDD, message = MensagensErro.STRING_MIN)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_CARACTERE_ESPECIAL)
+    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
     private String ddd;
     
     @NotNull(message = MensagensErro.VALOR_NULO)
     @Size(max = ConstantesNumericas.NUMERO_TELEFONE, message = MensagensErro.STRING_MAX)
     @Size(min = ConstantesNumericas.NUMERO_TELEFONE, message = MensagensErro.STRING_MIN)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_CARACTERE_ESPECIAL)
+    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
     private String numero;
     
     public TelefoneFixo(String ddd, String numero) {

@@ -8,10 +8,12 @@ public class MensagensErro {
     //String
     public static final String STRING_VAZIO = "O campo não pode estar vazio.";
     public static final String STRING_APENAS_ESPACO = "O campo não pode possuir apenas espaços em branco.";
+    public static final String STRING_COM_ESPACO = "O campo não pode possuir espaços em branco.";
     public static final String STRING_MAX = "O campo pode possuir no máximo {max} caracteres.";
     public static final String STRING_MIN = "O campo pode possuir no mínimo {min} caracteres.";
     public static final String STRING_CARACTERE_ESPECIAL = "O campo não pode possuir caracteres especiais.";
     public static final String STRING_NAO_NUMERAL = "O campo não pode possuir caracteres que não sejam numerais.";
+    public static final String STRING_NAO_FORMATO_EMAIL = "O campo deve ser um endereço de e-mail.";
     
     //double, float, respectivas wrappers e BigDecimal
     public static final String DECIMAL_MAX = "O campo não pode ser maior que {value}.";
