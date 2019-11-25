@@ -15,7 +15,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class Email {
 
     @NotNull(message = MensagensErro.VALOR_NULO)
-    @NaoVazio(message = MensagensErro.STRING_VAZIO)
+    @NaoVazio
     @NaoApenas
     @Pattern(regexp = ExpressoesRegularesRegraNegocio.EMAIL, message = MensagensErro.STRING_NAO_FORMATO_EMAIL)
     private String endereco;

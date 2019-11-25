@@ -176,6 +176,12 @@ public class EmailTest {
     }
     
     @Test
+    public void nao_deve_aceitar_valor_com_ponto_precedido_ou_sucedido_por_caractere_invalido_depois_do_arroba_no_endereco() {
+        email = Fixture.from(Email.class).gimme("comPontoEntreCaractereInvalidoDepoisArrobaEndereco");
+        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+    }
+    
+    @Test
     public void deve_aceitar_valor_valido_depois_do_arroba_antes_do_ponto_obrigatorio_no_endereco() {
         email = Fixture.from(Email.class).gimme("randomValidoDepoisArrobaAtePontoObrigatorioEndereco");
         assertFalse(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));

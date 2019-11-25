@@ -23,16 +23,15 @@ import org.joda.time.LocalDate;
 public class Pessoa {
 
 	@NotNull(message = MensagensErro.VALOR_NULO)
-	@NaoVazio(message = MensagensErro.STRING_VAZIO)
 	@Size(max = ConstantesNumericas.CPF, message = MensagensErro.STRING_MAX)
 	@Size(min = ConstantesNumericas.CPF, message = MensagensErro.STRING_MIN)
-	@NaoApenas
+	@NaoApenas(regexp = {"0", "1", "2", "3", "4", "5", "6", "7", "9"}, message = MensagensErro.STRING_APENAS_NUMERO_REPETIDO)
 	@Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
 	
 	private String cpf;
     
     @NotNull(message = MensagensErro.VALOR_NULO)
-    @NaoVazio(message = MensagensErro.STRING_VAZIO)
+    @NaoVazio
     @Size(max = ConstantesNumericas.CAMPO_REGULAR, message = MensagensErro.STRING_MAX)
     @NaoApenas
     @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_LETRA_ESPACO, message = MensagensErro.STRING_APENAS_LETRA_ESPACO)

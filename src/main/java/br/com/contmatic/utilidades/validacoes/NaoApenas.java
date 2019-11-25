@@ -22,7 +22,7 @@ public @interface NaoApenas {
 
     Class<? extends Payload>[] payload() default {};
     
-    String regexp() default "\\s";
+    String[] regexp() default {"\\s"};
 
     String value() default "";
 }

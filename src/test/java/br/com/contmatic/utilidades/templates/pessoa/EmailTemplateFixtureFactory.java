@@ -104,6 +104,10 @@ public class EmailTemplateFixtureFactory implements TemplateLoader {
             add("endereco", RandomizadorStringExpressaoRegular.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.DEPOIS_ARROBA_ANTES_PONTO, ExpressoesRegularesTesteRegra.ARROBA + RandomizadorStringExpressaoRegular.semCaractereNaoEspecificadoExpressaoRegular(ConstantesTesteNumericas.CARACTERES_CADA_PARTE_EMAIL_GERADO, ExpressoesRegularesTesteRegra.LETRA_MINUSCULA_SEM_ACENTO_NUMERAL)));
         }});        
         
+        Fixture.of(Email.class).addTemplate("comPontoEntreCaractereInvalidoDepoisArrobaEndereco").inherits("valido", new Rule() {{
+            add("endereco", RandomizadorStringExpressaoRegular.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.DEPOIS_ARROBA_ANTES_PONTO, ExpressoesRegularesTesteRegra.ARROBA + RandomizadorStringExpressaoRegular.semCaractereNaoEspecificadoExpressaoRegular(ConstantesTesteNumericas.CARACTERES_CADA_PARTE_EMAIL_GERADO, ExpressoesRegularesTesteRegra.LETRA_MINUSCULA_SEM_ACENTO_NUMERAL) + ExpressoesRegularesTesteRegra.PONTO + ExpressoesRegularesTesteRegra.PONTO));
+        }});   
+        
         Fixture.of(Email.class).addTemplate("randomValidoDepoisArrobaAtePontoObrigatorioEndereco").inherits("valido", new Rule() {{
             add("endereco", "lalala@" + RandomizadorStringExpressaoRegular.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.ANTES_ARROBA, ExpressoesRegularesTesteRegra.APENAS_EXCLUI_CARACTERE).replaceAll(ExpressoesRegularesTesteRegra.DEPOIS_PONTO, ExpressoesRegularesTesteRegra.APENAS_EXCLUI_CARACTERE) + ".com");
         }});

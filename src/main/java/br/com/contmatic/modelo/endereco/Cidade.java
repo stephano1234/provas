@@ -16,7 +16,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class Cidade {
 
     @NotNull(message = MensagensErro.VALOR_NULO)
-    @NaoVazio(message = MensagensErro.STRING_VAZIO)
+    @NaoVazio
     @Size(max = ConstantesNumericas.CAMPO_REGULAR, message = MensagensErro.STRING_MAX)
     @NaoApenas
     @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_CARACTERE_ESPECIAL, message = MensagensErro.STRING_CARACTERE_ESPECIAL)

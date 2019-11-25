@@ -24,12 +24,12 @@ public class Endereco {
     @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
     private String cep;
     
-    @NaoVazio(message = MensagensErro.STRING_VAZIO)
+    @NaoVazio
     @Size(max = ConstantesNumericas.MAX_NUMERO_ENDERECO, message = MensagensErro.STRING_MAX)
     @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
     private String numero;
     
-    @NaoVazio(message = MensagensErro.STRING_VAZIO)
+    @NaoVazio
     @Size(max = ConstantesNumericas.CAMPO_REGULAR, message = MensagensErro.STRING_MAX)
     @NaoApenas
     @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_CARACTERE_ESPECIAL, message = MensagensErro.STRING_CARACTERE_ESPECIAL)

@@ -16,7 +16,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class Agencia {
     
     @NotNull(message = MensagensErro.VALOR_NULO)
-    @NaoVazio(message = MensagensErro.STRING_VAZIO)
+    @NaoVazio
     @Size(max = ConstantesNumericas.MAX_NUMERO_AGENCIA, message = MensagensErro.STRING_MAX)
     @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_ESPACO, message = MensagensErro.STRING_COM_ESPACO)
     private String numero;
