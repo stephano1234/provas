@@ -1,10 +1,11 @@
 package br.com.contmatic.utilidades;
 
 import org.apache.commons.lang3.RandomUtils;
+import org.joda.time.LocalDate;
 
 import com.google.common.base.Preconditions;
 
-public class RandomizadorStringExpressaoRegular {
+public class FuncoesRandomicas {
 
     public static String geraStringForaPadraoExpressaoRegular(int tamanho, String expressaoRegular) {
         Preconditions.checkArgument(tamanho >= 0, "O tamanho da string gerada não pode ser um número inteiro negativo.");
@@ -74,6 +75,67 @@ public class RandomizadorStringExpressaoRegular {
     	emailRandom.append(ExpressoesRegularesTesteRegra.PONTO);
     	emailRandom.append(semCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.MIN_DEPOIS_PONTO_EMAIL, ConstantesTesteNumericas.MAX_DEPOIS_PONTO_EMAIL + 1), ExpressoesRegularesTesteRegra.LETRA_MINUSCULA_SEM_ACENTO));
     	return emailRandom.toString();
+    }
+    
+    public static String cpfValido() {
+    	StringBuilder cpfRandom = new StringBuilder();
+    	cpfRandom.append(semCaractereNaoEspecificadoExpressaoRegular(9, ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+    	if (cpfRandom.charAt(7) == cpfRandom.charAt(8)) {
+    		cpfRandom.deleteCharAt(8);
+    		cpfRandom.append(geraStringForaPadraoExpressaoRegular(1, cpfRandom.substring(7)));
+    	}
+		int soma = 0;
+		for (int i = 0; i < 9; i++) {
+			soma += Integer.parseInt(cpfRandom.substring(i, i + 1)) * (10 - i);
+		}
+		cpfRandom.append((((11 - (soma % 11)) % 11) % 10));
+    	soma = 0;
+		for (int i = 0; i < 10; i++) {
+			soma += Integer.parseInt(cpfRandom.substring(i, i + 1)) * (11 - i);
+		}
+		cpfRandom.append((((11 - (soma % 11)) % 11) % 10));
+		return cpfRandom.toString();
+    }
+    
+    public static String cpfInvalido() {
+    	StringBuilder cpfInvalidoRandom = new StringBuilder(cpfValido());
+    	int posicaoDigitoVerificador = RandomUtils.nextInt(9, 11);
+    	Integer digitoVerificadorInvalido = RandomUtils.nextInt(0, 10);
+    	while (Integer.parseInt(cpfInvalidoRandom.substring(posicaoDigitoVerificador, posicaoDigitoVerificador + 1)) == digitoVerificadorInvalido) {
+    		digitoVerificadorInvalido = RandomUtils.nextInt(0, 10);
+    	}
+    	cpfInvalidoRandom.deleteCharAt(posicaoDigitoVerificador);
+    	cpfInvalidoRandom.insert(posicaoDigitoVerificador, digitoVerificadorInvalido.toString());
+    	return cpfInvalidoRandom.toString();
+    }
+    
+    public static LocalDate localDateAleatoria(LocalDate dataInicio, LocalDate dataFim) {
+    	StringBuilder stringData = new StringBuilder();
+    	if (dataInicio.equals(dataFim)) {
+    		return dataInicio;
+    	}
+    	if (dataInicio.getYear() == dataFim.getYear() && dataInicio.getMonthOfYear() == dataFim.getMonthOfYear()) {
+    		stringData.append(RandomUtils.nextInt(dataInicio.getDayOfMonth(), dataFim.getDayOfMonth()));
+    		stringData.append("-");
+    		stringData.append(dataInicio.getMonthOfYear());
+    		stringData.append("-");
+    		stringData.append(dataInicio.getYear());
+    		return LocalDate.parse(stringData.toString());
+    	}
+    	if (dataInicio.getYear() == dataFim.getYear()) {
+    		stringData.append(RandomUtils.nextInt(dataInicio.getDayOfMonth(), dataFim.getDayOfMonth()));
+    		stringData.append("-");
+    		stringData.append(RandomUtils.nextInt(dataInicio.getMonthOfYear(), dataFim.getMonthOfYear() + 1));
+    		stringData.append("-");
+    		stringData.append(dataInicio.getYear());
+    		return LocalDate.parse(stringData.toString());
+    	}
+		stringData.append(RandomUtils.nextInt(dataInicio.getDayOfMonth(), dataFim.getDayOfMonth()));
+		stringData.append("-");
+		stringData.append(RandomUtils.nextInt(dataInicio.getMonthOfYear(), dataFim.getMonthOfYear() + 1));
+		stringData.append("-");
+		stringData.append(RandomUtils.nextInt(dataInicio.getYear(), dataFim.getYear() + 1));
+    	return LocalDate.parse(stringData.toString());
     }
     
 }

@@ -7,26 +7,28 @@ import com.google.common.base.Optional;
 
 public class NaoApenasValidador implements ConstraintValidator<NaoApenas, String> {
 
-	private String[] regexp;
+	private String[] regexs;
 
 	private Optional<String> value;
 
 	@Override
 	public void initialize(NaoApenas naoApenas) {
-		this.regexp = naoApenas.regexp();
+		this.regexs = naoApenas.regexp();
 	}
 
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
 		this.value = Optional.fromNullable(value);
 		value = this.value.or("");
-		for (int j = 0; j < regexp.length; j++) {
-			for (int i = 0; i < value.length(); i++) {
-				if (!value.substring(i, i + 1).matches(regexp[j])) {
-					i = value.length();
+		int quantidadeCaracteres = value.length();
+		int ultimoCaractere = quantidadeCaracteres - 1;
+		for (int posicaoRegex = 0; posicaoRegex < regexs.length; posicaoRegex++) {
+			for (int posicaoCaractere = 0; posicaoCaractere < quantidadeCaracteres; posicaoCaractere++) {
+				if (!value.substring(posicaoCaractere, posicaoCaractere + 1).matches(regexs[posicaoRegex])) {
+					posicaoCaractere = quantidadeCaracteres;
 				}
 				else {
-					if (i == value.length() - 1) {
+					if (posicaoCaractere == ultimoCaractere) {
 						return false;
 					}					
 				}

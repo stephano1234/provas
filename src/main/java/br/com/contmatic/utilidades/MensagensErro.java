@@ -16,7 +16,8 @@ public class MensagensErro {
     public static final String STRING_NAO_NUMERAL = "O campo não pode possuir caracteres que não sejam numerais.";
     public static final String STRING_NAO_FORMATO_EMAIL = "O campo deve ser um endereço de e-mail.";
     public static final String STRING_APENAS_NUMERO_REPETIDO = "O campo não pode conter todos os números iguais.";
-    public static final String STRING_DIGITO_CPF_INVALIDO = "O campo deve conter um CPF com os dois dígitos verificadores válidos.";
+    public static final String STRING_CPF_INVALIDO = "O campo deve conter um CPF válido.";
+    public static final String STRING_NOME_INVALIDO = "O campo deve conter um nome válido.";
     
     //double, float, respectivas wrappers e BigDecimal
     public static final String DECIMAL_MAX = "O campo não pode ser maior que {value}.";

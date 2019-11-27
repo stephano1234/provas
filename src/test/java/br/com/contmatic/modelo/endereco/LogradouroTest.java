@@ -1,9 +1,9 @@
 package br.com.contmatic.modelo.endereco;
 
-import static br.com.contmatic.utilidades.VerificadoresRegras.verificaConstrutor;
-import static br.com.contmatic.utilidades.VerificadoresRegras.verificaErro;
-import static br.com.contmatic.utilidades.VerificadoresRegras.verificaToStringJSONSTYLE;
-import static br.com.contmatic.utilidades.VerificadoresRegras.procuraAlgumErro;
+import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
+import static br.com.contmatic.utilidades.Verificadores.verificaErro;
+import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
+import static br.com.contmatic.utilidades.Verificadores.procuraAlgumErro;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;

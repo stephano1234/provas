@@ -1,8 +1,8 @@
 package br.com.contmatic.modelo.pessoa;
 
-import static br.com.contmatic.utilidades.VerificadoresRegras.verificaConstrutor;
-import static br.com.contmatic.utilidades.VerificadoresRegras.verificaErro;
-import static br.com.contmatic.utilidades.VerificadoresRegras.verificaToStringJSONSTYLE;
+import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
+import static br.com.contmatic.utilidades.Verificadores.verificaErro;
+import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;

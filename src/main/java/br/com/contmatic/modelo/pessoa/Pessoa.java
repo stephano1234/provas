@@ -1,40 +1,31 @@
 package br.com.contmatic.modelo.pessoa;
 
-import br.com.contmatic.modelo.endereco.Endereco;
-
-import br.com.contmatic.utilidades.ConstantesNumericas;
-import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
-import br.com.contmatic.utilidades.MensagensErro;
-import br.com.contmatic.utilidades.validacoes.NaoApenas;
-import br.com.contmatic.utilidades.validacoes.NaoVazio;
-
 import java.util.Set;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
 import org.joda.time.LocalDate;
+
+import br.com.contmatic.modelo.endereco.Endereco;
+import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
+import br.com.contmatic.utilidades.MensagensErro;
+import br.com.contmatic.utilidades.validacoes.CPFbr;
 
 public class Pessoa {
 
 	@NotNull(message = MensagensErro.VALOR_NULO)
-	@Size(max = ConstantesNumericas.CPF, message = MensagensErro.STRING_MAX)
-	@Size(min = ConstantesNumericas.CPF, message = MensagensErro.STRING_MIN)
-	@NaoApenas(regexp = {"0", "1", "2", "3", "4", "5", "6", "7", "9"}, message = MensagensErro.STRING_APENAS_NUMERO_REPETIDO)
-	@Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
-	
+	@CPFbr
 	private String cpf;
     
     @NotNull(message = MensagensErro.VALOR_NULO)
-    @NaoVazio
-    @Size(max = ConstantesNumericas.CAMPO_REGULAR, message = MensagensErro.STRING_MAX)
-    @NaoApenas
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_LETRA_ESPACO, message = MensagensErro.STRING_APENAS_LETRA_ESPACO)
+    @Pattern(regexp = ExpressoesRegularesRegraNegocio.NOME_PESSOA, message = MensagensErro.STRING_APENAS_LETRA_ESPACO)
     private String nome;
     
     @NotNull(message = MensagensErro.VALOR_NULO)

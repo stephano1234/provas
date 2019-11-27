@@ -24,5 +24,4 @@ public @interface NaoApenas {
     
     String[] regexp() default {"\\s"};
 
-    String value() default "";
 }

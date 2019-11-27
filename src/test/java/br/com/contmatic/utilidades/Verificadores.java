@@ -16,7 +16,7 @@ import org.apache.commons.collections4.map.LinkedMap;
 
 import com.google.common.base.Preconditions;
 
-public class VerificadoresRegras {
+public class Verificadores {
 
     private static Validator validator;
     private static ValidatorFactory factory;  
