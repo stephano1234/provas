@@ -1,4 +1,4 @@
-package br.com.contmatic.utilidades.validacoes;
+package br.com.contmatic.anotacoes;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

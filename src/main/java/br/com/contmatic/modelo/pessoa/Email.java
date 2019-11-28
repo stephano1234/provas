@@ -2,10 +2,10 @@ package br.com.contmatic.modelo.pessoa;
 
 import javax.validation.constraints.*;
 
+import br.com.contmatic.anotacoes.NaoApenas;
+import br.com.contmatic.anotacoes.NaoVazio;
 import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
 import br.com.contmatic.utilidades.MensagensErro;
-import br.com.contmatic.utilidades.validacoes.NaoApenas;
-import br.com.contmatic.utilidades.validacoes.NaoVazio;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

@@ -13,10 +13,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joda.time.LocalDate;
 
+import br.com.contmatic.anotacoes.CPFbr;
 import br.com.contmatic.modelo.endereco.Endereco;
 import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
 import br.com.contmatic.utilidades.MensagensErro;
-import br.com.contmatic.utilidades.validacoes.CPFbr;
 
 public class Pessoa {
 
