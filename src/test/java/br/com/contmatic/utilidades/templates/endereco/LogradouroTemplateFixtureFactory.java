@@ -5,7 +5,7 @@ import org.apache.commons.lang3.RandomUtils;
 import br.com.contmatic.modelo.endereco.Logradouro;
 import br.com.contmatic.modelo.endereco.Bairro;
 import br.com.contmatic.utilidades.ConstantesTesteNumericas;
-import br.com.contmatic.utilidades.ExpressoesRegularesTesteRegra;
+import br.com.contmatic.utilidades.ConstantesTesteString;
 import br.com.contmatic.utilidades.FuncoesRandomicas;
 
 import br.com.six2six.fixturefactory.Fixture;
@@ -54,27 +54,27 @@ public class LogradouroTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(Logradouro.class).addTemplate("apenasEspacoNome").inherits("valido", new Rule() {{
-            add("nome", FuncoesRandomicas.semCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
+            add("nome", FuncoesRandomicas.somenteCaractere(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.APENAS_ESPACO));
         }});
         
         Fixture.of(Logradouro.class).addTemplate("naoApenasEspacoNome").inherits("valido", new Rule() {{
-            add("nome", FuncoesRandomicas.geraStringForaPadraoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
+            add("nome", FuncoesRandomicas.naoCorresponde(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.APENAS_ESPACO));
         }});
         
         Fixture.of(Logradouro.class).addTemplate("umNaoEspacoNome").inherits("valido", new Rule() {{
-            add("nome", FuncoesRandomicas.comUmCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
+            add("nome", FuncoesRandomicas.ANTIGAcomUmCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.APENAS_ESPACO));
         }});
         
         Fixture.of(Logradouro.class).addTemplate("comCaractereInvalidoNome").inherits("valido", new Rule() {{
-            add("nome", FuncoesRandomicas.geraStringForaPadraoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.SEM_CARACTERE_ESPECIAL));
+            add("nome", FuncoesRandomicas.naoCorresponde(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.SEM_CARACTERE_ESPECIAL));
         }});
         
         Fixture.of(Logradouro.class).addTemplate("comUmCaractereInvalidoNome").inherits("valido", new Rule() {{
-            add("nome", FuncoesRandomicas.comUmCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.SEM_CARACTERE_ESPECIAL));
+            add("nome", FuncoesRandomicas.ANTIGAcomUmCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.SEM_CARACTERE_ESPECIAL));
         }});
         
         Fixture.of(Logradouro.class).addTemplate("semCaractereInvalidoNome").inherits("valido", new Rule() {{
-            add("nome", FuncoesRandomicas.semCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.SEM_CARACTERE_ESPECIAL));
+            add("nome", FuncoesRandomicas.somenteCaractere(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.SEM_CARACTERE_ESPECIAL));
         }});
         
     }

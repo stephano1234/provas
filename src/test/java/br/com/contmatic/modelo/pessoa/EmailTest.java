@@ -1,17 +1,26 @@
 package br.com.contmatic.modelo.pessoa;
 
+import static br.com.contmatic.utilidades.MensagensErro.STRING_NAO_FORMATO_EMAIL;
+import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
+
 import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
 import static br.com.contmatic.utilidades.Verificadores.verificaErro;
 import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
 
+import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
+import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+import static pl.pojo.tester.api.assertion.Method.GETTER;
+import static pl.pojo.tester.api.assertion.Method.SETTER;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,14 +28,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contmatic.utilidades.MensagensErro;
 import br.com.contmatic.utilidades.templates.pessoa.EmailTemplateFixtureFactory;
+
 import br.com.six2six.fixturefactory.Fixture;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
-
-import pl.pojo.tester.api.assertion.Method;
 
 public class EmailTest {
     
@@ -58,163 +64,139 @@ public class EmailTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_endereco() {
         email.setEndereco(null);
-        assertTrue(verificaErro(email, MensagensErro.VALOR_NULO));
+        assertTrue(verificaErro(email, VALOR_NULO));
     }
     
     @Test
     public void deve_aceitar_valor_nao_nulo_no_endereco() {
         email = Fixture.from(Email.class).gimme("naoNuloEndereco");
-        assertFalse(verificaErro(email, MensagensErro.VALOR_NULO));
+        assertFalse(verificaErro(email, VALOR_NULO));
     }
 	
     @Test
     public void nao_deve_aceitar_valor_vazio_no_endereco() {
         email.setEndereco("");
-        assertTrue(verificaErro(email, MensagensErro.STRING_VAZIO));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
-    
-    @Test
-    public void deve_aceitar_valor_nao_vazio_no_endereco() {
-        email = Fixture.from(Email.class).gimme("naoVazioEndereco");
-        assertFalse(verificaErro(email, MensagensErro.STRING_VAZIO));
-    }
-    
+        
     @Test
     public void nao_deve_aceitar_valor_com_apenas_espaco_no_endereco() {
         email = Fixture.from(Email.class).gimme("apenasEspacoEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_APENAS_ESPACO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_com_caractere_nao_espaco_no_endereco() {
-        email = Fixture.from(Email.class).gimme("naoApenasEspacoEndereco");
-        assertFalse(verificaErro(email, MensagensErro.STRING_APENAS_ESPACO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_com_um_caractere_nao_espaco_no_endereco() {
-        email = Fixture.from(Email.class).gimme("umNaoEspacoEndereco");
-        assertFalse(verificaErro(email, MensagensErro.STRING_APENAS_ESPACO));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_sem_arroba_no_endereco() {
         email = Fixture.from(Email.class).gimme("semArrobaEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_arroba_precedido_ou_sucedido_por_caractere_invalido_no_endereco() {
         email = Fixture.from(Email.class).gimme("comArrobaEntreCaracteresInvalidosEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_mais_de_um_arroba_no_endereco() {
         email = Fixture.from(Email.class).gimme("comMaisDeUmArrobaEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_sem_ponto_no_endereco() {
         email = Fixture.from(Email.class).gimme("semPontoEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void deve_aceitar_valor_valido_no_endereco() {
-        email = Fixture.from(Email.class).gimme("randomValidoEndereco");
-        assertFalse(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        email = Fixture.from(Email.class).gimme("validoEndereco");
+        assertFalse(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_vazio_antes_do_arroba_no_endereco() {
-        email = Fixture.from(Email.class).gimme("naoVazioAntesArrobaEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        email = Fixture.from(Email.class).gimme("vazioAntesArrobaEndereco");
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
    
     @Test
     public void nao_deve_aceitar_primeiro_valor_invalido_antes_do_arroba_no_endereco() {
         email = Fixture.from(Email.class).gimme("primeiroCaractereInvalidoAntesArrobaEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_antes_do_arroba_no_endereco() {
         email = Fixture.from(Email.class).gimme("comUmCaractereInvalidoAntesArrobaEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void deve_aceitar_valor_valido_antes_do_arroba_no_endereco() {
         email = Fixture.from(Email.class).gimme("randomValidoAntesArrobaEndereco");
-        assertFalse(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertFalse(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_vazio_depois_do_arroba_antes_do_ponto_obrigatorio_no_endereco() {
-        email = Fixture.from(Email.class).gimme("naoVazioDepoisArrobaAtePontoObrigatorioEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        email = Fixture.from(Email.class).gimme("vazioDepoisArrobaAtePontoObrigatorioEndereco");
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void nao_deve_aceitar_primeiro_valor_invalido_depois_do_arroba_antes_do_ponto_obrigatorio_no_endereco() {
         email = Fixture.from(Email.class).gimme("primeiroCaractereInvalidoDepoisArrobaAtePontoObrigatorioEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_depois_do_arroba_antes_do_ponto_obrigatorio_no_endereco() {
         email = Fixture.from(Email.class).gimme("comUmCaractereInvalidoDepoisArrobaAtePontoObrigatorioEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_sem_ponto_obrigatorio_depois_do_arroba_no_endereco() {
         email = Fixture.from(Email.class).gimme("semPontoObrigatorioDepoisArrobaEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_ponto_precedido_ou_sucedido_por_caractere_invalido_depois_do_arroba_no_endereco() {
         email = Fixture.from(Email.class).gimme("comPontoEntreCaractereInvalidoDepoisArrobaEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void deve_aceitar_valor_valido_depois_do_arroba_antes_do_ponto_obrigatorio_no_endereco() {
         email = Fixture.from(Email.class).gimme("randomValidoDepoisArrobaAtePontoObrigatorioEndereco");
-        assertFalse(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertFalse(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_menor_que_tamanho_depois_do_ponto_obrigatorio_no_endereco() {
         email = Fixture.from(Email.class).gimme("menorTamanhoDepoisPontoObrigatorioEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void nao_deve_aceitar_valor_maior_que_tamanho_depois_do_ponto_obrigatorio_no_endereco() {
         email = Fixture.from(Email.class).gimme("maiorTamanhoDepoisPontoObrigatorioEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
-    
-    @Test
-    public void deve_aceitar_valor_dentro_do_tamanho_depois_do_ponto_obrigatorio_no_endereco() {
-        email = Fixture.from(Email.class).gimme("entreMaiorMenorTamanhoDepoisPontoObrigatorioEndereco");
-        assertFalse(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
-    }
-    
+        
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_depois_ponto_obrigatorio_no_endereco() {
         email = Fixture.from(Email.class).gimme("comUmCaractereInvalidoDepoisPontoObrigatorioEndereco");
-        assertTrue(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertTrue(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     @Test
     public void deve_aceitar_valor_valido_depois_do_ponto_obrigatorio_no_endereco() {
         email = Fixture.from(Email.class).gimme("randomValidoDepoisPontoObrigatorioEndereco");
-        assertFalse(verificaErro(email, MensagensErro.STRING_NAO_FORMATO_EMAIL));
+        assertFalse(verificaErro(email, STRING_NAO_FORMATO_EMAIL));
     }
     
     //getter e setter    
@@ -227,12 +209,12 @@ public class EmailTest {
     
     @Test
     public void deve_haver_metodo_get_publico_para_cada_atributo() {
-        assertPojoMethodsFor(Email.class).testing(Method.GETTER).areWellImplemented();
+        assertPojoMethodsFor(Email.class).testing(GETTER).areWellImplemented();
     }
     
     @Test
     public void deve_haver_metodo_set_publico_para_cada_atributo() {
-        assertPojoMethodsFor(Email.class).testing(Method.SETTER).areWellImplemented();
+        assertPojoMethodsFor(Email.class).testing(SETTER).areWellImplemented();
     }
     
     //construtor
@@ -269,7 +251,7 @@ public class EmailTest {
     
     @Test
     public void verifica_consistencia_da_implementacao_do_metodo_equals_de_acordo_com_a_regra_estabelecida_de_comparacao() {
-        EqualsVerifier.forClass(Email.class).suppress(Warning.NONFINAL_FIELDS, Warning.ALL_FIELDS_SHOULD_BE_USED).verify();
+        EqualsVerifier.forClass(Email.class).suppress(NONFINAL_FIELDS, ALL_FIELDS_SHOULD_BE_USED).verify();
     }
     
     //toString

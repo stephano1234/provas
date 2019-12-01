@@ -151,7 +151,6 @@ public class BancoTest {
     @Test
     public void nao_deve_aceitar_valor_com_apenas_espaco_no_nome() {
         banco = Fixture.from(Banco.class).gimme("apenasEspacoNome");
-        System.out.println(banco);
         assertTrue(verificaErro(banco, MensagensErro.STRING_APENAS_ESPACO));
     }
     

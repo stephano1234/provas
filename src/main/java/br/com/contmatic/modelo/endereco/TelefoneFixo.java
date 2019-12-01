@@ -3,7 +3,7 @@ package br.com.contmatic.modelo.endereco;
 import javax.validation.constraints.*;
 
 import br.com.contmatic.utilidades.ConstantesNumericas;
-import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
+import br.com.contmatic.utilidades.ConstantesString;
 import br.com.contmatic.utilidades.MensagensErro;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -16,13 +16,13 @@ public class TelefoneFixo {
     @NotNull(message = MensagensErro.VALOR_NULO)   
     @Size(max = ConstantesNumericas.DDD, message = MensagensErro.STRING_MAX)
     @Size(min = ConstantesNumericas.DDD, message = MensagensErro.STRING_MIN)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
+    @Pattern(regexp = ConstantesString.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
     private String ddd;
     
     @NotNull(message = MensagensErro.VALOR_NULO)
     @Size(max = ConstantesNumericas.NUMERO_TELEFONE, message = MensagensErro.STRING_MAX)
     @Size(min = ConstantesNumericas.NUMERO_TELEFONE, message = MensagensErro.STRING_MIN)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
+    @Pattern(regexp = ConstantesString.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
     private String numero;
     
     public TelefoneFixo(String ddd, String numero) {

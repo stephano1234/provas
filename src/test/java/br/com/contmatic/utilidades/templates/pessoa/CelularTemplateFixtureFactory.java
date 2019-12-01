@@ -1,13 +1,18 @@
 package br.com.contmatic.utilidades.templates.pessoa;
 
-import org.apache.commons.lang3.RandomUtils;
+import static br.com.contmatic.utilidades.ConstantesTesteNumericas.DDD;
+import static br.com.contmatic.utilidades.ConstantesTesteNumericas.EXCLUI_STRING_VAZIO;
+import static br.com.contmatic.utilidades.ConstantesTesteNumericas.INCLUI_STRING_VAZIO;
+import static br.com.contmatic.utilidades.ConstantesTesteNumericas.NUMERO_CELULAR;
+import static br.com.contmatic.utilidades.ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS;
+import static br.com.contmatic.utilidades.ConstantesTesteString.APENAS_NUMERAL;
+import static br.com.contmatic.utilidades.FuncoesRandomicas.apenasUmCaractere;
+import static br.com.contmatic.utilidades.FuncoesRandomicas.somenteCaractere;
+import static br.com.contmatic.utilidades.FuncoesRandomicas.stringAleatoria;
+import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 import br.com.contmatic.modelo.pessoa.Celular;
 import br.com.contmatic.modelo.pessoa.TipoContatoCelular;
-import br.com.contmatic.utilidades.ConstantesTesteNumericas;
-import br.com.contmatic.utilidades.ExpressoesRegularesTesteRegra;
-import br.com.contmatic.utilidades.FuncoesRandomicas;
-
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
@@ -22,81 +27,57 @@ public class CelularTemplateFixtureFactory implements TemplateLoader {
         Fixture.of(Celular.class).addTemplate("valido", new Rule() {{
             add("ddd", random("12", "11", "68", "82"));
             add("numero", random("933445566", "950385476", "920381188", "940991818"));            
-            add("tipoContatoCelular", TipoContatoCelular.values()[RandomUtils.nextInt(0, 3)]);            
+            add("tipoContatoCelular", TipoContatoCelular.values()[nextInt(0, 3)]);            
         }});
         
         Fixture.of(Celular.class).addTemplate("outroValido", new Rule() {{
             add("ddd", random("13", "21", "69", "79"));
             add("numero", random("966554433", "988888888", "931240079", "908003232"));
-            add("tipoContatoCelular", TipoContatoCelular.values()[RandomUtils.nextInt(3, TipoContatoCelular.values().length)]);
+            add("tipoContatoCelular", TipoContatoCelular.values()[nextInt(3, TipoContatoCelular.values().length)]);
         }});
         
         //ddd
         
         Fixture.of(Celular.class).addTemplate("naoNuloDdd").inherits("valido", new Rule() {{
-            add("ddd", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
+            add("ddd", stringAleatoria(nextInt(INCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), false));
         }});
         
         Fixture.of(Celular.class).addTemplate("maiorTamanhoDdd").inherits("valido", new Rule() {{
-            add("ddd", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.DDD + 1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
+            add("ddd", stringAleatoria(nextInt(DDD + 1, VALOR_UNIVERSO_CHAR_GERADOS), false));
         }});
-        
-        Fixture.of(Celular.class).addTemplate("menorIgualTamanhoDdd").inherits("valido", new Rule() {{
-            add("ddd", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.DDD + 1), false));
-        }});
-        
+                
         Fixture.of(Celular.class).addTemplate("menorTamanhoDdd").inherits("valido", new Rule() {{
-            add("ddd", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.DDD), false));
-        }});
-        
-        Fixture.of(Celular.class).addTemplate("maiorIgualTamanhoDdd").inherits("valido", new Rule() {{
-            add("ddd", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.DDD, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
-        }});
-        
-        Fixture.of(Celular.class).addTemplate("comCaractereInvalidoDdd").inherits("valido", new Rule() {{
-            add("ddd", FuncoesRandomicas.geraStringForaPadraoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("ddd", stringAleatoria(nextInt(EXCLUI_STRING_VAZIO, DDD), false));
         }});
         
         Fixture.of(Celular.class).addTemplate("comUmCaractereInvalidoDdd").inherits("valido", new Rule() {{
-            add("ddd", FuncoesRandomicas.comUmCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("ddd", apenasUmCaractere(nextInt(EXCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), "[^0-9]", APENAS_NUMERAL));
         }});
         
-        Fixture.of(Celular.class).addTemplate("semCaractereInvalidoDdd").inherits("valido", new Rule() {{
-            add("ddd", FuncoesRandomicas.semCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+        Fixture.of(Celular.class).addTemplate("validoDdd").inherits("valido", new Rule() {{
+            add("ddd", somenteCaractere(DDD, APENAS_NUMERAL));
         }});
         
         //numero
         
         Fixture.of(Celular.class).addTemplate("naoNuloNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
+            add("numero", stringAleatoria(nextInt(INCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), false));
         }});
         
         Fixture.of(Celular.class).addTemplate("maiorTamanhoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.NUMERO_CELULAR + 1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
-        }});
-        
-        Fixture.of(Celular.class).addTemplate("menorIgualTamanhoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.NUMERO_CELULAR + 1), false));
+            add("numero", stringAleatoria(nextInt(NUMERO_CELULAR + 1, VALOR_UNIVERSO_CHAR_GERADOS), false));
         }});
         
         Fixture.of(Celular.class).addTemplate("menorTamanhoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.NUMERO_CELULAR), false));
-        }});
-        
-        Fixture.of(Celular.class).addTemplate("maiorIgualTamanhoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.NUMERO_CELULAR, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
-        }});
-        
-        Fixture.of(Celular.class).addTemplate("comCaractereInvalidoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.geraStringForaPadraoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("numero", stringAleatoria(nextInt(EXCLUI_STRING_VAZIO, NUMERO_CELULAR), false));
         }});
         
         Fixture.of(Celular.class).addTemplate("comUmCaractereInvalidoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.comUmCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("numero", apenasUmCaractere(nextInt(EXCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), "[^0-9]", APENAS_NUMERAL));
         }});
         
-        Fixture.of(Celular.class).addTemplate("semCaractereInvalidoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.semCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+        Fixture.of(Celular.class).addTemplate("validoNumero").inherits("valido", new Rule() {{
+            add("numero", somenteCaractere(NUMERO_CELULAR, APENAS_NUMERAL));
         }});
         
     }

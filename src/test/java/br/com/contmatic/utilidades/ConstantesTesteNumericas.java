@@ -21,9 +21,7 @@ public class ConstantesTesteNumericas {
     //pessoa
     public static final int CPF = 11;
     public static final int NUMERO_CELULAR = 9;
-    public static final int MAX_DEPOIS_PONTO_EMAIL = 6;
-    public static final int MIN_DEPOIS_PONTO_EMAIL = 2;
-    public static final int CARACTERES_CADA_PARTE_EMAIL_GERADO = 15;
+    public static final int MIN_LETRA_COM_UM_ESPACO = 3;
     
     //banco
     public static final int MAX_NUMERO_CONTA = 12;

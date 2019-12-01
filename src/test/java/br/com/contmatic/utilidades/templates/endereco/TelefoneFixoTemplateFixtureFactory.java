@@ -4,7 +4,7 @@ import org.apache.commons.lang3.RandomUtils;
 
 import br.com.contmatic.modelo.endereco.TelefoneFixo;
 import br.com.contmatic.utilidades.ConstantesTesteNumericas;
-import br.com.contmatic.utilidades.ExpressoesRegularesTesteRegra;
+import br.com.contmatic.utilidades.ConstantesTesteString;
 import br.com.contmatic.utilidades.FuncoesRandomicas;
 
 import br.com.six2six.fixturefactory.Fixture;
@@ -51,15 +51,15 @@ public class TelefoneFixoTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(TelefoneFixo.class).addTemplate("comCaractereInvalidoDdd").inherits("valido", new Rule() {{
-            add("ddd", FuncoesRandomicas.geraStringForaPadraoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("ddd", FuncoesRandomicas.naoCorresponde(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.APENAS_NUMERAL));
         }});
         
         Fixture.of(TelefoneFixo.class).addTemplate("comUmCaractereInvalidoDdd").inherits("valido", new Rule() {{
-            add("ddd", FuncoesRandomicas.comUmCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("ddd", FuncoesRandomicas.ANTIGAcomUmCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.APENAS_NUMERAL));
         }});
         
         Fixture.of(TelefoneFixo.class).addTemplate("semCaractereInvalidoDdd").inherits("valido", new Rule() {{
-            add("ddd", FuncoesRandomicas.semCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("ddd", FuncoesRandomicas.somenteCaractere(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.APENAS_NUMERAL));
         }});
         
         //numero
@@ -85,15 +85,15 @@ public class TelefoneFixoTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(TelefoneFixo.class).addTemplate("comCaractereInvalidoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.geraStringForaPadraoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("numero", FuncoesRandomicas.naoCorresponde(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.APENAS_NUMERAL));
         }});
         
         Fixture.of(TelefoneFixo.class).addTemplate("comUmCaractereInvalidoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.comUmCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("numero", FuncoesRandomicas.ANTIGAcomUmCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.APENAS_NUMERAL));
         }});
         
         Fixture.of(TelefoneFixo.class).addTemplate("semCaractereInvalidoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.semCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_NUMERAL));
+            add("numero", FuncoesRandomicas.somenteCaractere(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.APENAS_NUMERAL));
         }});
         
     }

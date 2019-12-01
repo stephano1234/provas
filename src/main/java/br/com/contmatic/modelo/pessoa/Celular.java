@@ -1,31 +1,32 @@
 package br.com.contmatic.modelo.pessoa;
 
-import javax.validation.constraints.*;
+import static br.com.contmatic.utilidades.ConstantesString.CELULAR;
+import static br.com.contmatic.utilidades.ConstantesString.DDD;
 
-import br.com.contmatic.utilidades.ConstantesNumericas;
-import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
-import br.com.contmatic.utilidades.MensagensErro;
+import static br.com.contmatic.utilidades.MensagensErro.STRING_CELULAR_INVALIDO;
+import static br.com.contmatic.utilidades.MensagensErro.STRING_DDD_INVALIDO;
+import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
+
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class Celular {
 
-    @NotNull(message = MensagensErro.VALOR_NULO)   
-    @Size(max = ConstantesNumericas.DDD, message = MensagensErro.STRING_MAX)
-    @Size(min = ConstantesNumericas.DDD, message = MensagensErro.STRING_MIN)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
+    @NotNull(message = VALOR_NULO)   
+    @Pattern(regexp = DDD, message = STRING_DDD_INVALIDO)
     private String ddd;
     
-    @NotNull(message = MensagensErro.VALOR_NULO)
-    @Size(max = ConstantesNumericas.NUMERO_CELULAR, message = MensagensErro.STRING_MAX)
-    @Size(min = ConstantesNumericas.NUMERO_CELULAR, message = MensagensErro.STRING_MIN)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
+    @NotNull(message = VALOR_NULO)
+    @Pattern(regexp = CELULAR, message = STRING_CELULAR_INVALIDO)
     private String numero;
     
-    @NotNull(message = MensagensErro.VALOR_NULO)
+    @NotNull(message = VALOR_NULO)
     private TipoContatoCelular tipoContatoCelular;
     
     public Celular(String ddd, String numero, TipoContatoCelular tipoContatoCelular) {
@@ -83,7 +84,7 @@ public class Celular {
     
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+        return new ToStringBuilder(this, JSON_STYLE)
                 .append("ddd", ddd)
                 .append("numero", numero)
                 .append("tipoContatoCelular", tipoContatoCelular)

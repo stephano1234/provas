@@ -5,7 +5,7 @@ import javax.validation.constraints.*;
 import br.com.contmatic.anotacoes.NaoApenas;
 import br.com.contmatic.anotacoes.NaoVazio;
 import br.com.contmatic.utilidades.ConstantesNumericas;
-import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
+import br.com.contmatic.utilidades.ConstantesString;
 import br.com.contmatic.utilidades.MensagensErro;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -18,7 +18,7 @@ public class Banco {
     @NotNull(message = MensagensErro.VALOR_NULO)
     @NaoVazio
     @Size(max = ConstantesNumericas.MAX_CODIGO_BANCO, message = MensagensErro.STRING_MAX)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_ESPACO, message = MensagensErro.STRING_COM_ESPACO)
+    @Pattern(regexp = ConstantesString.SEM_ESPACO, message = MensagensErro.STRING_COM_ESPACO)
     private String codigo;
     
     @NotNull(message = MensagensErro.VALOR_NULO)

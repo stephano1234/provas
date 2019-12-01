@@ -4,7 +4,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import br.com.contmatic.utilidades.ConstantesNumericas;
-import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
+import br.com.contmatic.utilidades.ConstantesString;
 
 public class CPFbrValidador implements ConstraintValidator<CPFbr, String> {
 	
@@ -17,7 +17,7 @@ public class CPFbrValidador implements ConstraintValidator<CPFbr, String> {
 		if (quantidadeCaracteres != ConstantesNumericas.CPF) {
 			return false;
 		}
-		if (!value.matches(ExpressoesRegularesRegraNegocio.APENAS_NUMERAL)) {
+		if (!value.matches(ConstantesString.APENAS_NUMERAL)) {
 			return false;
 		}
 		for (Integer numeroRepetido = 0; numeroRepetido < 10; numeroRepetido++) {

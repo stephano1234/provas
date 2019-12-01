@@ -1,23 +1,22 @@
 package br.com.contmatic.modelo.pessoa;
 
-import javax.validation.constraints.*;
+import static br.com.contmatic.utilidades.ConstantesString.EMAIL;
 
-import br.com.contmatic.anotacoes.NaoApenas;
-import br.com.contmatic.anotacoes.NaoVazio;
-import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
-import br.com.contmatic.utilidades.MensagensErro;
+import static br.com.contmatic.utilidades.MensagensErro.STRING_NAO_FORMATO_EMAIL;
+import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
+
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
+import javax.validation.constraints.*;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class Email {
 
-    @NotNull(message = MensagensErro.VALOR_NULO)
-    @NaoVazio
-    @NaoApenas
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.EMAIL, message = MensagensErro.STRING_NAO_FORMATO_EMAIL)
+    @NotNull(message = VALOR_NULO)
+    @Pattern(regexp = EMAIL, message = STRING_NAO_FORMATO_EMAIL)
     private String endereco;
     
     public Email(String endereco) {
@@ -55,7 +54,7 @@ public class Email {
     
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+        return new ToStringBuilder(this, JSON_STYLE)
                 .append("endereco", endereco)
                 .toString();
     }

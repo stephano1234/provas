@@ -1,19 +1,26 @@
 package br.com.contmatic.utilidades.templates.pessoa;
 
-import org.apache.commons.lang3.RandomUtils;
+import static br.com.contmatic.utilidades.ConstantesTesteNumericas.EXCLUI_STRING_VAZIO;
+import static br.com.contmatic.utilidades.ConstantesTesteNumericas.INCLUI_STRING_VAZIO;
+import static br.com.contmatic.utilidades.ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS;
+import static br.com.contmatic.utilidades.ConstantesTesteString.APENAS_ESPACO;
+import static br.com.contmatic.utilidades.ConstantesTesteString.INVALIDOS_ANTES_PONTO;
+import static br.com.contmatic.utilidades.ConstantesTesteString.INVALIDOS_DEPOIS_PONTO;
+import static br.com.contmatic.utilidades.FuncoesRandomicas.apenasUmCaractere;
+import static br.com.contmatic.utilidades.FuncoesRandomicas.emailAleatorio;
+import static br.com.contmatic.utilidades.FuncoesRandomicas.naoCorresponde;
+import static br.com.contmatic.utilidades.FuncoesRandomicas.somenteCaractere;
+import static br.com.contmatic.utilidades.FuncoesRandomicas.stringAleatoria;
+import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 import br.com.contmatic.modelo.pessoa.Email;
-import br.com.contmatic.utilidades.ConstantesTesteNumericas;
-import br.com.contmatic.utilidades.ExpressoesRegularesTesteRegra;
-import br.com.contmatic.utilidades.FuncoesRandomicas;
-
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
 public class EmailTemplateFixtureFactory implements TemplateLoader {
 
-    @Override
+	@Override
     public void load() {
 
         //geral
@@ -26,112 +33,90 @@ public class EmailTemplateFixtureFactory implements TemplateLoader {
             add("endereco", random("paulo4321@hotmail.com", "soares13@hotmail.com", "tetete@gmail.com"));
         }});
         
-        //endereco (geral)
+        //endereco
         
         Fixture.of(Email.class).addTemplate("naoNuloEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
+            add("endereco", stringAleatoria(nextInt(INCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), false));
         }});
-        
-        Fixture.of(Email.class).addTemplate("naoVazioEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
-        }});
-               
+                       
         Fixture.of(Email.class).addTemplate("apenasEspacoEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.semCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
-        }});
-        
-        Fixture.of(Email.class).addTemplate("naoApenasEspacoEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.geraStringForaPadraoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
-        }});
-        
-        Fixture.of(Email.class).addTemplate("umNaoEspacoEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.comUmCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
+            add("endereco", somenteCaractere(nextInt(EXCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), APENAS_ESPACO));
         }});
         
         Fixture.of(Email.class).addTemplate("semArrobaEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.ARROBA, ExpressoesRegularesTesteRegra.APENAS_EXCLUI_CARACTERE));
+            add("endereco", emailAleatorio().replaceAll("@", ""));
         }});
 
         Fixture.of(Email.class).addTemplate("comArrobaEntreCaracteresInvalidosEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.ARROBA, FuncoesRandomicas.semCaractereNaoEspecificadoExpressaoRegular(1, ExpressoesRegularesTesteRegra.UNDERLINE_TRACO_PONTO) + ExpressoesRegularesTesteRegra.ARROBA));
+            add("endereco", emailAleatorio().replaceAll("@", somenteCaractere(1, "[-_\\.]") + "@"));
         }});
         
         Fixture.of(Email.class).addTemplate("comMaisDeUmArrobaEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio() + ExpressoesRegularesTesteRegra.ARROBA);
+            add("endereco", emailAleatorio() + "@");
         }});
         
         Fixture.of(Email.class).addTemplate("semPontoEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.PONTO_REGEX, ExpressoesRegularesTesteRegra.APENAS_EXCLUI_CARACTERE));
+            add("endereco", emailAleatorio().replaceAll("\\.", ""));
         }});
         
-        Fixture.of(Email.class).addTemplate("randomValidoEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio());
+        Fixture.of(Email.class).addTemplate("validoEndereco").inherits("valido", new Rule() {{
+            add("endereco", emailAleatorio());
         }});
-        
-        //endereco (antes do Arroba)
             
-        Fixture.of(Email.class).addTemplate("naoVazioAntesArrobaEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.ANTES_ARROBA, ExpressoesRegularesTesteRegra.ARROBA));
+        Fixture.of(Email.class).addTemplate("vazioAntesArrobaEndereco").inherits("valido", new Rule() {{
+            add("endereco", emailAleatorio().replaceAll(".*@", "@"));
         }});
         
         Fixture.of(Email.class).addTemplate("primeiroCaractereInvalidoAntesArrobaEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.geraStringForaPadraoExpressaoRegular(1, ExpressoesRegularesTesteRegra.LETRA_MINUSCULA_SEM_ACENTO_NUMERAL) + FuncoesRandomicas.emailAleatorio());
+            add("endereco", naoCorresponde(1, "[a-z0-9]") + emailAleatorio());
         }});
         
         Fixture.of(Email.class).addTemplate("comUmCaractereInvalidoAntesArrobaEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.ANTES_ARROBA, FuncoesRandomicas.comUmCaractereNaoEspecificadoExpressaoRegular(ConstantesTesteNumericas.CARACTERES_CADA_PARTE_EMAIL_GERADO, ExpressoesRegularesTesteRegra.LETRA_MINUSCULA_SEM_ACENTO_NUMERAL_UNDERLINE_TRACO_PONTO) + ExpressoesRegularesTesteRegra.ARROBA));
+            add("endereco", emailAleatorio().replaceAll(".*@", apenasUmCaractere(nextInt(1, 10 + 1), INVALIDOS_ANTES_PONTO, "[a-z]+") + "@"));
         }});       
         
         Fixture.of(Email.class).addTemplate("randomValidoAntesArrobaEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.DEPOIS_ARROBA, ExpressoesRegularesTesteRegra.APENAS_EXCLUI_CARACTERE) + "@hotmail.com");
+            add("endereco", emailAleatorio().replaceAll("@.+", "") + "@hotmail.com");
         }});
-        
-        //endereco (depois do Arroba até o ponto obrigatório)
              
-        Fixture.of(Email.class).addTemplate("naoVazioDepoisArrobaAtePontoObrigatorioEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.DEPOIS_ARROBA_ANTES_PONTO, ExpressoesRegularesTesteRegra.ARROBA + ExpressoesRegularesTesteRegra.PONTO));
+        Fixture.of(Email.class).addTemplate("vazioDepoisArrobaAtePontoObrigatorioEndereco").inherits("valido", new Rule() {{
+            add("endereco", emailAleatorio().replaceAll("@{1}.*\\.(?!\\.)", "@" + "."));
         }});
         
         Fixture.of(Email.class).addTemplate("primeiroCaractereInvalidoDepoisArrobaAtePontoObrigatorioEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.PRIMEIRO_DEPOIS_ARROBA, FuncoesRandomicas.geraStringForaPadraoExpressaoRegular(1, ExpressoesRegularesTesteRegra.LETRA_MINUSCULA_SEM_ACENTO_NUMERAL)));
+            add("endereco", emailAleatorio().replaceAll("((?<=@).){1}", naoCorresponde(1, "[a-z0-9\\\\]")));
         }});
                
         Fixture.of(Email.class).addTemplate("comUmCaractereInvalidoDepoisArrobaAtePontoObrigatorioEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.DEPOIS_ARROBA_ANTES_PONTO, ExpressoesRegularesTesteRegra.ARROBA + FuncoesRandomicas.comUmCaractereNaoEspecificadoExpressaoRegular(ConstantesTesteNumericas.CARACTERES_CADA_PARTE_EMAIL_GERADO, ExpressoesRegularesTesteRegra.LETRA_MINUSCULA_SEM_ACENTO_NUMERAL_UNDERLINE_TRACO_PONTO) + ExpressoesRegularesTesteRegra.PONTO));
+            add("endereco", emailAleatorio().replaceAll("@{1}.*\\.(?!\\.)", "@" + apenasUmCaractere(10, INVALIDOS_ANTES_PONTO, "[a-z0-9]") + "."));
         }});
         
         Fixture.of(Email.class).addTemplate("semPontoObrigatorioDepoisArrobaEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.DEPOIS_ARROBA_ANTES_PONTO, ExpressoesRegularesTesteRegra.ARROBA + FuncoesRandomicas.semCaractereNaoEspecificadoExpressaoRegular(ConstantesTesteNumericas.CARACTERES_CADA_PARTE_EMAIL_GERADO, ExpressoesRegularesTesteRegra.LETRA_MINUSCULA_SEM_ACENTO_NUMERAL)));
+            add("endereco", emailAleatorio().replaceAll("@{1}.*\\.(?!\\.)", "@" + somenteCaractere(10, "[a-z0-9]")));
         }});        
         
         Fixture.of(Email.class).addTemplate("comPontoEntreCaractereInvalidoDepoisArrobaEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.DEPOIS_ARROBA_ANTES_PONTO, ExpressoesRegularesTesteRegra.ARROBA + FuncoesRandomicas.semCaractereNaoEspecificadoExpressaoRegular(ConstantesTesteNumericas.CARACTERES_CADA_PARTE_EMAIL_GERADO, ExpressoesRegularesTesteRegra.LETRA_MINUSCULA_SEM_ACENTO_NUMERAL) + ExpressoesRegularesTesteRegra.PONTO + ExpressoesRegularesTesteRegra.PONTO));
+            add("endereco", emailAleatorio().replaceAll("@{1}.*\\.(?!\\.)", "@" + somenteCaractere(10, "[a-z0-9]") + "." + "."));
         }});   
         
         Fixture.of(Email.class).addTemplate("randomValidoDepoisArrobaAtePontoObrigatorioEndereco").inherits("valido", new Rule() {{
-            add("endereco", "lalala@" + FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.ANTES_ARROBA, ExpressoesRegularesTesteRegra.APENAS_EXCLUI_CARACTERE).replaceAll(ExpressoesRegularesTesteRegra.DEPOIS_PONTO, ExpressoesRegularesTesteRegra.APENAS_EXCLUI_CARACTERE) + ".com");
+            add("endereco", "lalala@" + emailAleatorio().replaceAll(".*@", "").replaceAll("\\.(?!.*\\.).*", "") + ".com");
         }});
         
-        //endereco (depois do ponto obrigatório)
-        
         Fixture.of(Email.class).addTemplate("maiorTamanhoDepoisPontoObrigatorioEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.DEPOIS_PONTO, ExpressoesRegularesTesteRegra.PONTO + FuncoesRandomicas.semCaractereNaoEspecificadoExpressaoRegular(ConstantesTesteNumericas.MAX_DEPOIS_PONTO_EMAIL + 1, ExpressoesRegularesTesteRegra.LETRA_MINUSCULA_SEM_ACENTO)));
+            add("endereco", emailAleatorio().replaceAll("\\.(?!.*\\.).*", "." + somenteCaractere(6 + 1, "[a-z]")));
         }});
         
         Fixture.of(Email.class).addTemplate("menorTamanhoDepoisPontoObrigatorioEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.DEPOIS_PONTO, ExpressoesRegularesTesteRegra.PONTO + FuncoesRandomicas.semCaractereNaoEspecificadoExpressaoRegular(ConstantesTesteNumericas.MIN_DEPOIS_PONTO_EMAIL - 1, ExpressoesRegularesTesteRegra.LETRA_MINUSCULA_SEM_ACENTO)));
+            add("endereco", emailAleatorio().replaceAll("\\.(?!.*\\.).*", "." + somenteCaractere(2 - 1, "[a-z]")));
         }});
         
-        Fixture.of(Email.class).addTemplate("entreMaiorMenorTamanhoDepoisPontoObrigatorioEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.DEPOIS_PONTO, ExpressoesRegularesTesteRegra.PONTO + FuncoesRandomicas.semCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.MIN_DEPOIS_PONTO_EMAIL, ConstantesTesteNumericas.MAX_DEPOIS_PONTO_EMAIL + 1), ExpressoesRegularesTesteRegra.LETRA_MINUSCULA_SEM_ACENTO)));
-        }});
-               
         Fixture.of(Email.class).addTemplate("comUmCaractereInvalidoDepoisPontoObrigatorioEndereco").inherits("valido", new Rule() {{
-            add("endereco", FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.DEPOIS_PONTO, ExpressoesRegularesTesteRegra.PONTO + FuncoesRandomicas.comUmCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.MIN_DEPOIS_PONTO_EMAIL, ConstantesTesteNumericas.MAX_DEPOIS_PONTO_EMAIL + 1), ExpressoesRegularesTesteRegra.LETRA_MINUSCULA_SEM_ACENTO)));
+            add("endereco", emailAleatorio().replaceAll("\\.(?!.*\\.).*", "." + apenasUmCaractere(nextInt(2, 6 + 1), INVALIDOS_DEPOIS_PONTO, "[a-z]")));
         }});
         
         Fixture.of(Email.class).addTemplate("randomValidoDepoisPontoObrigatorioEndereco").inherits("valido", new Rule() {{
-            add("endereco", "lalala@contmatic." + FuncoesRandomicas.emailAleatorio().replaceAll(ExpressoesRegularesTesteRegra.ANTES_PONTO, ExpressoesRegularesTesteRegra.APENAS_EXCLUI_CARACTERE));
+            add("endereco", "lalala@contmatic." + emailAleatorio().replaceAll(".*\\.(?!\\.)", ""));
         }});
         
     }

@@ -6,5 +6,5 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ BancoTest.class, AgenciaTest.class, TipoContaTest.class, ContaTest.class })
-public class TodosBancoTest {
+public class TodosContaTest {
 }

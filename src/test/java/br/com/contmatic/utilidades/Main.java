@@ -6,13 +6,14 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
-import br.com.contmatic.modelo.conta.TodosBancoTest;
+import br.com.contmatic.modelo.conta.TodosContaTest;
 import br.com.contmatic.modelo.endereco.Bairro;
 import br.com.contmatic.modelo.endereco.Cidade;
 import br.com.contmatic.modelo.endereco.Endereco;
@@ -25,9 +26,7 @@ import br.com.contmatic.modelo.pessoa.TipoContatoCelular;
 import br.com.contmatic.modelo.pessoa.TipoEstadoCivil;
 import br.com.contmatic.modelo.pessoa.TipoGrauInstrucao;
 import br.com.contmatic.modelo.pessoa.TipoSexo;
-import br.com.contmatic.utilidades.Verificadores;
-
-//import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
+import br.com.contmatic.modelo.pessoa.TodosPessoaTest;
 
 public class Main {
 
@@ -56,15 +55,37 @@ public class Main {
     
     @Test
     public void verifica_erro_na_repeticao_dos_testes() {
-        for (int i = 0; i < ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS; i++) {
-            Result resultado = JUnitCore.runClasses(TodosBancoTest.class, TodosEnderecoTest.class);
+        for (int i = 0; i < 500; i++) {
+            Result resultado = JUnitCore.runClasses(TodosPessoaTest.class, TodosEnderecoTest.class, TodosContaTest.class);
             for (Failure falha : resultado.getFailures()) {
                 System.out.println(falha.toString());
+                System.out.println(falha.getTrace());
             }
+            System.out.println(i + 1);
             assertTrue(resultado.wasSuccessful());
         }
     }
+    
+    @Test
+    public void teste_random_function() {
+    	for (int i = 0; i < 100; i++) {
+    		System.out.println("lalal. gg.tgtg.A.FFFF.com".replaceAll("\\.(?!.*\\.).*", "." + FuncoesRandomicas.apenasUmCaractere(RandomUtils.nextInt(2, 6 + 1), "([^a-z\\.@])+", "[a-z]+")));
+    	}
+    }
 
+    @Test
+    public void repete_um_teste() {
+    	for (int i = 0; i < 100; i++) {
+    		String s = FuncoesRandomicas.emailAleatorio();
+    		System.out.println(s);
+    		String ss = s.replaceAll("\\.(?!.*\\.).*", "." + FuncoesRandomicas.apenasUmCaractere(RandomUtils.nextInt(2, 6 + 1), "\\d", "[a-z]+"));
+    		System.out.println(ss);
+    		Email e = new Email(ss);
+    		assertTrue(Verificadores.procuraAlgumErro(e));
+    	}
+    }
+
+    
     @Test
     public void testes_tostring_naoapenas_cpfbr() {
         Bairro b = new Bairro("Õ", new Cidade("õ", TipoUf.AC));
@@ -77,4 +98,12 @@ public class Main {
         assertTrue(Verificadores.verificaErro(p, MensagensErro.STRING_CPF_INVALIDO));
         assertTrue(Verificadores.verificaToStringJSONSTYLE(b));
     }
+    
+    @Test
+    public void jodatime() {
+        LocalDate b = LocalDate.parse("1990-21-31");
+        System.out.println(b);
+    }
+
+    
 }

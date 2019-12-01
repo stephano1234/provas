@@ -8,7 +8,7 @@ import javax.validation.constraints.*;
 import br.com.contmatic.anotacoes.NaoApenas;
 import br.com.contmatic.anotacoes.NaoVazio;
 import br.com.contmatic.utilidades.ConstantesNumericas;
-import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
+import br.com.contmatic.utilidades.ConstantesString;
 import br.com.contmatic.utilidades.MensagensErro;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -21,18 +21,18 @@ public class Endereco {
     @NotNull(message = MensagensErro.VALOR_NULO)
     @Size(max = ConstantesNumericas.CEP, message = MensagensErro.STRING_MAX)
     @Size(min = ConstantesNumericas.CEP, message = MensagensErro.STRING_MIN)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
+    @Pattern(regexp = ConstantesString.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
     private String cep;
     
     @NaoVazio
     @Size(max = ConstantesNumericas.MAX_NUMERO_ENDERECO, message = MensagensErro.STRING_MAX)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
+    @Pattern(regexp = ConstantesString.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
     private String numero;
     
     @NaoVazio
     @Size(max = ConstantesNumericas.CAMPO_REGULAR, message = MensagensErro.STRING_MAX)
     @NaoApenas
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_CARACTERE_ESPECIAL, message = MensagensErro.STRING_CARACTERE_ESPECIAL)
+    @Pattern(regexp = ConstantesString.SEM_CARACTERE_ESPECIAL, message = MensagensErro.STRING_CARACTERE_ESPECIAL)
     private String complemento;
     
     @NotNull(message = MensagensErro.VALOR_NULO)
