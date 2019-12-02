@@ -18,13 +18,19 @@ import static org.apache.commons.lang3.RandomUtils.nextInt;
 import java.util.HashSet;
 import java.util.Set;
 import org.joda.time.LocalDate;
+import br.com.contmatic.modelo.conta.Conta;
+import br.com.contmatic.modelo.contato.Celular;
+import br.com.contmatic.modelo.contato.Email;
+import br.com.contmatic.modelo.contato.TelefoneFixo;
 import br.com.contmatic.modelo.endereco.Endereco;
-import br.com.contmatic.modelo.pessoa.Celular;
-import br.com.contmatic.modelo.pessoa.Email;
 import br.com.contmatic.modelo.pessoa.Pessoa;
 import br.com.contmatic.modelo.pessoa.TipoEstadoCivil;
 import br.com.contmatic.modelo.pessoa.TipoGrauInstrucao;
 import br.com.contmatic.modelo.pessoa.TipoSexo;
+import br.com.contmatic.utilidades.templates.conta.ContaTemplateFixtureFactory;
+import br.com.contmatic.utilidades.templates.contato.CelularTemplateFixtureFactory;
+import br.com.contmatic.utilidades.templates.contato.EmailTemplateFixtureFactory;
+import br.com.contmatic.utilidades.templates.contato.TelefoneFixoTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.endereco.EnderecoTemplateFixtureFactory;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
@@ -40,7 +46,11 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
         
         new CelularTemplateFixtureFactory().load();
         
+        new TelefoneFixoTemplateFixtureFactory().load();
+        
         new EmailTemplateFixtureFactory().load();
+        
+        new ContaTemplateFixtureFactory().load();
         
         Set<Endereco> enderecos = new HashSet<Endereco>();
         
@@ -50,9 +60,17 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
         
         Set<Celular> outroCelulares = new HashSet<Celular>();
         
+        Set<TelefoneFixo> telefonesFixo = new HashSet<TelefoneFixo>();
+        
+        Set<TelefoneFixo> outroTelefonesFixo = new HashSet<TelefoneFixo>();
+        
         Set<Email> emails = new HashSet<Email>();
         
         Set<Email> outroEmails = new HashSet<Email>();
+        
+        Set<Conta> contas = new HashSet<Conta>();
+        
+        Set<Conta> outroContas = new HashSet<Conta>();
         
         for (int i = 0; i < ELEMENTOS_ARRAY_GERADA; i++) {
         	
@@ -64,9 +82,17 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
         	
         	outroCelulares.add(Fixture.from(Celular.class).gimme("outroValido"));
         	
+        	telefonesFixo.add(Fixture.from(TelefoneFixo.class).gimme("valido"));
+        	
+        	outroTelefonesFixo.add(Fixture.from(TelefoneFixo.class).gimme("outroValido"));
+        	
         	emails.add(Fixture.from(Email.class).gimme("valido"));
         	
         	outroEmails.add(Fixture.from(Email.class).gimme("outroValido"));
+        	
+        	contas.add(Fixture.from(Conta.class).gimme("valido"));
+        	
+        	outroContas.add(Fixture.from(Conta.class).gimme("outroValido"));
         	        	
         }
     	
@@ -78,10 +104,12 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
             add("enderecos", enderecos);
             add("dataNascimento", localDateAleatoria(LocalDate.parse("1900-01-01"), LocalDate.now()));
             add("celulares", celulares);
+            add("telefonesFixo", telefonesFixo);
             add("emails", emails);
             add("tipoGrauInstrucao", TipoGrauInstrucao.values()[nextInt(0, TipoGrauInstrucao.values().length)]);
             add("tipoEstadoCivil", TipoEstadoCivil.values()[nextInt(0, TipoEstadoCivil.values().length)]);
             add("tipoSexo", TipoSexo.values()[nextInt(0, TipoSexo.values().length)]);
+            add("contas", contas);
         }});
 
         Fixture.of(Pessoa.class).addTemplate("outroValido", new Rule() {{
@@ -90,10 +118,12 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
             add("enderecos", enderecos);
             add("dataNascimento", localDateAleatoria(LocalDate.parse("1900-01-01"), LocalDate.now()));
             add("celulares", celulares);
+            add("telefonesFixo", outroTelefonesFixo);
             add("emails", emails);
             add("tipoGrauInstrucao", TipoGrauInstrucao.values()[nextInt(0, TipoGrauInstrucao.values().length)]);
             add("tipoEstadoCivil", TipoEstadoCivil.values()[nextInt(0, TipoEstadoCivil.values().length)]);
             add("tipoSexo", TipoSexo.values()[nextInt(0, TipoSexo.values().length)]);
+            add("contas", outroContas);
         }});
         
         //cpf

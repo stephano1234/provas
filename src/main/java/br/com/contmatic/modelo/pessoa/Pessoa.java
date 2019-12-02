@@ -22,7 +22,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joda.time.LocalDate;
 
 import br.com.contmatic.anotacoes.CPFbr;
-
+import br.com.contmatic.modelo.conta.Conta;
+import br.com.contmatic.modelo.contato.Celular;
+import br.com.contmatic.modelo.contato.Email;
+import br.com.contmatic.modelo.contato.TelefoneFixo;
 import br.com.contmatic.modelo.endereco.Endereco;
 
 public class Pessoa {
@@ -45,6 +48,9 @@ public class Pessoa {
 
 	@Valid
 	private Set<Celular> celulares;
+	
+	@Valid
+	private Set<TelefoneFixo> telefonesFixo;
 
 	@Valid
 	private Set<Email> emails;
@@ -57,6 +63,9 @@ public class Pessoa {
 
 	@NotNull(message = VALOR_NULO)
 	private TipoSexo tipoSexo;
+	
+	@Valid
+	private Set<Conta> contas;
 
 	public Pessoa(String cpf, String nome, Set<Endereco> enderecos, LocalDate dataNascimento,
 			TipoGrauInstrucao tipoGrauInstrucao, TipoEstadoCivil tipoEstadoCivil, TipoSexo tipoSexo) {
@@ -109,6 +118,14 @@ public class Pessoa {
 		this.celulares = celulares;
 	}
 
+	public Set<TelefoneFixo> getTelefonesFixo() {
+		return telefonesFixo;
+	}
+
+	public void setTelefonesFixo(Set<TelefoneFixo> telefonesFixo) {
+		this.telefonesFixo = telefonesFixo;
+	}
+
 	public Set<Email> getEmails() {
 		return emails;
 	}
@@ -141,6 +158,14 @@ public class Pessoa {
 		this.tipoSexo = tipoSexo;
 	}
 
+	public Set<Conta> getContas() {
+		return contas;
+	}
+
+	public void setContas(Set<Conta> contas) {
+		this.contas = contas;
+	}
+
 	@Override
 	public final int hashCode() {
 		return new HashCodeBuilder()
@@ -169,9 +194,11 @@ public class Pessoa {
 				.append("nome", nome)
 				.append("enderecos", enderecos).append("dataNascimento", dataNascimento)
 				.append("celulares", (celulares != null) ? celulares : "Sem celular")
+				.append("telefonesFixo", (telefonesFixo != null) ? telefonesFixo : "Sem telefone fixo")
 				.append("emails", (emails != null) ? emails : "Sem e-mail")
 				.append("tipoGrauInstrucao", tipoGrauInstrucao).append("tipoEstadoCivil", tipoEstadoCivil)
 				.append("tipoSexo", tipoSexo)
+				.append("contas", (contas != null) ? contas : "Sem conta bancária")
 				.toString();
 	}
 

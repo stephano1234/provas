@@ -5,14 +5,14 @@ import java.util.Set;
 
 import org.apache.commons.lang3.RandomUtils;
 
+import br.com.contmatic.modelo.contato.TelefoneFixo;
 import br.com.contmatic.modelo.endereco.Endereco;
 import br.com.contmatic.modelo.endereco.Logradouro;
-import br.com.contmatic.modelo.endereco.TelefoneFixo;
 import br.com.contmatic.modelo.endereco.TipoEndereco;
 import br.com.contmatic.utilidades.ConstantesTesteNumericas;
 import br.com.contmatic.utilidades.ConstantesTesteString;
 import br.com.contmatic.utilidades.FuncoesRandomicas;
-
+import br.com.contmatic.utilidades.templates.contato.TelefoneFixoTemplateFixtureFactory;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;

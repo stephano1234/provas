@@ -7,6 +7,7 @@ import javax.validation.constraints.*;
 
 import br.com.contmatic.anotacoes.NaoApenas;
 import br.com.contmatic.anotacoes.NaoVazio;
+import br.com.contmatic.modelo.contato.TelefoneFixo;
 import br.com.contmatic.utilidades.ConstantesNumericas;
 import br.com.contmatic.utilidades.ConstantesString;
 import br.com.contmatic.utilidades.MensagensErro;

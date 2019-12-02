@@ -24,8 +24,8 @@ import br.com.contmatic.modelo.conta.Agencia;
 import br.com.contmatic.modelo.conta.Conta;
 import br.com.contmatic.modelo.conta.TipoConta;
 import br.com.contmatic.utilidades.MensagensErro;
-import br.com.contmatic.utilidades.templates.banco.ContaTemplateFixtureFactory;
-import br.com.contmatic.utilidades.templates.banco.AgenciaTemplateFixtureFactory;
+import br.com.contmatic.utilidades.templates.conta.AgenciaTemplateFixtureFactory;
+import br.com.contmatic.utilidades.templates.conta.ContaTemplateFixtureFactory;
 import br.com.six2six.fixturefactory.Fixture;
 
 import nl.jqno.equalsverifier.EqualsVerifier;

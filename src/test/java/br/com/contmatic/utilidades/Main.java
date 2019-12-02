@@ -14,15 +14,15 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
 import br.com.contmatic.modelo.conta.TodosContaTest;
+import br.com.contmatic.modelo.contato.Celular;
+import br.com.contmatic.modelo.contato.Email;
+import br.com.contmatic.modelo.contato.TipoContatoCelular;
 import br.com.contmatic.modelo.endereco.Bairro;
 import br.com.contmatic.modelo.endereco.Cidade;
 import br.com.contmatic.modelo.endereco.Endereco;
 import br.com.contmatic.modelo.endereco.TipoUf;
 import br.com.contmatic.modelo.endereco.TodosEnderecoTest;
-import br.com.contmatic.modelo.pessoa.Celular;
-import br.com.contmatic.modelo.pessoa.Email;
 import br.com.contmatic.modelo.pessoa.Pessoa;
-import br.com.contmatic.modelo.pessoa.TipoContatoCelular;
 import br.com.contmatic.modelo.pessoa.TipoEstadoCivil;
 import br.com.contmatic.modelo.pessoa.TipoGrauInstrucao;
 import br.com.contmatic.modelo.pessoa.TipoSexo;
@@ -55,7 +55,7 @@ public class Main {
     
     @Test
     public void verifica_erro_na_repeticao_dos_testes() {
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 100; i++) {
             Result resultado = JUnitCore.runClasses(TodosPessoaTest.class, TodosEnderecoTest.class, TodosContaTest.class);
             for (Failure falha : resultado.getFailures()) {
                 System.out.println(falha.toString());

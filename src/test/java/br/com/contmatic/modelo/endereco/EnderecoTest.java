@@ -23,14 +23,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import br.com.contmatic.modelo.contato.TelefoneFixo;
 import br.com.contmatic.modelo.endereco.Logradouro;
-import br.com.contmatic.modelo.endereco.TelefoneFixo;
 import br.com.contmatic.modelo.endereco.TipoEndereco;
 import br.com.contmatic.utilidades.ConstantesTesteNumericas;
 import br.com.contmatic.utilidades.MensagensErro;
+import br.com.contmatic.utilidades.templates.contato.TelefoneFixoTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.endereco.EnderecoTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.endereco.LogradouroTemplateFixtureFactory;
-import br.com.contmatic.utilidades.templates.endereco.TelefoneFixoTemplateFixtureFactory;
 import br.com.six2six.fixturefactory.Fixture;
 
 import nl.jqno.equalsverifier.EqualsVerifier;

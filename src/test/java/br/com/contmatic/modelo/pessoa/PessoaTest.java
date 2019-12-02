@@ -37,11 +37,15 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import br.com.contmatic.modelo.conta.Conta;
+import br.com.contmatic.modelo.contato.Celular;
+import br.com.contmatic.modelo.contato.Email;
+import br.com.contmatic.modelo.contato.TelefoneFixo;
 import br.com.contmatic.modelo.endereco.Endereco;
 
+import br.com.contmatic.utilidades.templates.contato.CelularTemplateFixtureFactory;
+import br.com.contmatic.utilidades.templates.contato.EmailTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.endereco.EnderecoTemplateFixtureFactory;
-import br.com.contmatic.utilidades.templates.pessoa.CelularTemplateFixtureFactory;
-import br.com.contmatic.utilidades.templates.pessoa.EmailTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.pessoa.PessoaTemplateFixtureFactory;
 
 import br.com.six2six.fixturefactory.Fixture;
@@ -61,10 +65,18 @@ public class PessoaTest {
     private Set<Celular> celulares = new HashSet<Celular>();
 
     private Set<Celular> celularesInvalido = new HashSet<Celular>();
+    
+    private Set<TelefoneFixo> telefonesFixo = new HashSet<TelefoneFixo>();
+    
+    private Set<TelefoneFixo> telefonesFixoInvalido = new HashSet<TelefoneFixo>();
 
     private Set<Email> emails = new HashSet<Email>();
 
     private Set<Email> emailsInvalido = new HashSet<Email>();
+    
+    private Set<Conta> contas = new HashSet<Conta>();
+    
+    private Set<Conta> contasInvalido = new HashSet<Conta>();
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -85,10 +97,14 @@ public class PessoaTest {
         for (int i = 0; i < ELEMENTOS_ARRAY_GERADA; i++) {
         	enderecos.add(Fixture.from(Endereco.class).gimme("valido"));
         	celulares.add(Fixture.from(Celular.class).gimme("valido"));
+        	telefonesFixo.add(Fixture.from(TelefoneFixo.class).gimme("valido"));
         	emails.add(Fixture.from(Email.class).gimme("valido"));
+        	contas.add(Fixture.from(Conta.class).gimme("valido"));
         	enderecosInvalido.add(Fixture.from(Endereco.class).gimme("comUmCaractereInvalidoCep"));
         	celularesInvalido.add(Fixture.from(Celular.class).gimme("comUmCaractereInvalidoNumero"));
+        	telefonesFixoInvalido.add(Fixture.from(TelefoneFixo.class).gimme("comUmCaractereInvalidoNumero"));
         	emailsInvalido.add(Fixture.from(Email.class).gimme("comUmCaractereInvalidoAntesArrobaEndereco"));
+        	contasInvalido.add(Fixture.from(Conta.class).gimme("comUmCaractereInvalidoNumero"));
         }
     }
 
@@ -280,6 +296,20 @@ public class PessoaTest {
     	assertFalse(procuraAlgumErro(pessoa));
     }
 
+    //telefonesFixo
+    
+    @Test
+    public void nao_deve_aceitar_telefonesFixo_invalido() {
+    	pessoa.setTelefonesFixo(telefonesFixoInvalido);
+    	assertTrue(procuraAlgumErro(pessoa));
+    }
+
+    @Test
+    public void deve_aceitar_telefonesFixo_valido() {
+    	pessoa.setTelefonesFixo(telefonesFixo);
+    	assertFalse(procuraAlgumErro(pessoa));
+    }
+
     //emails
     
     @Test
@@ -336,6 +366,20 @@ public class PessoaTest {
     	assertFalse(verificaErro(pessoa, VALOR_NULO));
     }
 
+    //contas
+    
+    @Test
+    public void nao_deve_aceitar_contas_invalido() {
+    	pessoa.setContas(contasInvalido);
+    	assertTrue(procuraAlgumErro(pessoa));
+    }
+
+    @Test
+    public void deve_aceitar_contas_valido() {
+    	pessoa.setContas(contas);
+    	assertFalse(procuraAlgumErro(pessoa));
+    }
+    
     //getter e setter    
     
     @Test
@@ -369,6 +413,12 @@ public class PessoaTest {
     }
     
     @Test
+    public void getTelefonesFixo_deve_trazer_o_valor_armazenado_em_telefonesFixo() {
+        pessoa.setTelefonesFixo(telefonesFixo);
+        assertThat(pessoa.getTelefonesFixo(), is(equalTo(telefonesFixo)));
+    }
+    
+    @Test
     public void getEmails_deve_trazer_o_valor_armazenado_em_emails() {
         pessoa.setEmails(emails);
         assertThat(pessoa.getEmails(), is(equalTo(emails)));
@@ -390,6 +440,12 @@ public class PessoaTest {
     public void getTipoSexo_deve_trazer_o_valor_armazenado_em_tipoSexo() {
         pessoa.setTipoSexo(TipoSexo.FEMININO);
         assertThat(pessoa.getTipoSexo(), is(equalTo(TipoSexo.FEMININO)));
+    }
+    
+    @Test
+    public void getContas_deve_trazer_o_valor_armazenado_em_contas() {
+        pessoa.setContas(contas);
+        assertThat(pessoa.getContas(), is(equalTo(contas)));
     }
     
     @Test
@@ -478,6 +534,18 @@ public class PessoaTest {
     }
 
     @Test
+    public void verifica_existencia_do_texto_que_representa_o_atributo_telefonesFixo_no_texto_gerado_pelo_metodo_toString() {
+        pessoa.setTelefonesFixo(telefonesFixo);
+        assertTrue(pessoa.toString().contains(telefonesFixo.toString()));
+    }
+
+    @Test
+    public void verifica_texto_gerado_pelo_metodo_toString_quando_atributo_telefonesFixo_nulo() {
+        pessoa.setTelefonesFixo(null);
+        assertTrue(pessoa.toString().contains("Sem telefone fixo"));
+    }
+
+    @Test
     public void verifica_existencia_do_texto_que_representa_o_atributo_emails_no_texto_gerado_pelo_metodo_toString() {
         pessoa.setEmails(emails);
         assertTrue(pessoa.toString().contains(emails.toString()));
@@ -505,6 +573,19 @@ public class PessoaTest {
     public void verifica_existencia_do_texto_que_representa_o_atributo_tipoSexo_no_texto_gerado_pelo_metodo_toString() {
         pessoa.setTipoSexo(TipoSexo.FEMININO);
         assertTrue(pessoa.toString().contains(TipoSexo.FEMININO.name()));
+    }
+    
+    @Test
+    public void verifica_existencia_do_texto_que_representa_o_atributo_contas_no_texto_gerado_pelo_metodo_toString() {
+        pessoa.setContas(contas);
+        assertTrue(pessoa.toString().contains(contas.toString()));
+    }
+
+    @Test
+    public void verifica_texto_gerado_pelo_metodo_toString_quando_atributo_contas_nulo() {
+        pessoa.setContas(null);
+        System.out.println(pessoa);
+        assertTrue(pessoa.toString().contains("Sem conta banc\\u00E1ria"));
     }
     
     @Test

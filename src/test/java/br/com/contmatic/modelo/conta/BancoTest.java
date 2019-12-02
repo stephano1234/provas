@@ -21,7 +21,7 @@ import org.junit.Test;
 
 import br.com.contmatic.modelo.conta.Banco;
 import br.com.contmatic.utilidades.MensagensErro;
-import br.com.contmatic.utilidades.templates.banco.BancoTemplateFixtureFactory;
+import br.com.contmatic.utilidades.templates.conta.BancoTemplateFixtureFactory;
 import br.com.six2six.fixturefactory.Fixture;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
