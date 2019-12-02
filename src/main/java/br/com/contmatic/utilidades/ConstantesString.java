@@ -14,6 +14,7 @@ public class ConstantesString {
     public static final String EMAIL = "^[a-z0-9]+[a-z0-9._-]*(?<![-_\\.])@[a-z0-9]+[a-z0-9.-]*(?<![-_\\.])\\.[a-z]{2,6}$";    
     public static final String NOME_PESSOA = "^([A-Z]|[ÁÉÍÓÚÃÕÀÂÊÔ]){1}([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô]|['ç]|([ ](?![ ]))){1," + (ConstantesNumericas.CAMPO_REGULAR - 2) + "}([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô]){1}$";
     public static final String CELULAR = "[0-9]{" + ConstantesNumericas.NUMERO_CELULAR + "}";
+    public static final String TELEFONE = "[0-9]{" + ConstantesNumericas.NUMERO_TELEFONE + "}";
     public static final String DDD = "[0-9]{" + ConstantesNumericas.DDD + "}";
     
     private ConstantesString() {

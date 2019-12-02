@@ -19,6 +19,7 @@ public class MensagensErro {
     public static final String STRING_CPF_INVALIDO = "O campo deve conter um CPF válido.";
     public static final String STRING_NOME_INVALIDO = "O campo deve conter um nome válido.";
     public static final String STRING_CELULAR_INVALIDO = "O campo deve conter um celular válido.";
+    public static final String STRING_TELEFONE_INVALIDO = "O campo deve conter um telefone válido.";
     public static final String STRING_DDD_INVALIDO = "O campo deve conter um DDD válido.";
     
     //double, float, respectivas wrappers e BigDecimal

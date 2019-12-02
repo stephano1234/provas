@@ -2,6 +2,8 @@ package br.com.contmatic.modelo.empresa;
 
 import java.util.Set;
 
+import org.joda.time.LocalDate;
+
 import br.com.contmatic.modelo.conta.Conta;
 import br.com.contmatic.modelo.contato.Celular;
 import br.com.contmatic.modelo.contato.Email;
@@ -15,6 +17,8 @@ public class Empresa {
 	private String cnpj;
 	
 	private String razaoSocial;
+	
+	private LocalDate dataAbertura;
 	
 	private Set<Socio> socios;
 	

@@ -25,6 +25,7 @@ public class ConstantesTesteString {
     public static final String NOME_PESSOA = "^([A-Z]|[ÁÉÍÓÚÃÕÀÂÊÔ]){1}([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô]|['ç]|([ ](?![ ]))){1," + (ConstantesTesteNumericas.CAMPO_REGULAR - 2) + "}([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô]){1}$";
     public static final String APENAS_UM_ESPACO_ENTRE_LETRAS = "^([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô])+[ ]{1}([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô])+$";
     public static final String CELULAR = "[0-9]{" + ConstantesTesteNumericas.NUMERO_CELULAR + "}";
+    public static final String TELEFONE = "[0-9]{" + ConstantesTesteNumericas.NUMERO_TELEFONE + "}";
     public static final String DDD = "[0-9]{" + ConstantesTesteNumericas.DDD + "}";
 
     //constante

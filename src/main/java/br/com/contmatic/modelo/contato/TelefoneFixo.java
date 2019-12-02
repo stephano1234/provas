@@ -1,28 +1,28 @@
 package br.com.contmatic.modelo.contato;
 
-import javax.validation.constraints.*;
+import static br.com.contmatic.utilidades.ConstantesString.DDD;
+import static br.com.contmatic.utilidades.ConstantesString.TELEFONE;
 
-import br.com.contmatic.utilidades.ConstantesNumericas;
-import br.com.contmatic.utilidades.ConstantesString;
-import br.com.contmatic.utilidades.MensagensErro;
+import static br.com.contmatic.utilidades.MensagensErro.STRING_DDD_INVALIDO;
+import static br.com.contmatic.utilidades.MensagensErro.STRING_TELEFONE_INVALIDO;
+import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
+
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
+import javax.validation.constraints.*;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class TelefoneFixo {
 
-    @NotNull(message = MensagensErro.VALOR_NULO)   
-    @Size(max = ConstantesNumericas.DDD, message = MensagensErro.STRING_MAX)
-    @Size(min = ConstantesNumericas.DDD, message = MensagensErro.STRING_MIN)
-    @Pattern(regexp = ConstantesString.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
+    @NotNull(message = VALOR_NULO)   
+    @Pattern(regexp = DDD, message = STRING_DDD_INVALIDO)
     private String ddd;
     
-    @NotNull(message = MensagensErro.VALOR_NULO)
-    @Size(max = ConstantesNumericas.NUMERO_TELEFONE, message = MensagensErro.STRING_MAX)
-    @Size(min = ConstantesNumericas.NUMERO_TELEFONE, message = MensagensErro.STRING_MIN)
-    @Pattern(regexp = ConstantesString.APENAS_NUMERAL, message = MensagensErro.STRING_NAO_NUMERAL)
+    @NotNull(message = VALOR_NULO)
+    @Pattern(regexp = TELEFONE, message = STRING_TELEFONE_INVALIDO)
     private String numero;
     
     public TelefoneFixo(String ddd, String numero) {
@@ -71,7 +71,7 @@ public class TelefoneFixo {
     
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+        return new ToStringBuilder(this, JSON_STYLE)
                 .append("ddd", ddd)
                 .append("numero", numero)
                 .toString();

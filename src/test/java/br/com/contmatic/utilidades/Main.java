@@ -17,6 +17,7 @@ import br.com.contmatic.modelo.conta.TodosContaTest;
 import br.com.contmatic.modelo.contato.Celular;
 import br.com.contmatic.modelo.contato.Email;
 import br.com.contmatic.modelo.contato.TipoContatoCelular;
+import br.com.contmatic.modelo.contato.TodosContatoTest;
 import br.com.contmatic.modelo.endereco.Bairro;
 import br.com.contmatic.modelo.endereco.Cidade;
 import br.com.contmatic.modelo.endereco.Endereco;
@@ -56,7 +57,7 @@ public class Main {
     @Test
     public void verifica_erro_na_repeticao_dos_testes() {
         for (int i = 0; i < 100; i++) {
-            Result resultado = JUnitCore.runClasses(TodosPessoaTest.class, TodosEnderecoTest.class, TodosContaTest.class);
+            Result resultado = JUnitCore.runClasses(TodosPessoaTest.class, TodosEnderecoTest.class, TodosContaTest.class, TodosContatoTest.class);
             for (Failure falha : resultado.getFailures()) {
                 System.out.println(falha.toString());
                 System.out.println(falha.getTrace());

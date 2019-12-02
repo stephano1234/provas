@@ -51,7 +51,7 @@ public class CelularTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(Celular.class).addTemplate("comUmCaractereInvalidoDdd").inherits("valido", new Rule() {{
-            add("ddd", apenasUmCaractere(nextInt(EXCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), "[^0-9]", APENAS_NUMERAL));
+            add("ddd", apenasUmCaractere(DDD, "[^0-9]", APENAS_NUMERAL));
         }});
         
         Fixture.of(Celular.class).addTemplate("validoDdd").inherits("valido", new Rule() {{
@@ -73,7 +73,7 @@ public class CelularTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(Celular.class).addTemplate("comUmCaractereInvalidoNumero").inherits("valido", new Rule() {{
-            add("numero", apenasUmCaractere(nextInt(EXCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), "[^0-9]", APENAS_NUMERAL));
+            add("numero", apenasUmCaractere(NUMERO_CELULAR, "[^0-9]", APENAS_NUMERAL));
         }});
         
         Fixture.of(Celular.class).addTemplate("validoNumero").inherits("valido", new Rule() {{
