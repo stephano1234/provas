@@ -5,15 +5,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+import static pl.pojo.tester.api.assertion.Method.GETTER;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import br.com.contmatic.modelo.conta.TipoConta;
-import pl.pojo.tester.api.assertion.Method;
 
 public class TipoContaTest {
 
@@ -49,7 +47,7 @@ public class TipoContaTest {
     
     @Test
     public void deve_haver_metodo_get_publico_para_cada_atributo() {
-        assertPojoMethodsFor(TipoConta.class).testing(Method.GETTER).areWellImplemented();
+        assertPojoMethodsFor(TipoConta.class).testing(GETTER).areWellImplemented();
     }
     
 }

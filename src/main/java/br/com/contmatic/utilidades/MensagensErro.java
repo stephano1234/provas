@@ -17,10 +17,13 @@ public class MensagensErro {
     public static final String STRING_NAO_FORMATO_EMAIL = "O campo deve ser um endereço de e-mail.";
     public static final String STRING_APENAS_NUMERO_REPETIDO = "O campo não pode conter todos os números iguais.";
     public static final String STRING_CPF_INVALIDO = "O campo deve conter um CPF válido.";
+    public static final String STRING_CNPJ_INVALIDO = "O campo deve conter um CNPJ válido.";
     public static final String STRING_NOME_INVALIDO = "O campo deve conter um nome válido.";
     public static final String STRING_CELULAR_INVALIDO = "O campo deve conter um celular válido.";
     public static final String STRING_TELEFONE_INVALIDO = "O campo deve conter um telefone válido.";
     public static final String STRING_DDD_INVALIDO = "O campo deve conter um DDD válido.";
+    public static final String STRING_CODIGO_BANCO_INVALIDO = "O campo deve conter um código de banco válido.";
+    public static final String STRING_RAZAO_SOCIAL_INVALIDO = "O campo deve conter uma Razão Social válida.";
     
     //double, float, respectivas wrappers e BigDecimal
     public static final String DECIMAL_MAX = "O campo não pode ser maior que {value}.";

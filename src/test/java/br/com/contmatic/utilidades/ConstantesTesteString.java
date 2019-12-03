@@ -27,6 +27,8 @@ public class ConstantesTesteString {
     public static final String CELULAR = "[0-9]{" + ConstantesTesteNumericas.NUMERO_CELULAR + "}";
     public static final String TELEFONE = "[0-9]{" + ConstantesTesteNumericas.NUMERO_TELEFONE + "}";
     public static final String DDD = "[0-9]{" + ConstantesTesteNumericas.DDD + "}";
+    public static final String CODIGO_BANCO = "[A-Za-z0-9]{1," + ConstantesTesteNumericas.MAX_CODIGO_BANCO + "}";
+    public static final String RAZAO_SOCIAL = "^([A-Z]|[ÁÉÍÓÚÃÕÀÂÊÔ]){1}([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô]|[&'ç\\-\\.]|([ ](?![ ]))){1," + (ConstantesNumericas.CAMPO_REGULAR - 2) + "}([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô]|\\.){1}$";
 
     //constante
     public static final String ESPACO = " ";

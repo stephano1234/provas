@@ -22,6 +22,9 @@ public class ConstantesNumericas {
     public static final int MAX_NUMERO_AGENCIA = 5;
     public static final int MAX_CODIGO_BANCO = 4;
     
+    //empresa
+    public static final int CNPJ = 14;
+
     private ConstantesNumericas() {
     }
 }

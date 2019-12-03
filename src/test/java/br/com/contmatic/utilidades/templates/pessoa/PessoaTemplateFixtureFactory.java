@@ -183,11 +183,11 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
         }});
 
         Fixture.of(Pessoa.class).addTemplate("comEspacoInicioNome").inherits("valido", new Rule() {{
-            add("nome", " " + name());
+            add("nome", " " + somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]") + "  " + somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]"));
         }});
 
         Fixture.of(Pessoa.class).addTemplate("comEspacoFimNome").inherits("valido", new Rule() {{
-            add("nome", name() + " ");
+            add("nome", somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]") + "  " + somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]") + " ");
         }});
 
         Fixture.of(Pessoa.class).addTemplate("nomeValido").inherits("valido", new Rule() {{

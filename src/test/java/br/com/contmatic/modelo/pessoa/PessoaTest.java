@@ -42,9 +42,10 @@ import br.com.contmatic.modelo.contato.Celular;
 import br.com.contmatic.modelo.contato.Email;
 import br.com.contmatic.modelo.contato.TelefoneFixo;
 import br.com.contmatic.modelo.endereco.Endereco;
-
+import br.com.contmatic.utilidades.templates.conta.ContaTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.contato.CelularTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.contato.EmailTemplateFixtureFactory;
+import br.com.contmatic.utilidades.templates.contato.TelefoneFixoTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.endereco.EnderecoTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.pessoa.PessoaTemplateFixtureFactory;
 
@@ -83,7 +84,9 @@ public class PessoaTest {
         new PessoaTemplateFixtureFactory().load();
         new EnderecoTemplateFixtureFactory().load();
         new CelularTemplateFixtureFactory().load();
+        new TelefoneFixoTemplateFixtureFactory().load();
         new EmailTemplateFixtureFactory().load();
+        new ContaTemplateFixtureFactory().load();
     }
 
     @AfterClass
@@ -584,7 +587,6 @@ public class PessoaTest {
     @Test
     public void verifica_texto_gerado_pelo_metodo_toString_quando_atributo_contas_nulo() {
         pessoa.setContas(null);
-        System.out.println(pessoa);
         assertTrue(pessoa.toString().contains("Sem conta banc\\u00E1ria"));
     }
     

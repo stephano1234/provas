@@ -18,6 +18,10 @@ import br.com.contmatic.modelo.contato.Celular;
 import br.com.contmatic.modelo.contato.Email;
 import br.com.contmatic.modelo.contato.TipoContatoCelular;
 import br.com.contmatic.modelo.contato.TodosContatoTest;
+import br.com.contmatic.modelo.empresa.Empresa;
+import br.com.contmatic.modelo.empresa.TipoEmpresa;
+import br.com.contmatic.modelo.empresa.TipoPorteEmpresa;
+import br.com.contmatic.modelo.empresa.TodosEmpresaTest;
 import br.com.contmatic.modelo.endereco.Bairro;
 import br.com.contmatic.modelo.endereco.Cidade;
 import br.com.contmatic.modelo.endereco.Endereco;
@@ -56,8 +60,8 @@ public class Main {
     
     @Test
     public void verifica_erro_na_repeticao_dos_testes() {
-        for (int i = 0; i < 100; i++) {
-            Result resultado = JUnitCore.runClasses(TodosPessoaTest.class, TodosEnderecoTest.class, TodosContaTest.class, TodosContatoTest.class);
+        for (int i = 0; i < 500; i++) {
+            Result resultado = JUnitCore.runClasses(TodosEmpresaTest.class, TodosPessoaTest.class, TodosEnderecoTest.class, TodosContaTest.class, TodosContatoTest.class);
             for (Failure falha : resultado.getFailures()) {
                 System.out.println(falha.toString());
                 System.out.println(falha.getTrace());
@@ -106,5 +110,10 @@ public class Main {
         System.out.println(b);
     }
 
+    @Test
+    public void cnpj() {
+    	Empresa e = new Empresa("92385152000178", "ABC", LocalDate.parse("1990-02-12"), new HashSet<Pessoa>(), new HashSet<Endereco>(), TipoEmpresa.EIRELI, TipoPorteEmpresa.EPP);
+    	assertFalse(Verificadores.verificaErro(e, MensagensErro.STRING_CNPJ_INVALIDO));
+    }
     
 }
