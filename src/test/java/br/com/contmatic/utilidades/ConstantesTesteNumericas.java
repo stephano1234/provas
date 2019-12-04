@@ -8,7 +8,6 @@ public class ConstantesTesteNumericas {
     public static final int ELEMENTOS_ARRAY_GERADA = 5;
     public static final int INCLUI_STRING_VAZIO = 0;
     public static final int EXCLUI_STRING_VAZIO = 1;
-    public static final int MIN_LETRA_COM_UM_ESPACO = 3;
     
     //geral
     public static final int CAMPO_REGULAR = 100;

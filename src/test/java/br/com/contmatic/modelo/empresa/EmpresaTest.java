@@ -3,6 +3,7 @@ package br.com.contmatic.modelo.empresa;
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.ELEMENTOS_ARRAY_GERADA;
 
 import static br.com.contmatic.utilidades.MensagensErro.DATA_PASSADO;
+import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO;
 import static br.com.contmatic.utilidades.MensagensErro.STRING_CNPJ_INVALIDO;
 import static br.com.contmatic.utilidades.MensagensErro.STRING_RAZAO_SOCIAL_INVALIDO;
 import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
@@ -283,13 +284,25 @@ public class EmpresaTest {
     @Test
     public void nao_deve_aceitar_responsaveis_nulo() {
     	empresa.setResponsaveis(null);
-    	assertTrue(verificaErro(empresa, VALOR_NULO));
+    	assertTrue(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_responsaveis_vazio() {
+    	empresa.setResponsaveis(new HashSet<Pessoa>());
+    	assertTrue(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_responsaveis_com_pelo_menos_um_elemento_nulo() {
+    	empresa.getResponsaveis().add(null);
+    	assertTrue(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
     }
 
     @Test
-    public void deve_aceitar_responsaveis_nao_nulo() {
+    public void deve_aceitar_responsaveis_nao_nulo_e_nao_vazio_e_sem_elementos_nulos() {
     	empresa.setResponsaveis(responsaveis);
-    	assertFalse(verificaErro(empresa, VALOR_NULO));
+    	assertFalse(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
     }
     
     @Test
@@ -323,13 +336,25 @@ public class EmpresaTest {
     @Test
     public void nao_deve_aceitar_enderecos_nulo() {
     	empresa.setEnderecos(null);
-    	assertTrue(verificaErro(empresa, VALOR_NULO));
+    	assertTrue(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
     }
 
     @Test
-    public void deve_aceitar_enderecos_nao_nulo() {
+    public void nao_deve_aceitar_enderecos_vazio() {
+    	empresa.setEnderecos(new HashSet<Endereco>());
+    	assertTrue(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_enderecos_com_pelo_menos_um_elemento_nulo() {
+    	empresa.getEnderecos().add(null);
+    	assertTrue(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    }
+    
+    @Test
+    public void deve_aceitar_enderecos_nao_nulo_e_nao_vazio_e_sem_elementos_nulos() {
     	empresa.setEnderecos(enderecos);
-    	assertFalse(verificaErro(empresa, VALOR_NULO));
+    	assertFalse(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
     }
     
     @Test

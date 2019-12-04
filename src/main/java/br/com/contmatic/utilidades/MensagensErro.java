@@ -5,6 +5,9 @@ public class MensagensErro {
     //objeto
     public static final String VALOR_NULO = "O campo não pode ser nulo.";
     
+    //Collection
+    public static final String VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO = "O campo não pode ser nulo e deve conter um conjunto de dados não vazio e sem elementos nulos.";
+    
     //String
     public static final String STRING_VAZIO = "O campo não pode estar vazio.";
     public static final String STRING_APENAS_ESPACO = "O campo não pode possuir apenas espaços em branco.";

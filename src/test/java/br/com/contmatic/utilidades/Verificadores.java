@@ -22,7 +22,9 @@ public class Verificadores {
     private static ValidatorFactory factory;  
     
     public static boolean verificaErro(Object objetoTestado, String mensagem) {
-        factory = Validation.buildDefaultValidatorFactory();
+        Preconditions.checkNotNull(objetoTestado, "O objeto testado não pode ser nulo.");
+        Preconditions.checkNotNull(mensagem, "A mensagem do erro procurado deve ser informada.");
+    	factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
         boolean possuiErro = false;
         Set<ConstraintViolation<Object>> violacoes = validator.validate(objetoTestado);
@@ -35,14 +37,16 @@ public class Verificadores {
     }
     
     public static boolean procuraAlgumErro(Object objetoTestado) {  
-        factory = Validation.buildDefaultValidatorFactory();
+    	Preconditions.checkNotNull(objetoTestado, "O objeto testado não pode ser nulo.");
+    	factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
         Set<ConstraintViolation<Object>> violacoes = validator.validate(objetoTestado);
         return !violacoes.isEmpty();
     }
     
     public static boolean verificaToStringJSONSTYLE(Object objetoTestado) {
-        StringBuilder formatoEsperado = new StringBuilder("{");
+    	Preconditions.checkNotNull(objetoTestado, "O objeto testado não pode ser nulo.");
+    	StringBuilder formatoEsperado = new StringBuilder("{");
         Field[] campos = objetoTestado.getClass().getDeclaredFields();
         for(Field campo : campos) {
             campo.setAccessible(true);

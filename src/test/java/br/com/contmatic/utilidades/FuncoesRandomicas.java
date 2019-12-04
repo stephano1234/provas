@@ -10,6 +10,7 @@ public class FuncoesRandomicas {
 	public static String naoCorresponde(int tamanho, String expressaoRegular) {
 		Preconditions.checkArgument(tamanho >= 0,
 				"O tamanho da string gerada não pode ser um número inteiro negativo.");
+		Preconditions.checkNotNull(expressaoRegular, "A expressão regular deve ser informada.");
 		StringBuilder stringComCharInvalido = new StringBuilder(stringAleatoria(tamanho, false));
 		while (stringComCharInvalido.toString().matches(expressaoRegular)) {
 			stringComCharInvalido.delete(0, tamanho);
@@ -19,6 +20,7 @@ public class FuncoesRandomicas {
 	}
 
 	public static String todosCaracteresValidos(String expressaoRegular) {
+		Preconditions.checkNotNull(expressaoRegular, "A expressão regular deve ser informada.");
 		StringBuilder caracteresValidos = new StringBuilder();
 		for (int i = 0; i < ConstantesTesteString.UNVIVERSO_CARACTERES.length(); i++) {
 			if (ConstantesTesteString.UNVIVERSO_CARACTERES.substring(i, i + 1).matches(expressaoRegular)) {
@@ -31,6 +33,7 @@ public class FuncoesRandomicas {
 	public static String somenteCaractere(int tamanho, String expressaoRegular) {
 		Preconditions.checkArgument(tamanho >= 0,
 				"O tamanho da string gerada não pode ser um número inteiro negativo.");
+		Preconditions.checkNotNull(expressaoRegular, "A expressão regular deve ser informada.");
 		StringBuilder stringSemCaractereInvalido = new StringBuilder();
 		String caracteresValidos = todosCaracteresValidos(expressaoRegular);
 		for (int i = 0; i < tamanho && !caracteresValidos.isEmpty(); i++) {
@@ -42,24 +45,26 @@ public class FuncoesRandomicas {
 
 	public static String ANTIGAcomUmCaractereNaoEspecificadoExpressaoRegular(int tamanho, String expressaoRegular) {
 		Preconditions.checkArgument(tamanho >= 1, "O tamanho da string gerada deve ser maior ou igual a um.");
+		Preconditions.checkNotNull(expressaoRegular, "A expressão regular deve ser informada.");
 		int posicaoCaractereInvalido = RandomUtils.nextInt(0, tamanho - 1);
 		return somenteCaractere(posicaoCaractereInvalido, expressaoRegular) + naoCorresponde(1, expressaoRegular)
 				+ somenteCaractere((tamanho - 1) - posicaoCaractereInvalido, expressaoRegular);
 	}
 
-	public static String apenasUmCaractere(int tamanho, String regexCaractere, String regexConjunto) {
+	public static String apenasUmCaractere(int tamanho, String regexCaractere, String regexCaracteres) {
 		Preconditions.checkArgument(tamanho >= 1,
 				"O tamanho da string gerada por apenasUmCaractere deve ser maior ou igual a um.");
+		Preconditions.checkNotNull(regexCaractere, "A expressão regular do caractere único deve ser informada.");
+		Preconditions.checkNotNull(regexCaracteres, "A expressão regular dos outros caracteres deve ser informada.");
 		int posicaoCaractere = RandomUtils.nextInt(0, tamanho - 1);
-		return somenteCaractere(posicaoCaractere, regexConjunto) + somenteCaractere(1, regexCaractere)
-				+ somenteCaractere((tamanho - 1) - posicaoCaractere, regexConjunto);
+		return somenteCaractere(posicaoCaractere, regexCaracteres) + somenteCaractere(1, regexCaractere)
+				+ somenteCaractere((tamanho - 1) - posicaoCaractere, regexCaracteres);
 	}
 
 	public static String stringAleatoria(int tamanho, boolean incluiNulo) {
 		Preconditions.checkArgument(tamanho >= 0,
 				"O tamanho da string gerada não pode ser um número inteiro negativo.");
 		if (incluiNulo && RandomUtils.nextInt(1, 100) <= ConstantesTesteNumericas.PERCENTUAL_NULO_GERADO) {
-			System.out.println("entrou onde nao devia");
 			return null;
 		} else {
 			StringBuilder randomString = new StringBuilder("");

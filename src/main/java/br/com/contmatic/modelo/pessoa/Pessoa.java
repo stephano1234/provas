@@ -22,6 +22,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joda.time.LocalDate;
 
 import br.com.contmatic.anotacoes.CPFbr;
+import br.com.contmatic.anotacoes.CollectionComElementoNaoNulo;
+
 import br.com.contmatic.modelo.conta.Conta;
 import br.com.contmatic.modelo.contato.Celular;
 import br.com.contmatic.modelo.contato.Email;
@@ -38,7 +40,7 @@ public class Pessoa {
 	@Pattern(regexp = NOME_PESSOA, message = STRING_NOME_INVALIDO)
 	private String nome;
 
-	@NotNull(message = VALOR_NULO)
+	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<Endereco> enderecos;
 

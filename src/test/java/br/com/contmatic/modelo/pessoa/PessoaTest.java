@@ -3,6 +3,7 @@ package br.com.contmatic.modelo.pessoa;
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.ELEMENTOS_ARRAY_GERADA;
 
 import static br.com.contmatic.utilidades.MensagensErro.DATA_PASSADO;
+import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO;
 import static br.com.contmatic.utilidades.MensagensErro.STRING_CPF_INVALIDO;
 import static br.com.contmatic.utilidades.MensagensErro.STRING_NOME_INVALIDO;
 import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
@@ -238,13 +239,25 @@ public class PessoaTest {
     @Test
     public void nao_deve_aceitar_enderecos_nulo() {
     	pessoa.setEnderecos(null);
-    	assertTrue(verificaErro(pessoa, VALOR_NULO));
+    	assertTrue(verificaErro(pessoa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
     }
 
     @Test
-    public void deve_aceitar_enderecos_nao_nulo() {
+    public void nao_deve_aceitar_enderecos_vazio() {
+    	pessoa.setEnderecos(new HashSet<Endereco>());
+    	assertTrue(verificaErro(pessoa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_enderecos_com_elementos_nulos() {
+    	pessoa.getEnderecos().add(null);
+    	assertTrue(verificaErro(pessoa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    }
+    
+    @Test
+    public void deve_aceitar_enderecos_nao_nulo_e_nao_vazio_e_sem_elementos_nulos() {
     	pessoa.setEnderecos(enderecos);
-    	assertFalse(verificaErro(pessoa, VALOR_NULO));
+    	assertFalse(verificaErro(pessoa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
     }
     
     @Test

@@ -22,6 +22,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.joda.time.LocalDate;
 
 import br.com.contmatic.anotacoes.CNPJbr;
+import br.com.contmatic.anotacoes.CollectionComElementoNaoNulo;
+
 import br.com.contmatic.modelo.conta.Conta;
 import br.com.contmatic.modelo.contato.Celular;
 import br.com.contmatic.modelo.contato.Email;
@@ -44,14 +46,14 @@ public class Empresa {
 	@Past(message = DATA_PASSADO)
 	private LocalDate dataAbertura;
 
-	@NotNull(message = VALOR_NULO)
+	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<Pessoa> responsaveis;
 
 	@Valid
 	private Set<ContratoTrabalho> contratosTrabalho;
 
-	@NotNull(message = VALOR_NULO)
+	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<Endereco> enderecos;
 
