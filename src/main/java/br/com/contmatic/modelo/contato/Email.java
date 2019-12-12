@@ -2,7 +2,7 @@ package br.com.contmatic.modelo.contato;
 
 import static br.com.contmatic.utilidades.ConstantesString.EMAIL;
 
-import static br.com.contmatic.utilidades.MensagensErro.STRING_NAO_FORMATO_EMAIL;
+import static br.com.contmatic.utilidades.MensagensErro.EMAIL_INVALIDO;
 import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
 
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
@@ -16,7 +16,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class Email {
 
     @NotNull(message = VALOR_NULO)
-    @Pattern(regexp = EMAIL, message = STRING_NAO_FORMATO_EMAIL)
+    @Pattern(regexp = EMAIL, message = EMAIL_INVALIDO)
     private String endereco;
     
     public Email(String endereco) {

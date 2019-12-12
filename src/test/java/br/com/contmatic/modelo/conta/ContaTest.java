@@ -1,18 +1,23 @@
 package br.com.contmatic.modelo.conta;
 
-import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
-import static br.com.contmatic.utilidades.Verificadores.verificaErro;
-import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
 import static br.com.contmatic.utilidades.Verificadores.procuraAlgumErro;
+import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
+import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
+
+import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
+import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+import static pl.pojo.tester.api.assertion.Method.GETTER;
+import static pl.pojo.tester.api.assertion.Method.SETTER;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -23,15 +28,13 @@ import org.junit.Test;
 import br.com.contmatic.modelo.conta.Agencia;
 import br.com.contmatic.modelo.conta.Conta;
 import br.com.contmatic.modelo.conta.TipoConta;
-import br.com.contmatic.utilidades.MensagensErro;
+
 import br.com.contmatic.utilidades.templates.conta.AgenciaTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.conta.ContaTemplateFixtureFactory;
+
 import br.com.six2six.fixturefactory.Fixture;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
-
-import pl.pojo.tester.api.assertion.Method;
 
 public class ContaTest {
 
@@ -67,55 +70,31 @@ public class ContaTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_numero() {
         conta.setNumero(null);
-        assertTrue(verificaErro(conta, MensagensErro.VALOR_NULO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_nulo_no_numero() {
-        conta = Fixture.from(Conta.class).gimme("naoNuloNumero");
-        assertFalse(verificaErro(conta, MensagensErro.VALOR_NULO));
+        assertTrue(procuraAlgumErro(conta));
     }
     
     @Test
     public void nao_deve_aceitar_valor_vazio_no_numero() {
         conta.setNumero("");
-        assertTrue(verificaErro(conta, MensagensErro.STRING_VAZIO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_vazio_no_numero() {
-        conta = Fixture.from(Conta.class).gimme("naoVazioNumero");
-        assertFalse(verificaErro(conta, MensagensErro.STRING_VAZIO));
+        assertTrue(procuraAlgumErro(conta));
     }
     
     @Test
     public void nao_deve_aceitar_valor_maior_que_tamanho_no_numero() {
         conta = Fixture.from(Conta.class).gimme("maiorTamanhoNumero");
-        assertTrue(verificaErro(conta, MensagensErro.STRING_MAX));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_menor_ou_igual_que_tamanho_no_numero() {
-        conta = Fixture.from(Conta.class).gimme("menorIgualTamanhoNumero");
-        assertFalse(verificaErro(conta, MensagensErro.STRING_MAX));
-    }
-    
-    @Test
-    public void nao_deve_aceitar_valor_com_caractere_invalido_no_numero() {
-        conta = Fixture.from(Conta.class).gimme("comCaractereInvalidoNumero");
-        assertTrue(verificaErro(conta, MensagensErro.STRING_COM_ESPACO));
+        assertTrue(procuraAlgumErro(conta));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_numero() {
         conta = Fixture.from(Conta.class).gimme("comUmCaractereInvalidoNumero");
-        assertTrue(verificaErro(conta, MensagensErro.STRING_COM_ESPACO));
+        assertTrue(procuraAlgumErro(conta));
     }
     
     @Test
-    public void deve_aceitar_valor_sem_caractere_invalido_no_numero() {
-        conta = Fixture.from(Conta.class).gimme("semCaractereInvalidoNumero");
-        assertFalse(verificaErro(conta, MensagensErro.STRING_COM_ESPACO));
+    public void deve_aceitar_numero_valido() {
+        conta = Fixture.from(Conta.class).gimme("validoNumero");
+        assertFalse(procuraAlgumErro(conta));
     }
 
     //agencia
@@ -123,13 +102,13 @@ public class ContaTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_agencia() {
         conta.setAgencia(null);
-        assertTrue(verificaErro(conta, MensagensErro.VALOR_NULO));
+        assertTrue(procuraAlgumErro(conta));
     }
     
     @Test
     public void deve_aceitar_valor_nao_nulo_no_agencia() {
         conta.setAgencia(agencia);
-        assertFalse(verificaErro(conta, MensagensErro.VALOR_NULO));
+        assertFalse(procuraAlgumErro(conta));
     }
     
     @Test
@@ -149,13 +128,13 @@ public class ContaTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_tipoConta() {
         conta.setTipoConta(null);
-        assertTrue(verificaErro(conta, MensagensErro.VALOR_NULO));
+        assertTrue(procuraAlgumErro(conta));
     }
     
     @Test
     public void deve_aceitar_valor_nao_nulo_no_tipoConta() {
         conta.setTipoConta(TipoConta.CONTA_CORRENTE);
-        assertFalse(verificaErro(conta, MensagensErro.VALOR_NULO));
+        assertFalse(procuraAlgumErro(conta));
     }
     
     //getter e setter    
@@ -174,12 +153,12 @@ public class ContaTest {
     
     @Test
     public void deve_haver_metodo_get_publico_para_cada_atributo() {
-        assertPojoMethodsFor(Conta.class).testing(Method.GETTER).areWellImplemented();
+        assertPojoMethodsFor(Conta.class).testing(GETTER).areWellImplemented();
     }
     
     @Test
     public void deve_haver_metodo_set_publico_para_cada_atributo() {
-        assertPojoMethodsFor(Conta.class).testing(Method.SETTER).areWellImplemented();
+        assertPojoMethodsFor(Conta.class).testing(SETTER).areWellImplemented();
     }
     
     //construtor
@@ -187,7 +166,7 @@ public class ContaTest {
     @Test
     public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
         Object[] valores = {"123454321", agencia, TipoConta.CONTA_CORRENTE};
-        assertTrue(verificaConstrutor(conta, valores, String.class, Agencia.class, TipoConta.class));
+        assertTrue(verificaConstrutor(Conta.class, valores, String.class, Agencia.class, TipoConta.class));
     }
     
     //equals e hashcode
@@ -242,7 +221,7 @@ public class ContaTest {
         
     @Test
     public void verifica_consistencia_da_implementacao_do_metodo_equals_de_acordo_com_a_regra_estabelecida_de_comparacao() {
-        EqualsVerifier.forClass(Conta.class).suppress(Warning.NONFINAL_FIELDS, Warning.ALL_FIELDS_SHOULD_BE_USED).verify();
+        EqualsVerifier.forClass(Conta.class).suppress(NONFINAL_FIELDS, ALL_FIELDS_SHOULD_BE_USED).verify();
     }
     
     //toString

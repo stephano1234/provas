@@ -16,7 +16,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = CollectionComElementoNaoNuloValidador.class)
 public @interface CollectionComElementoNaoNulo {
     
-    String message() default MensagensErro.VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO;
+    String message() default MensagensErro.VAZIO_OU_COM_ELEMENTO_NULO;
 
     Class<?>[] groups() default {};
 

@@ -1,19 +1,17 @@
 package br.com.contmatic.utilidades.templates.contato;
 
-import static br.com.contmatic.utilidades.ConstantesTesteNumericas.EXCLUI_STRING_VAZIO;
-import static br.com.contmatic.utilidades.ConstantesTesteNumericas.INCLUI_STRING_VAZIO;
-import static br.com.contmatic.utilidades.ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS;
-import static br.com.contmatic.utilidades.ConstantesTesteString.APENAS_ESPACO;
 import static br.com.contmatic.utilidades.ConstantesTesteString.INVALIDOS_ANTES_PONTO;
 import static br.com.contmatic.utilidades.ConstantesTesteString.INVALIDOS_DEPOIS_PONTO;
+
 import static br.com.contmatic.utilidades.FuncoesRandomicas.apenasUmCaractere;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.emailAleatorio;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.naoCorresponde;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.somenteCaractere;
-import static br.com.contmatic.utilidades.FuncoesRandomicas.stringAleatoria;
+
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 import br.com.contmatic.modelo.contato.Email;
+
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
@@ -34,14 +32,6 @@ public class EmailTemplateFixtureFactory implements TemplateLoader {
         }});
         
         //endereco
-        
-        Fixture.of(Email.class).addTemplate("naoNuloEndereco").inherits("valido", new Rule() {{
-            add("endereco", stringAleatoria(nextInt(INCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), false));
-        }});
-                       
-        Fixture.of(Email.class).addTemplate("apenasEspacoEndereco").inherits("valido", new Rule() {{
-            add("endereco", somenteCaractere(nextInt(EXCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), APENAS_ESPACO));
-        }});
         
         Fixture.of(Email.class).addTemplate("semArrobaEndereco").inherits("valido", new Rule() {{
             add("endereco", emailAleatorio().replaceAll("@", ""));

@@ -56,7 +56,7 @@ public class FuncoesRandomicas {
 				"O tamanho da string gerada por apenasUmCaractere deve ser maior ou igual a um.");
 		Preconditions.checkNotNull(regexCaractere, "A expressão regular do caractere único deve ser informada.");
 		Preconditions.checkNotNull(regexCaracteres, "A expressão regular dos outros caracteres deve ser informada.");
-		int posicaoCaractere = RandomUtils.nextInt(0, tamanho - 1);
+		int posicaoCaractere = RandomUtils.nextInt(0, tamanho);
 		return somenteCaractere(posicaoCaractere, regexCaracteres) + somenteCaractere(1, regexCaractere)
 				+ somenteCaractere((tamanho - 1) - posicaoCaractere, regexCaracteres);
 	}

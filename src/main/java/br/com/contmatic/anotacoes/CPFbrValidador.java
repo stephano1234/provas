@@ -1,10 +1,10 @@
 package br.com.contmatic.anotacoes;
 
+import static br.com.contmatic.utilidades.ConstantesNumericas.CPF;
+import static br.com.contmatic.utilidades.ConstantesString.NUMERAL;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-
-import br.com.contmatic.utilidades.ConstantesNumericas;
-import br.com.contmatic.utilidades.ConstantesString;
 
 public class CPFbrValidador implements ConstraintValidator<CPFbr, String> {
 	
@@ -13,40 +13,43 @@ public class CPFbrValidador implements ConstraintValidator<CPFbr, String> {
 		if (value == null) {
 			return true;
 		}
-		int quantidadeCaracteres = value.length();
-		if (quantidadeCaracteres != ConstantesNumericas.CPF) {
+		if (!value.matches(NUMERAL + "{" + CPF + "}")) {
 			return false;
-		}
-		if (!value.matches(ConstantesString.APENAS_NUMERAL)) {
-			return false;
-		}
-		for (Integer numeroRepetido = 0; numeroRepetido < 10; numeroRepetido++) {
-			for (int i = 0; i < quantidadeCaracteres; i++) {
-				if (!value.substring(i, i + 1).equals(numeroRepetido.toString())) {
-					i = quantidadeCaracteres;
-				}
-				else {
-					if (i == quantidadeCaracteres - 1) {
-						return false;
-					}					
-				}
-			}
 		}		
-		int dig1 = Integer.parseInt(value.substring(9, 9 + 1));
-		int dig2 = Integer.parseInt(value.substring(10, 10 + 1));
+		return verificaNumerosTodosIguais(value) && verificaDigitosValidadores(value);
+	}
+
+	private boolean verificaDigitosValidadores(String value) {
+		int dig1 = Integer.parseInt(value.substring(CPF - 2, CPF - 1));
+		int dig2 = Integer.parseInt(value.substring(CPF - 1, CPF));
 		int soma = 0;
-		for (int i = 0; i < quantidadeCaracteres - 2; i++) {
+		for (int i = 0; i < CPF - 2; i++) {
 			soma += Integer.parseInt(value.substring(i, i + 1)) * (10 - i);
 		}
 		if ((((11 - (soma % 11)) % 11) % 10) != dig1) {
 			return false;
 		}
 		soma = 0;
-		for (int i = 0; i < quantidadeCaracteres - 1; i++) {
+		for (int i = 0; i < CPF - 1; i++) {
 			soma += Integer.parseInt(value.substring(i, i + 1)) * (11 - i);
 		}
-		if ((((11 - (soma % 11)) % 11) % 10) != dig2) {
-			return false;
+		return (((11 - (soma % 11)) % 11) % 10) == dig2;
+	}
+
+	private boolean verificaNumerosTodosIguais(String value) {
+		boolean possuiNumeroDiferente;
+		for (Integer numeroRepetido = 0; numeroRepetido < 10; numeroRepetido++) {
+			possuiNumeroDiferente = false;
+			for (int i = 0; i < CPF && !possuiNumeroDiferente; i++) {
+				if (!value.substring(i, i + 1).equals(numeroRepetido.toString())) {
+					possuiNumeroDiferente = true;
+				}
+				else {
+					if (i == CPF - 1) {
+						return false;
+					}					
+				}
+			}
 		}
 		return true;
 	}

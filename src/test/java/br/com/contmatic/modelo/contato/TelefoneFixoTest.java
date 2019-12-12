@@ -1,11 +1,7 @@
 package br.com.contmatic.modelo.contato;
 
-import static br.com.contmatic.utilidades.MensagensErro.STRING_DDD_INVALIDO;
-import static br.com.contmatic.utilidades.MensagensErro.STRING_TELEFONE_INVALIDO;
-import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
-
+import static br.com.contmatic.utilidades.Verificadores.procuraAlgumErro;
 import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
-import static br.com.contmatic.utilidades.Verificadores.verificaErro;
 import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
 
 import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
@@ -65,37 +61,31 @@ public class TelefoneFixoTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_ddd() {
         telefoneFixo.setDdd(null);
-        assertTrue(verificaErro(telefoneFixo, VALOR_NULO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_nulo_no_ddd() {
-        telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("naoNuloDdd");
-        assertFalse(verificaErro(telefoneFixo, VALOR_NULO));
+        assertTrue(procuraAlgumErro(telefoneFixo));
     }
     
     @Test
     public void nao_deve_aceitar_valor_maior_que_tamanho_no_ddd() {
         telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("maiorTamanhoDdd");
-        assertTrue(verificaErro(telefoneFixo, STRING_DDD_INVALIDO));
+        assertTrue(procuraAlgumErro(telefoneFixo));
     }
     
     @Test
     public void nao_deve_aceitar_valor_menor_que_tamanho_no_ddd() {
         telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("menorTamanhoDdd");
-        assertTrue(verificaErro(telefoneFixo, STRING_DDD_INVALIDO));
+        assertTrue(procuraAlgumErro(telefoneFixo));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_ddd() {
         telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("comUmCaractereInvalidoDdd");
-        assertTrue(verificaErro(telefoneFixo, STRING_DDD_INVALIDO));
+        assertTrue(procuraAlgumErro(telefoneFixo));
     }
     
     @Test
     public void deve_aceitar_ddd_valido() {
         telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("validoDdd");
-        assertFalse(verificaErro(telefoneFixo, STRING_DDD_INVALIDO));
+        assertFalse(procuraAlgumErro(telefoneFixo));
     }
     
     //numero
@@ -103,37 +93,31 @@ public class TelefoneFixoTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_numero() {
         telefoneFixo.setNumero(null);
-        assertTrue(verificaErro(telefoneFixo, VALOR_NULO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_nulo_no_numero() {
-        telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("naoNuloNumero");
-        assertFalse(verificaErro(telefoneFixo, VALOR_NULO));
+        assertTrue(procuraAlgumErro(telefoneFixo));
     }
     
     @Test
     public void nao_deve_aceitar_valor_maior_que_tamanho_no_numero() {
         telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("maiorTamanhoNumero");
-        assertTrue(verificaErro(telefoneFixo, STRING_TELEFONE_INVALIDO));
+        assertTrue(procuraAlgumErro(telefoneFixo));
     }
 
     @Test
     public void nao_deve_aceitar_valor_menor_que_tamanho_no_numero() {
         telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("menorTamanhoNumero");
-        assertTrue(verificaErro(telefoneFixo, STRING_TELEFONE_INVALIDO));
+        assertTrue(procuraAlgumErro(telefoneFixo));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_numero() {
         telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("comUmCaractereInvalidoNumero");
-        assertTrue(verificaErro(telefoneFixo, STRING_TELEFONE_INVALIDO));
+        assertTrue(procuraAlgumErro(telefoneFixo));
     }
     
     @Test
     public void deve_aceitar_numero_valido() {
         telefoneFixo = Fixture.from(TelefoneFixo.class).gimme("validoNumero");
-        assertFalse(verificaErro(telefoneFixo, STRING_TELEFONE_INVALIDO));
+        assertFalse(procuraAlgumErro(telefoneFixo));
     }
     
     //getter e setter    
@@ -165,7 +149,7 @@ public class TelefoneFixoTest {
     @Test
     public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
         Object[] valores = {"00", "00000000"};
-        assertTrue(verificaConstrutor(telefoneFixo, valores, String.class, String.class));
+        assertTrue(verificaConstrutor(TelefoneFixo.class, valores, String.class, String.class));
     }
     
     //equals e hashcode

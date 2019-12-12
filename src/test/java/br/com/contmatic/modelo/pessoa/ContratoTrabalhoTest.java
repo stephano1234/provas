@@ -1,11 +1,7 @@
 package br.com.contmatic.modelo.pessoa;
 
-import static br.com.contmatic.utilidades.MensagensErro.DATA_PASSADO;
-import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
-
 import static br.com.contmatic.utilidades.Verificadores.procuraAlgumErro;
 import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
-import static br.com.contmatic.utilidades.Verificadores.verificaErro;
 import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
 
 import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
@@ -71,13 +67,13 @@ public class ContratoTrabalhoTest {
     @Test
     public void nao_deve_aceitar_pessoa_nulo() {
     	contratoTrabalho.setPessoa(null);
-    	assertTrue(verificaErro(contratoTrabalho, VALOR_NULO));
+    	assertTrue(procuraAlgumErro(contratoTrabalho));
     }
 
     @Test
     public void deve_aceitar_pessoa_nao_nulo() {
     	contratoTrabalho.setPessoa(pessoa);
-    	assertFalse(verificaErro(contratoTrabalho, VALOR_NULO));
+    	assertFalse(procuraAlgumErro(contratoTrabalho));
     }
     
     @Test
@@ -97,13 +93,13 @@ public class ContratoTrabalhoTest {
     @Test
     public void nao_deve_aceitar_tipoContratoTrabalho_nulo() {
     	contratoTrabalho.setTipoContratoTrabalho(null);
-    	assertTrue(verificaErro(contratoTrabalho, VALOR_NULO));
+    	assertTrue(procuraAlgumErro(contratoTrabalho));
     }
 
     @Test
     public void deve_aceitar_tipoContratoTrabalho_nao_nulo() {
     	contratoTrabalho.setTipoContratoTrabalho(TipoContratoTrabalho.AUTONOMO);
-    	assertFalse(verificaErro(contratoTrabalho, VALOR_NULO));
+    	assertFalse(procuraAlgumErro(contratoTrabalho));
     }
     
     //dataInicioContrato
@@ -111,25 +107,19 @@ public class ContratoTrabalhoTest {
     @Test
     public void nao_deve_aceitar_dataInicioContrato_nulo() {
     	contratoTrabalho.setDataInicioContrato(null);
-    	assertTrue(verificaErro(contratoTrabalho, VALOR_NULO));
-    }
-
-    @Test
-    public void deve_aceitar_dataInicioContrato_nao_nulo() {
-    	contratoTrabalho = Fixture.from(ContratoTrabalho.class).gimme("dataInicioContratoQualquer");
-    	assertFalse(verificaErro(contratoTrabalho, VALOR_NULO));
+    	assertTrue(procuraAlgumErro(contratoTrabalho));
     }
     
     @Test
     public void nao_deve_aceitar_dataInicioContrato_futura() {
     	contratoTrabalho = Fixture.from(ContratoTrabalho.class).gimme("dataInicioContratoFutura");
-    	assertTrue(verificaErro(contratoTrabalho, DATA_PASSADO));
+    	assertTrue(procuraAlgumErro(contratoTrabalho));
     }
 
     @Test
     public void deve_aceitar_dataInicioContrato_passada() {
     	contratoTrabalho = Fixture.from(ContratoTrabalho.class).gimme("dataInicioContratoPassada");
-    	assertFalse(verificaErro(contratoTrabalho, DATA_PASSADO));
+    	assertFalse(procuraAlgumErro(contratoTrabalho));
     }
     
     //getter e setter    
@@ -167,7 +157,7 @@ public class ContratoTrabalhoTest {
     @Test
     public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
         Object[] valores = {pessoa, TipoContratoTrabalho.AUTONOMO, LocalDate.parse("1996-08-13")};
-        assertTrue(verificaConstrutor(contratoTrabalho, valores, Pessoa.class, TipoContratoTrabalho.class, LocalDate.class));
+        assertTrue(verificaConstrutor(ContratoTrabalho.class, valores, Pessoa.class, TipoContratoTrabalho.class, LocalDate.class));
     }
     
     //equals e hashcode

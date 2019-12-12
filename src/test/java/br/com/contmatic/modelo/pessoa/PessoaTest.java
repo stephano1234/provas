@@ -2,15 +2,8 @@ package br.com.contmatic.modelo.pessoa;
 
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.ELEMENTOS_ARRAY_GERADA;
 
-import static br.com.contmatic.utilidades.MensagensErro.DATA_PASSADO;
-import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO;
-import static br.com.contmatic.utilidades.MensagensErro.STRING_CPF_INVALIDO;
-import static br.com.contmatic.utilidades.MensagensErro.STRING_NOME_INVALIDO;
-import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
-
 import static br.com.contmatic.utilidades.Verificadores.procuraAlgumErro;
 import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
-import static br.com.contmatic.utilidades.Verificadores.verificaErro;
 import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
 
 import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
@@ -43,6 +36,7 @@ import br.com.contmatic.modelo.contato.Celular;
 import br.com.contmatic.modelo.contato.Email;
 import br.com.contmatic.modelo.contato.TelefoneFixo;
 import br.com.contmatic.modelo.endereco.Endereco;
+
 import br.com.contmatic.utilidades.templates.conta.ContaTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.contato.CelularTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.contato.EmailTemplateFixtureFactory;
@@ -61,25 +55,15 @@ public class PessoaTest {
     private Pessoa outroPessoa;
     
     private Set<Endereco> enderecos = new HashSet<Endereco>();
-
-    private Set<Endereco> enderecosInvalido = new HashSet<Endereco>();
     
     private Set<Celular> celulares = new HashSet<Celular>();
 
-    private Set<Celular> celularesInvalido = new HashSet<Celular>();
-    
     private Set<TelefoneFixo> telefonesFixo = new HashSet<TelefoneFixo>();
     
-    private Set<TelefoneFixo> telefonesFixoInvalido = new HashSet<TelefoneFixo>();
-
     private Set<Email> emails = new HashSet<Email>();
 
-    private Set<Email> emailsInvalido = new HashSet<Email>();
-    
     private Set<Conta> contas = new HashSet<Conta>();
     
-    private Set<Conta> contasInvalido = new HashSet<Conta>();
-
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         new PessoaTemplateFixtureFactory().load();
@@ -104,11 +88,6 @@ public class PessoaTest {
         	telefonesFixo.add(Fixture.from(TelefoneFixo.class).gimme("valido"));
         	emails.add(Fixture.from(Email.class).gimme("valido"));
         	contas.add(Fixture.from(Conta.class).gimme("valido"));
-        	enderecosInvalido.add(Fixture.from(Endereco.class).gimme("comUmCaractereInvalidoCep"));
-        	celularesInvalido.add(Fixture.from(Celular.class).gimme("comUmCaractereInvalidoNumero"));
-        	telefonesFixoInvalido.add(Fixture.from(TelefoneFixo.class).gimme("comUmCaractereInvalidoNumero"));
-        	emailsInvalido.add(Fixture.from(Email.class).gimme("comUmCaractereInvalidoAntesArrobaEndereco"));
-        	contasInvalido.add(Fixture.from(Conta.class).gimme("comUmCaractereInvalidoNumero"));
         }
     }
 
@@ -121,55 +100,43 @@ public class PessoaTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_cpf() {
         pessoa.setCpf(null);
-        assertTrue(verificaErro(pessoa, VALOR_NULO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_nulo_no_cpf() {
-        pessoa = Fixture.from(Pessoa.class).gimme("naoNuloCpf");
-        assertFalse(verificaErro(pessoa, VALOR_NULO));
+        assertTrue(procuraAlgumErro(pessoa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_maior_que_tamanho_no_cpf() {
         pessoa = Fixture.from(Pessoa.class).gimme("maiorTamanhoCpf");
-        assertTrue(verificaErro(pessoa, STRING_CPF_INVALIDO));
+        assertTrue(procuraAlgumErro(pessoa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_menor_que_tamanho_no_cpf() {
         pessoa = Fixture.from(Pessoa.class).gimme("menorTamanhoCpf");
-        assertTrue(verificaErro(pessoa, STRING_CPF_INVALIDO));
-    }
-        
-    @Test
-    public void nao_deve_aceitar_valor_com_caractere_invalido_no_cpf() {
-        pessoa = Fixture.from(Pessoa.class).gimme("comCaractereInvalidoCpf");
-        assertTrue(verificaErro(pessoa, STRING_CPF_INVALIDO));
+        assertTrue(procuraAlgumErro(pessoa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_cpf() {
         pessoa = Fixture.from(Pessoa.class).gimme("comUmCaractereInvalidoCpf");
-        assertTrue(verificaErro(pessoa, STRING_CPF_INVALIDO));
+        assertTrue(procuraAlgumErro(pessoa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_apenas_numeros_repetidos_no_cpf() {
         pessoa = Fixture.from(Pessoa.class).gimme("numerosRepetidosCpf");
-        assertTrue(verificaErro(pessoa, STRING_CPF_INVALIDO));
+        assertTrue(procuraAlgumErro(pessoa));
     }
     
     @Test
     public void nao_deve_aceitar_cpf_com_um_digito_verificador_invalido() {
         pessoa = Fixture.from(Pessoa.class).gimme("comUmDigitoVerificadorInvalidoCpf");
-        assertTrue(verificaErro(pessoa, STRING_CPF_INVALIDO));
+        assertTrue(procuraAlgumErro(pessoa));
     }    
     
     @Test
     public void deve_aceitar_cpf_valido() {
         pessoa = Fixture.from(Pessoa.class).gimme("cpfValido");
-        assertFalse(verificaErro(pessoa, STRING_CPF_INVALIDO));
+        assertFalse(procuraAlgumErro(pessoa));
     }
     
     //nome
@@ -177,61 +144,61 @@ public class PessoaTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_nome() {
         pessoa.setNome(null);
-        assertTrue(verificaErro(pessoa, VALOR_NULO));
+        assertTrue(procuraAlgumErro(pessoa));
     }
     
     @Test
-    public void deve_aceitar_valor_nao_nulo_no_nome() {
-        pessoa = Fixture.from(Pessoa.class).gimme("naoNuloNome");
-        assertFalse(verificaErro(pessoa, VALOR_NULO));
-    }
-
-    @Test
     public void nao_deve_aceitar_valor_vazio_no_nome() {
     	pessoa.setNome("");
-        assertTrue(verificaErro(pessoa, STRING_NOME_INVALIDO));
+        assertTrue(procuraAlgumErro(pessoa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_maior_que_tamanho_no_nome() {
         pessoa = Fixture.from(Pessoa.class).gimme("maiorTamanhoNome");
-        assertTrue(verificaErro(pessoa, STRING_NOME_INVALIDO));
+        assertTrue(procuraAlgumErro(pessoa));
+    }
+
+    @Test
+    public void nao_deve_aceitar_valor_com_apenas_espaco_no_nome() {
+        pessoa = Fixture.from(Pessoa.class).gimme("apenasEspacoNome");
+        assertTrue(procuraAlgumErro(pessoa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_primeiro_caractere_invalido_no_nome() {
         pessoa = Fixture.from(Pessoa.class).gimme("comPrimeiroCaractereInvalido");
-        assertTrue(verificaErro(pessoa, STRING_NOME_INVALIDO));
+        assertTrue(procuraAlgumErro(pessoa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_nome() {
         pessoa = Fixture.from(Pessoa.class).gimme("comUmCaractereInvalidoNome");
-        assertTrue(verificaErro(pessoa, STRING_NOME_INVALIDO));
+        assertTrue(procuraAlgumErro(pessoa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_dois_espacos_juntos_no_nome() {
         pessoa = Fixture.from(Pessoa.class).gimme("comEspacoDuploNome");
-        assertTrue(verificaErro(pessoa, STRING_NOME_INVALIDO));
+        assertTrue(procuraAlgumErro(pessoa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_primeiro_caractere_espaco_no_nome() {
         pessoa = Fixture.from(Pessoa.class).gimme("comEspacoInicioNome");
-        assertTrue(verificaErro(pessoa, STRING_NOME_INVALIDO));
+        assertTrue(procuraAlgumErro(pessoa));
     }
 
     @Test
     public void nao_deve_aceitar_valor_com_ultimo_caractere_espaco_no_nome() {
         pessoa = Fixture.from(Pessoa.class).gimme("comEspacoFimNome");
-        assertTrue(verificaErro(pessoa, STRING_NOME_INVALIDO));
+        assertTrue(procuraAlgumErro(pessoa));
     }
 
     @Test
     public void deve_aceitar_nome_valido() {
-        pessoa = Fixture.from(Pessoa.class).gimme("nomeValido");
-        assertFalse(verificaErro(pessoa, STRING_NOME_INVALIDO));
+        pessoa = Fixture.from(Pessoa.class).gimme("validoNome");
+        assertFalse(procuraAlgumErro(pessoa));
     }
         
     //enderecos
@@ -239,35 +206,29 @@ public class PessoaTest {
     @Test
     public void nao_deve_aceitar_enderecos_nulo() {
     	pessoa.setEnderecos(null);
-    	assertTrue(verificaErro(pessoa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    	assertTrue(procuraAlgumErro(pessoa));
     }
-
+    
     @Test
     public void nao_deve_aceitar_enderecos_vazio() {
     	pessoa.setEnderecos(new HashSet<Endereco>());
-    	assertTrue(verificaErro(pessoa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    	assertTrue(procuraAlgumErro(pessoa));
     }
     
     @Test
-    public void nao_deve_aceitar_enderecos_com_elementos_nulos() {
+    public void nao_deve_aceitar_enderecos_com_pelo_menos_um_elemento_nulo() {
     	pessoa.getEnderecos().add(null);
-    	assertTrue(verificaErro(pessoa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    	assertTrue(procuraAlgumErro(pessoa));
     }
     
     @Test
-    public void deve_aceitar_enderecos_nao_nulo_e_nao_vazio_e_sem_elementos_nulos() {
-    	pessoa.setEnderecos(enderecos);
-    	assertFalse(verificaErro(pessoa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
-    }
-    
-    @Test
-    public void nao_deve_aceitar_enderecos_invalido() {
-    	pessoa.setEnderecos(enderecosInvalido);
+    public void nao_deve_aceitar_enderecos_com_elemento_invalido() {
+    	pessoa.getEnderecos().add(Fixture.from(Endereco.class).gimme("comUmCaractereInvalidoCep"));
     	assertTrue(procuraAlgumErro(pessoa));
     }
 
     @Test
-    public void deve_aceitar_enderecos_valido() {
+    public void deve_aceitar_enderecos_nao_vazio_sem_elemento_nulo_apenas_elemento_valido() {
     	pessoa.setEnderecos(enderecos);
     	assertFalse(procuraAlgumErro(pessoa));
     }
@@ -277,37 +238,49 @@ public class PessoaTest {
     @Test
     public void nao_deve_aceitar_dataNascimento_nulo() {
     	pessoa.setDataNascimento(null);
-    	assertTrue(verificaErro(pessoa, VALOR_NULO));
-    }
-
-    @Test
-    public void deve_aceitar_dataNascimento_nao_nulo() {
-    	pessoa = Fixture.from(Pessoa.class).gimme("dataNascimentoQualquer");
-    	assertFalse(verificaErro(pessoa, VALOR_NULO));
+    	assertTrue(procuraAlgumErro(pessoa));
     }
     
     @Test
     public void nao_deve_aceitar_dataNascimento_futura() {
     	pessoa = Fixture.from(Pessoa.class).gimme("dataNascimentoFutura");
-    	assertTrue(verificaErro(pessoa, DATA_PASSADO));
+    	assertTrue(procuraAlgumErro(pessoa));
     }
 
     @Test
     public void deve_aceitar_dataNascimento_passada() {
     	pessoa = Fixture.from(Pessoa.class).gimme("dataNascimentoPassada");
-    	assertFalse(verificaErro(pessoa, DATA_PASSADO));
+    	assertFalse(procuraAlgumErro(pessoa));
     }
 
     //celulares
     
     @Test
-    public void nao_deve_aceitar_celulares_invalido() {
-    	pessoa.setCelulares(celularesInvalido);
+    public void deve_aceitar_celulares_nulo() {
+    	pessoa.setCelulares(null);
+    	assertFalse(procuraAlgumErro(pessoa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_celulares_vazio() {
+    	pessoa.setCelulares(new HashSet<Celular>());
+    	assertTrue(procuraAlgumErro(pessoa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_celulares_com_pelo_menos_um_elemento_nulo() {
+    	pessoa.getCelulares().add(null);
+    	assertTrue(procuraAlgumErro(pessoa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_celulares_com_elemento_invalido() {
+    	pessoa.getCelulares().add(Fixture.from(Celular.class).gimme("comUmCaractereInvalidoNumero"));
     	assertTrue(procuraAlgumErro(pessoa));
     }
 
     @Test
-    public void deve_aceitar_celulares_valido() {
+    public void deve_aceitar_celulares_nao_vazio_sem_elemento_nulo_apenas_elemento_valido() {
     	pessoa.setCelulares(celulares);
     	assertFalse(procuraAlgumErro(pessoa));
     }
@@ -315,13 +288,31 @@ public class PessoaTest {
     //telefonesFixo
     
     @Test
-    public void nao_deve_aceitar_telefonesFixo_invalido() {
-    	pessoa.setTelefonesFixo(telefonesFixoInvalido);
+    public void deve_aceitar_telefonesFixo_nulo() {
+    	pessoa.setTelefonesFixo(null);
+    	assertFalse(procuraAlgumErro(pessoa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_telefonesFixo_vazio() {
+    	pessoa.setTelefonesFixo(new HashSet<TelefoneFixo>());
+    	assertTrue(procuraAlgumErro(pessoa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_telefonesFixo_com_pelo_menos_um_elemento_nulo() {
+    	pessoa.getTelefonesFixo().add(null);
+    	assertTrue(procuraAlgumErro(pessoa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_telefonesFixo_com_elemento_invalido() {
+    	pessoa.getTelefonesFixo().add(Fixture.from(TelefoneFixo.class).gimme("comUmCaractereInvalidoNumero"));
     	assertTrue(procuraAlgumErro(pessoa));
     }
 
     @Test
-    public void deve_aceitar_telefonesFixo_valido() {
+    public void deve_aceitar_telefonesFixo_nao_vazio_sem_elemento_nulo_apenas_elemento_valido() {
     	pessoa.setTelefonesFixo(telefonesFixo);
     	assertFalse(procuraAlgumErro(pessoa));
     }
@@ -329,13 +320,31 @@ public class PessoaTest {
     //emails
     
     @Test
-    public void nao_deve_aceitar_emails_invalido() {
-    	pessoa.setEmails(emailsInvalido);
+    public void deve_aceitar_emails_nulo() {
+    	pessoa.setEmails(null);
+    	assertFalse(procuraAlgumErro(pessoa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_emails_vazio() {
+    	pessoa.setEmails(new HashSet<Email>());
+    	assertTrue(procuraAlgumErro(pessoa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_emails_com_pelo_menos_um_elemento_nulo() {
+    	pessoa.getEmails().add(null);
+    	assertTrue(procuraAlgumErro(pessoa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_emails_com_elemento_invalido() {
+    	pessoa.getEmails().add(Fixture.from(Email.class).gimme("comUmCaractereInvalidoAntesArrobaEndereco"));
     	assertTrue(procuraAlgumErro(pessoa));
     }
 
     @Test
-    public void deve_aceitar_emails_valido() {
+    public void deve_aceitar_emails_nao_vazio_sem_elemento_nulo_apenas_elemento_valido() {
     	pessoa.setEmails(emails);
     	assertFalse(procuraAlgumErro(pessoa));
     }
@@ -345,13 +354,13 @@ public class PessoaTest {
     @Test
     public void nao_deve_aceitar_tipoGrauInstrucao_nulo() {
     	pessoa.setTipoGrauInstrucao(null);
-    	assertTrue(verificaErro(pessoa, VALOR_NULO));
+    	assertTrue(procuraAlgumErro(pessoa));
     }
 
     @Test
     public void deve_aceitar_tipoGrauInstrucao_nao_nulo() {
     	pessoa.setTipoGrauInstrucao(TipoGrauInstrucao.ANALFABETO);
-    	assertFalse(verificaErro(pessoa, VALOR_NULO));
+    	assertFalse(procuraAlgumErro(pessoa));
     }
 
     //tipoEstadoCivil
@@ -359,13 +368,13 @@ public class PessoaTest {
     @Test
     public void nao_deve_aceitar_tipoEstadoCivil_nulo() {
     	pessoa.setTipoEstadoCivil(null);
-    	assertTrue(verificaErro(pessoa, VALOR_NULO));
+    	assertTrue(procuraAlgumErro(pessoa));
     }
 
     @Test
     public void deve_aceitar_tipoEstadoCivil_nao_nulo() {
     	pessoa.setTipoEstadoCivil(TipoEstadoCivil.CASADO);
-    	assertFalse(verificaErro(pessoa, VALOR_NULO));
+    	assertFalse(procuraAlgumErro(pessoa));
     }
 
     //tipoSexo
@@ -373,25 +382,43 @@ public class PessoaTest {
     @Test
     public void nao_deve_aceitar_tipoSexo_nulo() {
     	pessoa.setTipoSexo(null);
-    	assertTrue(verificaErro(pessoa, VALOR_NULO));
+    	assertTrue(procuraAlgumErro(pessoa));
     }
 
     @Test
     public void deve_aceitar_tipoSexo_nao_nulo() {
     	pessoa.setTipoSexo(TipoSexo.FEMININO);
-    	assertFalse(verificaErro(pessoa, VALOR_NULO));
+    	assertFalse(procuraAlgumErro(pessoa));
     }
 
     //contas
     
     @Test
-    public void nao_deve_aceitar_contas_invalido() {
-    	pessoa.setContas(contasInvalido);
+    public void deve_aceitar_contas_nulo() {
+    	pessoa.setContas(null);
+    	assertFalse(procuraAlgumErro(pessoa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_contas_vazio() {
+    	pessoa.setContas(new HashSet<Conta>());
+    	assertTrue(procuraAlgumErro(pessoa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_contas_com_pelo_menos_um_elemento_nulo() {
+    	pessoa.getContas().add(null);
+    	assertTrue(procuraAlgumErro(pessoa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_contas_com_elemento_invalido() {
+    	pessoa.getContas().add(Fixture.from(Conta.class).gimme("comUmCaractereInvalidoNumero"));
     	assertTrue(procuraAlgumErro(pessoa));
     }
 
     @Test
-    public void deve_aceitar_contas_valido() {
+    public void deve_aceitar_contas_nao_vazio_sem_elemento_nulo_apenas_elemento_valido() {
     	pessoa.setContas(contas);
     	assertFalse(procuraAlgumErro(pessoa));
     }
@@ -479,7 +506,7 @@ public class PessoaTest {
     @Test
     public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
         Object[] valores = {"28361440844", "Gabriel Marques", enderecos, LocalDate.parse("1990-02-12"), TipoGrauInstrucao.ANALFABETO, TipoEstadoCivil.CASADO, TipoSexo.FEMININO};
-        assertTrue(verificaConstrutor(pessoa, valores, String.class, String.class, Set.class, LocalDate.class, TipoGrauInstrucao.class, TipoEstadoCivil.class, TipoSexo.class));
+        assertTrue(verificaConstrutor(Pessoa.class, valores, String.class, String.class, Set.class, LocalDate.class, TipoGrauInstrucao.class, TipoEstadoCivil.class, TipoSexo.class));
     }
     
     //equals e hashcode

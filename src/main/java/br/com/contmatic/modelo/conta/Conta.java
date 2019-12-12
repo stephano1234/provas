@@ -1,31 +1,30 @@
 package br.com.contmatic.modelo.conta;
 
+import static br.com.contmatic.utilidades.ConstantesString.NUMERO_CONTA;
+
+import static br.com.contmatic.utilidades.MensagensErro.NUMERO_CONTA_INVALIDO;
+import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
+
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
-
-import br.com.contmatic.anotacoes.NaoVazio;
-import br.com.contmatic.utilidades.ConstantesNumericas;
-import br.com.contmatic.utilidades.ConstantesString;
-import br.com.contmatic.utilidades.MensagensErro;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class Conta {
 
-    @NotNull(message = MensagensErro.VALOR_NULO)
-    @NaoVazio
-    @Size(max = ConstantesNumericas.MAX_NUMERO_CONTA, message = MensagensErro.STRING_MAX)
-    @Pattern(regexp = ConstantesString.SEM_ESPACO, message = MensagensErro.STRING_COM_ESPACO)
+    @NotNull(message = VALOR_NULO)
+    @Pattern(regexp = NUMERO_CONTA, message = NUMERO_CONTA_INVALIDO)
     private String numero;
     
-    @NotNull(message = MensagensErro.VALOR_NULO)
+    @NotNull(message = VALOR_NULO)
     @Valid
     private Agencia agencia;
     
-    @NotNull(message = MensagensErro.VALOR_NULO)
+    @NotNull(message = VALOR_NULO)
     private TipoConta tipoConta;
 
     public Conta(String numero, Agencia agencia, TipoConta tipoConta) {
@@ -83,7 +82,7 @@ public class Conta {
     
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+        return new ToStringBuilder(this, JSON_STYLE)
                 .append("numero", numero)
                 .append("agencia", agencia)
                 .append("tipoConta", tipoConta)

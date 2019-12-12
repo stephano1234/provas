@@ -3,7 +3,7 @@ package br.com.contmatic.utilidades;
 public class ConstantesNumericas {
    
     //geral
-    public static final int CAMPO_REGULAR = 100;
+    public static final int TAMANHO_REGULAR = 100;
     
     //endereco
     public static final int CEP = 8;

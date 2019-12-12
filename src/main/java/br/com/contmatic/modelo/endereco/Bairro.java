@@ -1,29 +1,27 @@
 package br.com.contmatic.modelo.endereco;
 
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import static br.com.contmatic.utilidades.ConstantesString.NOME;
 
-import br.com.contmatic.anotacoes.NaoApenas;
-import br.com.contmatic.anotacoes.NaoVazio;
-import br.com.contmatic.utilidades.ConstantesNumericas;
-import br.com.contmatic.utilidades.ConstantesString;
-import br.com.contmatic.utilidades.MensagensErro;
+import static br.com.contmatic.utilidades.MensagensErro.NOME_INVALIDO;
+import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
+
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class Bairro {
 
-    @NotNull(message = MensagensErro.VALOR_NULO)
-    @NaoVazio
-    @Size(max = ConstantesNumericas.CAMPO_REGULAR, message = MensagensErro.STRING_MAX)
-    @NaoApenas
-    @Pattern(regexp = ConstantesString.SEM_CARACTERE_ESPECIAL, message = MensagensErro.STRING_CARACTERE_ESPECIAL)
+    @NotNull(message = VALOR_NULO)
+    @Pattern(regexp = NOME, message = NOME_INVALIDO)
     private String nome;
     
-    @NotNull(message = MensagensErro.VALOR_NULO)
+    @NotNull(message = VALOR_NULO)
     @Valid
     private Cidade cidade;
     
@@ -73,7 +71,7 @@ public class Bairro {
     
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+        return new ToStringBuilder(this, JSON_STYLE)
                 .append("nome", nome)
                 .append("cidade", cidade)
                 .toString();

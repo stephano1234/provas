@@ -1,9 +1,9 @@
 package br.com.contmatic.modelo.pessoa;
 
-import static br.com.contmatic.utilidades.ConstantesString.NOME_PESSOA;
+import static br.com.contmatic.utilidades.ConstantesString.NOME;
 
 import static br.com.contmatic.utilidades.MensagensErro.DATA_PASSADO;
-import static br.com.contmatic.utilidades.MensagensErro.STRING_NOME_INVALIDO;
+import static br.com.contmatic.utilidades.MensagensErro.NOME_INVALIDO;
 import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
 
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
@@ -37,9 +37,10 @@ public class Pessoa {
 	private String cpf;
 
 	@NotNull(message = VALOR_NULO)
-	@Pattern(regexp = NOME_PESSOA, message = STRING_NOME_INVALIDO)
+	@Pattern(regexp = NOME, message = NOME_INVALIDO)
 	private String nome;
 
+	@NotNull(message = VALOR_NULO)
 	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<Endereco> enderecos;
@@ -48,12 +49,15 @@ public class Pessoa {
 	@Past(message = DATA_PASSADO)
 	private LocalDate dataNascimento;
 
+	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<Celular> celulares;
 	
+	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<TelefoneFixo> telefonesFixo;
 
+	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<Email> emails;
 
@@ -66,6 +70,7 @@ public class Pessoa {
 	@NotNull(message = VALOR_NULO)
 	private TipoSexo tipoSexo;
 	
+	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<Conta> contas;
 

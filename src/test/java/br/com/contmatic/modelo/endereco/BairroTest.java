@@ -1,18 +1,23 @@
 package br.com.contmatic.modelo.endereco;
 
-import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
-import static br.com.contmatic.utilidades.Verificadores.verificaErro;
-import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
 import static br.com.contmatic.utilidades.Verificadores.procuraAlgumErro;
+import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
+import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
+
+import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
+import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+import static pl.pojo.tester.api.assertion.Method.GETTER;
+import static pl.pojo.tester.api.assertion.Method.SETTER;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -22,15 +27,13 @@ import org.junit.Test;
 
 import br.com.contmatic.modelo.endereco.Bairro;
 import br.com.contmatic.modelo.endereco.Cidade;
-import br.com.contmatic.utilidades.MensagensErro;
+
 import br.com.contmatic.utilidades.templates.endereco.BairroTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.endereco.CidadeTemplateFixtureFactory;
+
 import br.com.six2six.fixturefactory.Fixture;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
-
-import pl.pojo.tester.api.assertion.Method;
 
 public class BairroTest {
     
@@ -66,87 +69,75 @@ public class BairroTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_nome() {
         bairro.setNome(null);
-        assertTrue(verificaErro(bairro, MensagensErro.VALOR_NULO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_nulo_no_nome() {
-        bairro = Fixture.from(Bairro.class).gimme("naoNuloNome");
-        assertFalse(verificaErro(bairro, MensagensErro.VALOR_NULO));
+        assertTrue(procuraAlgumErro(bairro));
     }
     
     @Test
     public void nao_deve_aceitar_valor_vazio_no_nome() {
-        bairro.setNome("");
-        assertTrue(verificaErro(bairro, MensagensErro.STRING_VAZIO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_vazio_no_nome() {
-        bairro = Fixture.from(Bairro.class).gimme("naoVazioNome");
-        assertFalse(verificaErro(bairro, MensagensErro.STRING_VAZIO));
+    	bairro.setNome("");
+        assertTrue(procuraAlgumErro(bairro));
     }
     
     @Test
     public void nao_deve_aceitar_valor_maior_que_tamanho_no_nome() {
         bairro = Fixture.from(Bairro.class).gimme("maiorTamanhoNome");
-        assertTrue(verificaErro(bairro, MensagensErro.STRING_MAX));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_menor_ou_igual_que_tamanho_no_nome() {
-        bairro = Fixture.from(Bairro.class).gimme("menorIgualTamanhoNome");
-        assertFalse(verificaErro(bairro, MensagensErro.STRING_MAX));
-    }
-    
-    @Test
-    public void nao_deve_aceitar_valor_com_apenas_espaco_no_nome() {
-        bairro = Fixture.from(Bairro.class).gimme("apenasEspacoNome");
-        assertTrue(verificaErro(bairro, MensagensErro.STRING_APENAS_ESPACO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_com_caractere_nao_espaco_no_nome() {
-        bairro = Fixture.from(Bairro.class).gimme("naoApenasEspacoNome");
-        assertFalse(verificaErro(bairro, MensagensErro.STRING_APENAS_ESPACO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_com_um_caractere_nao_espaco_no_nome() {
-        bairro = Fixture.from(Bairro.class).gimme("umNaoEspacoNome");
-        assertFalse(verificaErro(bairro, MensagensErro.STRING_APENAS_ESPACO));
+        assertTrue(procuraAlgumErro(bairro));
     }
 
     @Test
-    public void nao_deve_aceitar_valor_com_caractere_invalido_no_nome() {
-        bairro = Fixture.from(Bairro.class).gimme("comCaractereInvalidoNome");
-        assertTrue(verificaErro(bairro, MensagensErro.STRING_CARACTERE_ESPECIAL));
+    public void nao_deve_aceitar_valor_com_apenas_espaco_no_nome() {
+        bairro = Fixture.from(Bairro.class).gimme("apenasEspacoNome");
+        assertTrue(procuraAlgumErro(bairro));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_com_primeiro_caractere_invalido_no_nome() {
+        bairro = Fixture.from(Bairro.class).gimme("comPrimeiroCaractereInvalido");
+        assertTrue(procuraAlgumErro(bairro));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_nome() {
         bairro = Fixture.from(Bairro.class).gimme("comUmCaractereInvalidoNome");
-        assertTrue(verificaErro(bairro, MensagensErro.STRING_CARACTERE_ESPECIAL));
+        assertTrue(procuraAlgumErro(bairro));
     }
     
     @Test
-    public void deve_aceitar_valor_sem_caractere_invalido_no_nome() {
-        bairro = Fixture.from(Bairro.class).gimme("semCaractereInvalidoNome");
-        assertFalse(verificaErro(bairro, MensagensErro.STRING_CARACTERE_ESPECIAL));
+    public void nao_deve_aceitar_valor_com_dois_espacos_juntos_no_nome() {
+        bairro = Fixture.from(Bairro.class).gimme("comEspacoDuploNome");
+        assertTrue(procuraAlgumErro(bairro));
     }
     
+    @Test
+    public void nao_deve_aceitar_valor_com_primeiro_caractere_espaco_no_nome() {
+        bairro = Fixture.from(Bairro.class).gimme("comEspacoInicioNome");
+        assertTrue(procuraAlgumErro(bairro));
+    }
+
+    @Test
+    public void nao_deve_aceitar_valor_com_ultimo_caractere_espaco_no_nome() {
+        bairro = Fixture.from(Bairro.class).gimme("comEspacoFimNome");
+        assertTrue(procuraAlgumErro(bairro));
+    }
+
+    @Test
+    public void deve_aceitar_nome_valido() {
+        bairro = Fixture.from(Bairro.class).gimme("validoNome");
+        assertFalse(procuraAlgumErro(bairro));
+    }
+        
     //cidade
     
     @Test
     public void nao_deve_aceitar_valor_nulo_no_cidade() {
         bairro.setCidade(null);
-        assertTrue(verificaErro(bairro, MensagensErro.VALOR_NULO));
+        assertTrue(procuraAlgumErro(bairro));
     }
     
     @Test
     public void deve_aceitar_valor_nao_nulo_no_cidade() {
         bairro.setCidade(cidade);
-        assertFalse(verificaErro(bairro, MensagensErro.VALOR_NULO));
+        assertFalse(procuraAlgumErro(bairro));
     }
     
     @Test
@@ -177,12 +168,12 @@ public class BairroTest {
     
     @Test
     public void deve_haver_metodo_get_publico_para_cada_atributo() {
-        assertPojoMethodsFor(Bairro.class).testing(Method.GETTER).areWellImplemented();
+        assertPojoMethodsFor(Bairro.class).testing(GETTER).areWellImplemented();
     }
     
     @Test
     public void deve_haver_metodo_set_publico_para_cada_atributo() {
-        assertPojoMethodsFor(Bairro.class).testing(Method.SETTER).areWellImplemented();
+        assertPojoMethodsFor(Bairro.class).testing(SETTER).areWellImplemented();
     }
     
     //construtor
@@ -190,7 +181,7 @@ public class BairroTest {
     @Test
     public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
         Object[] valores = {"Itaim Bibi", cidade};
-        assertTrue(verificaConstrutor(bairro, valores, String.class, Cidade.class));
+        assertTrue(verificaConstrutor(Bairro.class, valores, String.class, Cidade.class));
     }
     
     //equals e hashcode
@@ -245,7 +236,7 @@ public class BairroTest {
     
     @Test
     public void verifica_consistencia_da_implementacao_do_metodo_equals_de_acordo_com_a_regra_estabelecida_de_comparacao() {
-        EqualsVerifier.forClass(Bairro.class).suppress(Warning.NONFINAL_FIELDS, Warning.ALL_FIELDS_SHOULD_BE_USED).verify();
+        EqualsVerifier.forClass(Bairro.class).suppress(NONFINAL_FIELDS, ALL_FIELDS_SHOULD_BE_USED).verify();
     }
     
     //toString

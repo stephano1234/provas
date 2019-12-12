@@ -1,16 +1,15 @@
 package br.com.contmatic.utilidades.templates.contato;
 
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.DDD;
-import static br.com.contmatic.utilidades.ConstantesTesteNumericas.EXCLUI_STRING_VAZIO;
-import static br.com.contmatic.utilidades.ConstantesTesteNumericas.INCLUI_STRING_VAZIO;
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.NUMERO_TELEFONE;
-import static br.com.contmatic.utilidades.ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS;
+
 import static br.com.contmatic.utilidades.ConstantesTesteString.APENAS_NUMERAL;
+
 import static br.com.contmatic.utilidades.FuncoesRandomicas.apenasUmCaractere;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.somenteCaractere;
-import static br.com.contmatic.utilidades.FuncoesRandomicas.stringAleatoria;
-import static org.apache.commons.lang3.RandomUtils.nextInt;
+
 import br.com.contmatic.modelo.contato.TelefoneFixo;
+
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
@@ -34,16 +33,12 @@ public class TelefoneFixoTemplateFixtureFactory implements TemplateLoader {
         
         //ddd
         
-        Fixture.of(TelefoneFixo.class).addTemplate("naoNuloDdd").inherits("valido", new Rule() {{
-            add("ddd", stringAleatoria(nextInt(INCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), false));
-        }});
-        
         Fixture.of(TelefoneFixo.class).addTemplate("maiorTamanhoDdd").inherits("valido", new Rule() {{
-            add("ddd", stringAleatoria(nextInt(DDD + 1, VALOR_UNIVERSO_CHAR_GERADOS), false));
+            add("ddd", somenteCaractere(DDD + 1, APENAS_NUMERAL));
         }});
         
         Fixture.of(TelefoneFixo.class).addTemplate("menorTamanhoDdd").inherits("valido", new Rule() {{
-            add("ddd", stringAleatoria(nextInt(EXCLUI_STRING_VAZIO, DDD), false));
+            add("ddd", somenteCaractere(DDD - 1, APENAS_NUMERAL));
         }});
         
         Fixture.of(TelefoneFixo.class).addTemplate("comUmCaractereInvalidoDdd").inherits("valido", new Rule() {{
@@ -56,16 +51,12 @@ public class TelefoneFixoTemplateFixtureFactory implements TemplateLoader {
         
         //numero
         
-        Fixture.of(TelefoneFixo.class).addTemplate("naoNuloNumero").inherits("valido", new Rule() {{
-            add("numero", stringAleatoria(nextInt(INCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), false));
-        }});
-        
         Fixture.of(TelefoneFixo.class).addTemplate("maiorTamanhoNumero").inherits("valido", new Rule() {{
-            add("numero", stringAleatoria(nextInt(NUMERO_TELEFONE + 1, VALOR_UNIVERSO_CHAR_GERADOS), false));
+            add("numero", somenteCaractere(NUMERO_TELEFONE + 1, APENAS_NUMERAL));
         }});
         
         Fixture.of(TelefoneFixo.class).addTemplate("menorTamanhoNumero").inherits("valido", new Rule() {{
-            add("numero", stringAleatoria(nextInt(EXCLUI_STRING_VAZIO, NUMERO_TELEFONE), false));
+            add("numero", somenteCaractere(NUMERO_TELEFONE - 1, APENAS_NUMERAL));
         }});
         
         Fixture.of(TelefoneFixo.class).addTemplate("comUmCaractereInvalidoNumero").inherits("valido", new Rule() {{

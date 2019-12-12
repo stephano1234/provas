@@ -1,12 +1,14 @@
 package br.com.contmatic.utilidades.templates.conta;
 
-import org.apache.commons.lang3.RandomUtils;
+import static br.com.contmatic.utilidades.ConstantesString.APENAS_LETRA_NUMERAL;
+
+import static br.com.contmatic.utilidades.ConstantesTesteNumericas.MAX_NUMERO_AGENCIA;
+import static br.com.contmatic.utilidades.ConstantesTesteNumericas.MAX_CODIGO_BANCO;
+
+import static br.com.contmatic.utilidades.FuncoesRandomicas.apenasUmCaractere;
+import static br.com.contmatic.utilidades.FuncoesRandomicas.somenteCaractere;
 
 import br.com.contmatic.modelo.conta.Agencia;
-import br.com.contmatic.modelo.conta.Banco;
-import br.com.contmatic.utilidades.ConstantesTesteNumericas;
-import br.com.contmatic.utilidades.ConstantesTesteString;
-import br.com.contmatic.utilidades.FuncoesRandomicas;
 
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
@@ -17,52 +19,44 @@ public class AgenciaTemplateFixtureFactory implements TemplateLoader {
     @Override
     public void load() {
         
-        new BancoTemplateFixtureFactory().load();
-        
-        Banco banco = Fixture.from(Banco.class).gimme("valido");
-        
-        Banco outroBanco = Fixture.from(Banco.class).gimme("outroValido");
-        
         //geral
         
         Fixture.of(Agencia.class).addTemplate("valido", new Rule() {{
             add("numero", random("11111", "3232", "4457o", "1234"));
-            add("banco", banco);
+            add("codigoBanco", random("341", "23z", "14", "123"));
         }});
         
         Fixture.of(Agencia.class).addTemplate("outroValido", new Rule() {{
             add("numero", random("4321", "3422G", "7667", "47590"));
-            add("banco", outroBanco);
+            add("codigoBanco", random("056", "31A", "22", "431"));
         }});
         
         //numero
         
-        Fixture.of(Agencia.class).addTemplate("naoNuloNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
-        }});
-        
-        Fixture.of(Agencia.class).addTemplate("naoVazioNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
-        }});
-        
         Fixture.of(Agencia.class).addTemplate("maiorTamanhoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.MAX_NUMERO_AGENCIA + 1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
-        }});
-        
-        Fixture.of(Agencia.class).addTemplate("menorIgualTamanhoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.stringAleatoria(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.MAX_NUMERO_AGENCIA + 1), false));
-        }});
-        
-        Fixture.of(Agencia.class).addTemplate("comCaractereInvalidoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.naoCorresponde(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.SEM_ESPACO));
+            add("numero", somenteCaractere(MAX_NUMERO_AGENCIA + 1, APENAS_LETRA_NUMERAL));
         }});
         
         Fixture.of(Agencia.class).addTemplate("comUmCaractereInvalidoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.ANTIGAcomUmCaractereNaoEspecificadoExpressaoRegular(RandomUtils.nextInt(ConstantesTesteNumericas.EXCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.SEM_ESPACO));
+            add("numero", apenasUmCaractere(MAX_NUMERO_AGENCIA, "[^A-Za-z0-9]", APENAS_LETRA_NUMERAL));
         }});
         
-        Fixture.of(Agencia.class).addTemplate("semCaractereInvalidoNumero").inherits("valido", new Rule() {{
-            add("numero", FuncoesRandomicas.somenteCaractere(RandomUtils.nextInt(ConstantesTesteNumericas.INCLUI_STRING_VAZIO, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ConstantesTesteString.SEM_ESPACO));
+        Fixture.of(Agencia.class).addTemplate("validoNumero").inherits("valido", new Rule() {{
+            add("numero", somenteCaractere(MAX_NUMERO_AGENCIA, APENAS_LETRA_NUMERAL));
+        }});
+        
+        //codigoBanco
+        
+        Fixture.of(Agencia.class).addTemplate("maiorTamanhoCodigoBanco").inherits("valido", new Rule() {{
+            add("codigoBanco", somenteCaractere(MAX_CODIGO_BANCO + 1, APENAS_LETRA_NUMERAL));
+        }});
+        
+        Fixture.of(Agencia.class).addTemplate("comUmCaractereInvalidoCodigoBanco").inherits("valido", new Rule() {{
+            add("codigoBanco", apenasUmCaractere(MAX_CODIGO_BANCO, "[^A-Za-z0-9]", APENAS_LETRA_NUMERAL));
+        }});
+        
+        Fixture.of(Agencia.class).addTemplate("validoCodigoBanco").inherits("valido", new Rule() {{
+            add("codigoBanco", somenteCaractere(MAX_CODIGO_BANCO, APENAS_LETRA_NUMERAL));
         }});
         
     }

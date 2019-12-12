@@ -16,7 +16,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = CNPJbrValidador.class)
 public @interface CNPJbr {
     
-    String message() default MensagensErro.STRING_CNPJ_INVALIDO;
+    String message() default MensagensErro.CNPJ_INVALIDO;
 
     Class<?>[] groups() default {};
 

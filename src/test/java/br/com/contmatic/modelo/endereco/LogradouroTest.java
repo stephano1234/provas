@@ -1,18 +1,23 @@
 package br.com.contmatic.modelo.endereco;
 
-import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
-import static br.com.contmatic.utilidades.Verificadores.verificaErro;
-import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
 import static br.com.contmatic.utilidades.Verificadores.procuraAlgumErro;
+import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
+import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
+
+import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
+import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+import static pl.pojo.tester.api.assertion.Method.GETTER;
+import static pl.pojo.tester.api.assertion.Method.SETTER;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -20,17 +25,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contmatic.modelo.endereco.Logradouro;
-import br.com.contmatic.modelo.endereco.Bairro;
-import br.com.contmatic.utilidades.MensagensErro;
-import br.com.contmatic.utilidades.templates.endereco.LogradouroTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.endereco.BairroTemplateFixtureFactory;
+import br.com.contmatic.utilidades.templates.endereco.LogradouroTemplateFixtureFactory;
+
 import br.com.six2six.fixturefactory.Fixture;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
-
-import pl.pojo.tester.api.assertion.Method;
 
 public class LogradouroTest {
     
@@ -66,73 +66,61 @@ public class LogradouroTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_nome() {
         logradouro.setNome(null);
-        assertTrue(verificaErro(logradouro, MensagensErro.VALOR_NULO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_nulo_no_nome() {
-        logradouro = Fixture.from(Logradouro.class).gimme("naoNuloNome");
-        assertFalse(verificaErro(logradouro, MensagensErro.VALOR_NULO));
+        assertTrue(procuraAlgumErro(logradouro));
     }
     
     @Test
     public void nao_deve_aceitar_valor_vazio_no_nome() {
-        logradouro.setNome("");
-        assertTrue(verificaErro(logradouro, MensagensErro.STRING_VAZIO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_vazio_no_nome() {
-        logradouro = Fixture.from(Logradouro.class).gimme("naoVazioNome");
-        assertFalse(verificaErro(logradouro, MensagensErro.STRING_VAZIO));
+    	logradouro.setNome("");
+        assertTrue(procuraAlgumErro(logradouro));
     }
     
     @Test
     public void nao_deve_aceitar_valor_maior_que_tamanho_no_nome() {
         logradouro = Fixture.from(Logradouro.class).gimme("maiorTamanhoNome");
-        assertTrue(verificaErro(logradouro, MensagensErro.STRING_MAX));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_menor_ou_igual_que_tamanho_no_nome() {
-        logradouro = Fixture.from(Logradouro.class).gimme("menorIgualTamanhoNome");
-        assertFalse(verificaErro(logradouro, MensagensErro.STRING_MAX));
-    }
-    
-    @Test
-    public void nao_deve_aceitar_valor_com_apenas_espaco_no_nome() {
-        logradouro = Fixture.from(Logradouro.class).gimme("apenasEspacoNome");
-        assertTrue(verificaErro(logradouro, MensagensErro.STRING_APENAS_ESPACO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_com_caractere_nao_espaco_no_nome() {
-        logradouro = Fixture.from(Logradouro.class).gimme("naoApenasEspacoNome");
-        assertFalse(verificaErro(logradouro, MensagensErro.STRING_APENAS_ESPACO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_com_um_caractere_nao_espaco_no_nome() {
-        logradouro = Fixture.from(Logradouro.class).gimme("umNaoEspacoNome");
-        assertFalse(verificaErro(logradouro, MensagensErro.STRING_APENAS_ESPACO));
+        assertTrue(procuraAlgumErro(logradouro));
     }
 
     @Test
-    public void nao_deve_aceitar_valor_com_caractere_invalido_no_nome() {
-        logradouro = Fixture.from(Logradouro.class).gimme("comCaractereInvalidoNome");
-        assertTrue(verificaErro(logradouro, MensagensErro.STRING_CARACTERE_ESPECIAL));
+    public void nao_deve_aceitar_valor_com_apenas_espaco_no_nome() {
+        logradouro = Fixture.from(Logradouro.class).gimme("apenasEspacoNome");
+        assertTrue(procuraAlgumErro(logradouro));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_com_primeiro_caractere_invalido_no_nome() {
+        logradouro = Fixture.from(Logradouro.class).gimme("comPrimeiroCaractereInvalido");
+        assertTrue(procuraAlgumErro(logradouro));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_nome() {
         logradouro = Fixture.from(Logradouro.class).gimme("comUmCaractereInvalidoNome");
-        assertTrue(verificaErro(logradouro, MensagensErro.STRING_CARACTERE_ESPECIAL));
+        assertTrue(procuraAlgumErro(logradouro));
     }
     
     @Test
-    public void deve_aceitar_valor_sem_caractere_invalido_no_nome() {
-        logradouro = Fixture.from(Logradouro.class).gimme("semCaractereInvalidoNome");
-        assertFalse(verificaErro(logradouro, MensagensErro.STRING_CARACTERE_ESPECIAL));
+    public void nao_deve_aceitar_valor_com_dois_espacos_juntos_no_nome() {
+        logradouro = Fixture.from(Logradouro.class).gimme("comEspacoDuploNome");
+        assertTrue(procuraAlgumErro(logradouro));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_com_primeiro_caractere_espaco_no_nome() {
+        logradouro = Fixture.from(Logradouro.class).gimme("comEspacoInicioNome");
+        assertTrue(procuraAlgumErro(logradouro));
+    }
+
+    @Test
+    public void nao_deve_aceitar_valor_com_ultimo_caractere_espaco_no_nome() {
+        logradouro = Fixture.from(Logradouro.class).gimme("comEspacoFimNome");
+        assertTrue(procuraAlgumErro(logradouro));
+    }
+
+    @Test
+    public void deve_aceitar_nome_valido() {
+        logradouro = Fixture.from(Logradouro.class).gimme("validoNome");
+        assertFalse(procuraAlgumErro(logradouro));
     }
     
     //bairro
@@ -140,13 +128,13 @@ public class LogradouroTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_bairro() {
         logradouro.setBairro(null);
-        assertTrue(verificaErro(logradouro, MensagensErro.VALOR_NULO));
+        assertTrue(procuraAlgumErro(logradouro));
     }
     
     @Test
     public void deve_aceitar_valor_nao_nulo_no_bairro() {
         logradouro.setBairro(bairro);
-        assertFalse(verificaErro(logradouro, MensagensErro.VALOR_NULO));
+        assertFalse(procuraAlgumErro(logradouro));
     }
     
     @Test
@@ -177,12 +165,12 @@ public class LogradouroTest {
     
     @Test
     public void deve_haver_metodo_get_publico_para_cada_atributo() {
-        assertPojoMethodsFor(Logradouro.class).testing(Method.GETTER).areWellImplemented();
+        assertPojoMethodsFor(Logradouro.class).testing(GETTER).areWellImplemented();
     }
     
     @Test
     public void deve_haver_metodo_set_publico_para_cada_atributo() {
-        assertPojoMethodsFor(Logradouro.class).testing(Method.SETTER).areWellImplemented();
+        assertPojoMethodsFor(Logradouro.class).testing(SETTER).areWellImplemented();
     }
     
     //construtor
@@ -190,7 +178,7 @@ public class LogradouroTest {
     @Test
     public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
         Object[] valores = {"Rua Calimã", bairro};
-        assertTrue(verificaConstrutor(logradouro, valores, String.class, Bairro.class));
+        assertTrue(verificaConstrutor(Logradouro.class, valores, String.class, Bairro.class));
     }
     
     //equals e hashcode
@@ -245,7 +233,7 @@ public class LogradouroTest {
     
     @Test
     public void verifica_consistencia_da_implementacao_do_metodo_equals_de_acordo_com_a_regra_estabelecida_de_comparacao() {
-        EqualsVerifier.forClass(Logradouro.class).suppress(Warning.NONFINAL_FIELDS, Warning.ALL_FIELDS_SHOULD_BE_USED).verify();
+        EqualsVerifier.forClass(Logradouro.class).suppress(NONFINAL_FIELDS, ALL_FIELDS_SHOULD_BE_USED).verify();
     }
     
     //toString

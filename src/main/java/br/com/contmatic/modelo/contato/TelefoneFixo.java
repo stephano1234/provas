@@ -3,8 +3,8 @@ package br.com.contmatic.modelo.contato;
 import static br.com.contmatic.utilidades.ConstantesString.DDD;
 import static br.com.contmatic.utilidades.ConstantesString.TELEFONE;
 
-import static br.com.contmatic.utilidades.MensagensErro.STRING_DDD_INVALIDO;
-import static br.com.contmatic.utilidades.MensagensErro.STRING_TELEFONE_INVALIDO;
+import static br.com.contmatic.utilidades.MensagensErro.DDD_INVALIDO;
+import static br.com.contmatic.utilidades.MensagensErro.TELEFONE_INVALIDO;
 import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
 
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
@@ -18,11 +18,11 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class TelefoneFixo {
 
     @NotNull(message = VALOR_NULO)   
-    @Pattern(regexp = DDD, message = STRING_DDD_INVALIDO)
+    @Pattern(regexp = DDD, message = DDD_INVALIDO)
     private String ddd;
     
     @NotNull(message = VALOR_NULO)
-    @Pattern(regexp = TELEFONE, message = STRING_TELEFONE_INVALIDO)
+    @Pattern(regexp = TELEFONE, message = TELEFONE_INVALIDO)
     private String numero;
     
     public TelefoneFixo(String ddd, String numero) {

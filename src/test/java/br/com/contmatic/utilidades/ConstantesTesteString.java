@@ -2,14 +2,12 @@ package br.com.contmatic.utilidades;
 
 public class ConstantesTesteString {
     
-    //teste
+    //gerador random
     public static final String UNVIVERSO_CARACTERES = "AZQSWXCDERÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô FVBGTYHNMJUIKLOPÇ><:?}{`´^~ºª=+§-_)(*&¨%#@!¹²³£¢¬1234567890qazxswedcvfrtgbnhyujmkilopç,.;/\\]['\"";
     
-    //não permite determinados caracteres    
+    //regex    
     public static final String SEM_ESPACO = "\\S*";
-    
-    //permite apenas determinados caracteres
-    public static final String APENAS_NUMERAL = "\\d";
+    public static final String APENAS_NUMERAL = "[0-9]";
     public static final String APENAS_LETRA = "\\w";
     public static final String APENAS_LETRA_MAIUSCULA = "[A-Z]";
     public static final String APENAS_ESPACO = "\\s";
@@ -19,16 +17,6 @@ public class ConstantesTesteString {
 	public static final String APENAS_LETRAS_VALIDAS_NOME = "([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô])+";
 	public static final String INVALIDOS_ANTES_PONTO = "[A-Zªº;:/@\\$´`\\^~\\}\\{?!\\]\\[\\)\\+\\*\\\"\\(\\#°§¬¢£³²¹¨,'&%ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô]";
 	public static final String INVALIDOS_DEPOIS_PONTO = "[\\dA-Zªº;:/@\\$´`\\^~\\}\\{?!\\]\\[\\)\\+\\*\\\"\\(\\#°§¬¢£³²¹¨,'&%ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô]";
-    
-    //regex complexa
-    public static final String EMAIL = "^[a-z0-9]+[a-z0-9._-]*(?<![-_\\.])@[a-z0-9]+[a-z0-9.-]*(?<![-_\\.])\\.[a-z]{2,6}$";    
-    public static final String NOME_PESSOA = "^([A-Z]|[ÁÉÍÓÚÃÕÀÂÊÔ]){1}([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô]|['ç]|([ ](?![ ]))){1," + (ConstantesTesteNumericas.CAMPO_REGULAR - 2) + "}([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô]){1}$";
-    public static final String APENAS_UM_ESPACO_ENTRE_LETRAS = "^([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô])+[ ]{1}([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô])+$";
-    public static final String CELULAR = "[0-9]{" + ConstantesTesteNumericas.NUMERO_CELULAR + "}";
-    public static final String TELEFONE = "[0-9]{" + ConstantesTesteNumericas.NUMERO_TELEFONE + "}";
-    public static final String DDD = "[0-9]{" + ConstantesTesteNumericas.DDD + "}";
-    public static final String CODIGO_BANCO = "[A-Za-z0-9]{1," + ConstantesTesteNumericas.MAX_CODIGO_BANCO + "}";
-    public static final String RAZAO_SOCIAL = "^([A-Z]|[ÁÉÍÓÚÃÕÀÂÊÔ]){1}([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô]|[&'ç\\-\\.]|([ ](?![ ]))){1," + (ConstantesNumericas.CAMPO_REGULAR - 2) + "}([A-Z]|[a-z]|[ÁÉÍÓÚáéíóúÃÕãõÀàÂÊÔâêô]|\\.){1}$";
     
     public ConstantesTesteString() {
     }

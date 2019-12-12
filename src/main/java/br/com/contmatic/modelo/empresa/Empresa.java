@@ -3,7 +3,7 @@ package br.com.contmatic.modelo.empresa;
 import static br.com.contmatic.utilidades.ConstantesString.RAZAO_SOCIAL;
 
 import static br.com.contmatic.utilidades.MensagensErro.DATA_PASSADO;
-import static br.com.contmatic.utilidades.MensagensErro.STRING_RAZAO_SOCIAL_INVALIDO;
+import static br.com.contmatic.utilidades.MensagensErro.RAZAO_SOCIAL_INVALIDO;
 import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
 
 import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
@@ -39,33 +39,40 @@ public class Empresa {
 	private String cnpj;
 
 	@NotNull(message = VALOR_NULO)
-	@Pattern(regexp = RAZAO_SOCIAL, message = STRING_RAZAO_SOCIAL_INVALIDO)
+	@Pattern(regexp = RAZAO_SOCIAL, message = RAZAO_SOCIAL_INVALIDO)
 	private String razaoSocial;
 
 	@NotNull(message = VALOR_NULO)
 	@Past(message = DATA_PASSADO)
 	private LocalDate dataAbertura;
 
+	@NotNull(message = VALOR_NULO)
 	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<Pessoa> responsaveis;
 
+	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<ContratoTrabalho> contratosTrabalho;
 
+	@NotNull(message = VALOR_NULO)
 	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<Endereco> enderecos;
 
+	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<TelefoneFixo> telefonesFixo;
 
+	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<Email> emails;
 
+	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<Celular> celulares;
 
+	@CollectionComElementoNaoNulo
 	@Valid
 	private Set<Conta> contas;
 

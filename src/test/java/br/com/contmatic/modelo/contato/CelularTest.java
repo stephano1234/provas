@@ -1,11 +1,7 @@
 package br.com.contmatic.modelo.contato;
 
-import static br.com.contmatic.utilidades.MensagensErro.STRING_CELULAR_INVALIDO;
-import static br.com.contmatic.utilidades.MensagensErro.STRING_DDD_INVALIDO;
-import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
-
+import static br.com.contmatic.utilidades.Verificadores.procuraAlgumErro;
 import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
-import static br.com.contmatic.utilidades.Verificadores.verificaErro;
 import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
 
 import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
@@ -31,7 +27,9 @@ import org.junit.Test;
 
 import br.com.contmatic.modelo.contato.Celular;
 import br.com.contmatic.modelo.contato.TipoContatoCelular;
+
 import br.com.contmatic.utilidades.templates.contato.CelularTemplateFixtureFactory;
+
 import br.com.six2six.fixturefactory.Fixture;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
@@ -66,37 +64,31 @@ public class CelularTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_ddd() {
         celular.setDdd(null);
-        assertTrue(verificaErro(celular, VALOR_NULO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_nulo_no_ddd() {
-        celular = Fixture.from(Celular.class).gimme("naoNuloDdd");
-        assertFalse(verificaErro(celular, VALOR_NULO));
+        assertTrue(procuraAlgumErro(celular));
     }
     
     @Test
     public void nao_deve_aceitar_valor_maior_que_tamanho_no_ddd() {
         celular = Fixture.from(Celular.class).gimme("maiorTamanhoDdd");
-        assertTrue(verificaErro(celular, STRING_DDD_INVALIDO));
+        assertTrue(procuraAlgumErro(celular));
     }
     
     @Test
     public void nao_deve_aceitar_valor_menor_que_tamanho_no_ddd() {
         celular = Fixture.from(Celular.class).gimme("menorTamanhoDdd");
-        assertTrue(verificaErro(celular, STRING_DDD_INVALIDO));
+        assertTrue(procuraAlgumErro(celular));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_ddd() {
         celular = Fixture.from(Celular.class).gimme("comUmCaractereInvalidoDdd");
-        assertTrue(verificaErro(celular, STRING_DDD_INVALIDO));
+        assertTrue(procuraAlgumErro(celular));
     }
     
     @Test
     public void deve_aceitar_ddd_valido() {
         celular = Fixture.from(Celular.class).gimme("validoDdd");
-        assertFalse(verificaErro(celular, STRING_DDD_INVALIDO));
+        assertFalse(procuraAlgumErro(celular));
     }
     
     //numero
@@ -104,37 +96,31 @@ public class CelularTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_numero() {
         celular.setNumero(null);
-        assertTrue(verificaErro(celular, VALOR_NULO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_nulo_no_numero() {
-        celular = Fixture.from(Celular.class).gimme("naoNuloNumero");
-        assertFalse(verificaErro(celular, VALOR_NULO));
+        assertTrue(procuraAlgumErro(celular));
     }
     
     @Test
     public void nao_deve_aceitar_valor_maior_que_tamanho_no_numero() {
         celular = Fixture.from(Celular.class).gimme("maiorTamanhoNumero");
-        assertTrue(verificaErro(celular, STRING_CELULAR_INVALIDO));
+        assertTrue(procuraAlgumErro(celular));
     }
     
     @Test
     public void nao_deve_aceitar_valor_menor_que_tamanho_no_numero() {
         celular = Fixture.from(Celular.class).gimme("menorTamanhoNumero");
-        assertTrue(verificaErro(celular, STRING_CELULAR_INVALIDO));
+        assertTrue(procuraAlgumErro(celular));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_numero() {
         celular = Fixture.from(Celular.class).gimme("comUmCaractereInvalidoNumero");
-        assertTrue(verificaErro(celular, STRING_CELULAR_INVALIDO));
+        assertTrue(procuraAlgumErro(celular));
     }
     
     @Test
     public void deve_aceitar_numero_valido() {
         celular = Fixture.from(Celular.class).gimme("validoNumero");
-        assertFalse(verificaErro(celular, STRING_CELULAR_INVALIDO));
+        assertFalse(procuraAlgumErro(celular));
     }
     
     //tipoContatoCelular
@@ -142,13 +128,13 @@ public class CelularTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_tipoContatoCelular() {
         celular.setTipoContatoCelular(null);
-        assertTrue(verificaErro(celular, VALOR_NULO));
+        assertTrue(procuraAlgumErro(celular));
     }
     
     @Test
     public void deve_aceitar_valor_nao_nulo_no_tipoContatoCelular() {
         celular.setTipoContatoCelular(TipoContatoCelular.APENAS_LIGACAO);
-        assertFalse(verificaErro(celular, VALOR_NULO));
+        assertFalse(procuraAlgumErro(celular));
     }
     
     //getter e setter    
@@ -186,7 +172,7 @@ public class CelularTest {
     @Test
     public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
         Object[] valores = {"00", "900000000", TipoContatoCelular.APENAS_LIGACAO};
-        assertTrue(verificaConstrutor(celular, valores, String.class, String.class, TipoContatoCelular.class));
+        assertTrue(verificaConstrutor(Celular.class, valores, String.class, String.class, TipoContatoCelular.class));
     }
     
     //equals e hashcode

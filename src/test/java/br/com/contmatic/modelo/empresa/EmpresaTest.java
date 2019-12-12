@@ -2,19 +2,14 @@ package br.com.contmatic.modelo.empresa;
 
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.ELEMENTOS_ARRAY_GERADA;
 
-import static br.com.contmatic.utilidades.MensagensErro.DATA_PASSADO;
-import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO;
-import static br.com.contmatic.utilidades.MensagensErro.STRING_CNPJ_INVALIDO;
-import static br.com.contmatic.utilidades.MensagensErro.STRING_RAZAO_SOCIAL_INVALIDO;
-import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
-
 import static br.com.contmatic.utilidades.Verificadores.procuraAlgumErro;
 import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
-import static br.com.contmatic.utilidades.Verificadores.verificaErro;
 import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
 
 import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
 import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
+
+import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -50,10 +45,10 @@ import br.com.contmatic.utilidades.templates.conta.ContaTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.contato.CelularTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.contato.EmailTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.contato.TelefoneFixoTemplateFixtureFactory;
+import br.com.contmatic.utilidades.templates.empresa.EmpresaTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.endereco.EnderecoTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.pessoa.ContratoTrabalhoTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.pessoa.PessoaTemplateFixtureFactory;
-import br.com.contmatic.utilidades.templates.empresa.EmpresaTemplateFixtureFactory;
 
 import br.com.six2six.fixturefactory.Fixture;
 
@@ -65,33 +60,19 @@ public class EmpresaTest {
     
     private Empresa outroEmpresa;
     
-    Set<Pessoa> responsaveis = new HashSet<Pessoa>();
+    private Set<Pessoa> responsaveis = new HashSet<Pessoa>();
     
-    Set<Pessoa> responsaveisInvalido = new HashSet<Pessoa>();
-
-    Set<ContratoTrabalho> contratosTrabalho = new HashSet<ContratoTrabalho>();
-    
-    Set<ContratoTrabalho> contratosTrabalhoInvalido = new HashSet<ContratoTrabalho>();
+    private Set<ContratoTrabalho> contratosTrabalho = new HashSet<ContratoTrabalho>();
     
     private Set<Endereco> enderecos = new HashSet<Endereco>();
-
-    private Set<Endereco> enderecosInvalido = new HashSet<Endereco>();
         
     private Set<TelefoneFixo> telefonesFixo = new HashSet<TelefoneFixo>();
-    
-    private Set<TelefoneFixo> telefonesFixoInvalido = new HashSet<TelefoneFixo>();
 
     private Set<Email> emails = new HashSet<Email>();
-
-    private Set<Email> emailsInvalido = new HashSet<Email>();
     
     private Set<Celular> celulares = new HashSet<Celular>();
 
-    private Set<Celular> celularesInvalido = new HashSet<Celular>();
-
     private Set<Conta> contas = new HashSet<Conta>();
-    
-    private Set<Conta> contasInvalido = new HashSet<Conta>();
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -113,7 +94,7 @@ public class EmpresaTest {
     public void setUp() throws Exception {
         empresa = Fixture.from(Empresa.class).gimme("valido");
         outroEmpresa = Fixture.from(Empresa.class).gimme("outroValido");
-        for (int i = 0; i < ELEMENTOS_ARRAY_GERADA; i++) {
+        for (int i = 0; i < nextInt(1, ELEMENTOS_ARRAY_GERADA); i++) {
         	responsaveis.add(Fixture.from(Pessoa.class).gimme("valido"));
         	contratosTrabalho.add(Fixture.from(ContratoTrabalho.class).gimme("valido"));
         	enderecos.add(Fixture.from(Endereco.class).gimme("valido"));        	
@@ -121,13 +102,6 @@ public class EmpresaTest {
         	emails.add(Fixture.from(Email.class).gimme("valido"));
         	celulares.add(Fixture.from(Celular.class).gimme("valido"));
         	contas.add(Fixture.from(Conta.class).gimme("valido"));
-        	responsaveisInvalido.add(Fixture.from(Pessoa.class).gimme("comUmDigitoVerificadorInvalidoCpf"));
-        	contratosTrabalhoInvalido.add(Fixture.from(ContratoTrabalho.class).gimme("dataInicioContratoFutura"));
-        	enderecosInvalido.add(Fixture.from(Endereco.class).gimme("comUmCaractereInvalidoCep"));        	
-        	telefonesFixoInvalido.add(Fixture.from(TelefoneFixo.class).gimme("comUmCaractereInvalidoNumero"));
-        	emailsInvalido.add(Fixture.from(Email.class).gimme("comUmCaractereInvalidoAntesArrobaEndereco"));
-        	celularesInvalido.add(Fixture.from(Celular.class).gimme("comUmCaractereInvalidoNumero"));
-        	contasInvalido.add(Fixture.from(Conta.class).gimme("comUmCaractereInvalidoNumero"));
         }
     }
 
@@ -140,55 +114,43 @@ public class EmpresaTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_cnpj() {
         empresa.setCnpj(null);
-        assertTrue(verificaErro(empresa, VALOR_NULO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_nulo_no_cnpj() {
-        empresa = Fixture.from(Empresa.class).gimme("naoNuloCnpj");
-        assertFalse(verificaErro(empresa, VALOR_NULO));
+        assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_maior_que_tamanho_no_cnpj() {
         empresa = Fixture.from(Empresa.class).gimme("maiorTamanhoCnpj");
-        assertTrue(verificaErro(empresa, STRING_CNPJ_INVALIDO));
+        assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_menor_que_tamanho_no_cnpj() {
         empresa = Fixture.from(Empresa.class).gimme("menorTamanhoCnpj");
-        assertTrue(verificaErro(empresa, STRING_CNPJ_INVALIDO));
-    }
-        
-    @Test
-    public void nao_deve_aceitar_valor_com_caractere_invalido_no_cnpj() {
-        empresa = Fixture.from(Empresa.class).gimme("comCaractereInvalidoCnpj");
-        assertTrue(verificaErro(empresa, STRING_CNPJ_INVALIDO));
+        assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_cnpj() {
         empresa = Fixture.from(Empresa.class).gimme("comUmCaractereInvalidoCnpj");
-        assertTrue(verificaErro(empresa, STRING_CNPJ_INVALIDO));
+        assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_apenas_numeros_repetidos_no_cnpj() {
         empresa = Fixture.from(Empresa.class).gimme("numerosRepetidosCnpj");
-        assertTrue(verificaErro(empresa, STRING_CNPJ_INVALIDO));
+        assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
     public void nao_deve_aceitar_cnpj_com_um_digito_verificador_invalido() {
         empresa = Fixture.from(Empresa.class).gimme("comUmDigitoVerificadorInvalidoCnpj");
-        assertTrue(verificaErro(empresa, STRING_CNPJ_INVALIDO));
+        assertTrue(procuraAlgumErro(empresa));
     }    
     
     @Test
     public void deve_aceitar_cnpj_valido() {
         empresa = Fixture.from(Empresa.class).gimme("cnpjValido");
-        assertFalse(verificaErro(empresa, STRING_CNPJ_INVALIDO));
+        assertFalse(procuraAlgumErro(empresa));
     }
     
     //razaoSocial
@@ -196,61 +158,55 @@ public class EmpresaTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_razaoSocial() {
         empresa.setRazaoSocial(null);
-        assertTrue(verificaErro(empresa, VALOR_NULO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_nulo_no_razaoSocial() {
-        empresa = Fixture.from(Empresa.class).gimme("naoNuloRazaoSocial");
-        assertFalse(verificaErro(empresa, VALOR_NULO));
+        assertTrue(procuraAlgumErro(empresa));
     }
 
     @Test
     public void nao_deve_aceitar_valor_vazio_no_razaoSocial() {
     	empresa.setRazaoSocial("");
-        assertTrue(verificaErro(empresa, STRING_RAZAO_SOCIAL_INVALIDO));
+        assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_maior_que_tamanho_no_razaoSocial() {
         empresa = Fixture.from(Empresa.class).gimme("maiorTamanhoRazaoSocial");
-        assertTrue(verificaErro(empresa, STRING_RAZAO_SOCIAL_INVALIDO));
+        assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_primeiro_caractere_invalido_no_razaoSocial() {
         empresa = Fixture.from(Empresa.class).gimme("comPrimeiroCaractereInvalido");
-        assertTrue(verificaErro(empresa, STRING_RAZAO_SOCIAL_INVALIDO));
+        assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_razaoSocial() {
         empresa = Fixture.from(Empresa.class).gimme("comUmCaractereInvalidoRazaoSocial");
-        assertTrue(verificaErro(empresa, STRING_RAZAO_SOCIAL_INVALIDO));
+        assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_dois_espacos_juntos_no_razaoSocial() {
         empresa = Fixture.from(Empresa.class).gimme("comEspacoDuploRazaoSocial");
-        assertTrue(verificaErro(empresa, STRING_RAZAO_SOCIAL_INVALIDO));
+        assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_primeiro_caractere_espaco_no_razaoSocial() {
         empresa = Fixture.from(Empresa.class).gimme("comEspacoInicioRazaoSocial");
-        assertTrue(verificaErro(empresa, STRING_RAZAO_SOCIAL_INVALIDO));
+        assertTrue(procuraAlgumErro(empresa));
     }
 
     @Test
     public void nao_deve_aceitar_valor_com_ultimo_caractere_espaco_no_razaoSocial() {
         empresa = Fixture.from(Empresa.class).gimme("comEspacoFimRazaoSocial");
-        assertTrue(verificaErro(empresa, STRING_RAZAO_SOCIAL_INVALIDO));
+        assertTrue(procuraAlgumErro(empresa));
     }
 
     @Test
     public void deve_aceitar_razaoSocial_valido() {
         empresa = Fixture.from(Empresa.class).gimme("razaoSocialValido");
-        assertFalse(verificaErro(empresa, STRING_RAZAO_SOCIAL_INVALIDO));
+        assertFalse(procuraAlgumErro(empresa));
     }
 
     //dataAbertura
@@ -258,25 +214,19 @@ public class EmpresaTest {
     @Test
     public void nao_deve_aceitar_dataAbertura_nulo() {
     	empresa.setDataAbertura(null);
-    	assertTrue(verificaErro(empresa, VALOR_NULO));
-    }
-
-    @Test
-    public void deve_aceitar_dataAbertura_nao_nulo() {
-    	empresa = Fixture.from(Empresa.class).gimme("dataAberturaQualquer");
-    	assertFalse(verificaErro(empresa, VALOR_NULO));
+    	assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
     public void nao_deve_aceitar_dataAbertura_futura() {
     	empresa = Fixture.from(Empresa.class).gimme("dataAberturaFutura");
-    	assertTrue(verificaErro(empresa, DATA_PASSADO));
+    	assertTrue(procuraAlgumErro(empresa));
     }
 
     @Test
     public void deve_aceitar_dataAbertura_passada() {
     	empresa = Fixture.from(Empresa.class).gimme("dataAberturaPassada");
-    	assertFalse(verificaErro(empresa, DATA_PASSADO));
+    	assertFalse(procuraAlgumErro(empresa));
     }
     
     //responsaveis
@@ -284,35 +234,29 @@ public class EmpresaTest {
     @Test
     public void nao_deve_aceitar_responsaveis_nulo() {
     	empresa.setResponsaveis(null);
-    	assertTrue(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    	assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
     public void nao_deve_aceitar_responsaveis_vazio() {
     	empresa.setResponsaveis(new HashSet<Pessoa>());
-    	assertTrue(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    	assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
     public void nao_deve_aceitar_responsaveis_com_pelo_menos_um_elemento_nulo() {
     	empresa.getResponsaveis().add(null);
-    	assertTrue(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
-    }
-
-    @Test
-    public void deve_aceitar_responsaveis_nao_nulo_e_nao_vazio_e_sem_elementos_nulos() {
-    	empresa.setResponsaveis(responsaveis);
-    	assertFalse(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    	assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
-    public void nao_deve_aceitar_responsaveis_invalido() {
-    	empresa.setResponsaveis(responsaveisInvalido);
+    public void nao_deve_aceitar_responsaveis_com_elemento_invalido() {
+    	empresa.getResponsaveis().add(Fixture.from(Pessoa.class).gimme("comUmDigitoVerificadorInvalidoCpf"));
     	assertTrue(procuraAlgumErro(empresa));
     }
 
     @Test
-    public void deve_aceitar_responsaveis_valido() {
+    public void deve_aceitar_responsaveis_nao_vazio_sem_elemento_nulo_apenas_elemento_valido() {
     	empresa.setResponsaveis(responsaveis);
     	assertFalse(procuraAlgumErro(empresa));
     }
@@ -320,13 +264,31 @@ public class EmpresaTest {
     //contratosTrabalho
     
     @Test
-    public void nao_deve_aceitar_contratosTrabalho_invalido() {
-    	empresa.setContratosTrabalho(contratosTrabalhoInvalido);
+    public void deve_aceitar_contratosTrabalho_nulo() {
+    	empresa.setContratosTrabalho(null);
+    	assertFalse(procuraAlgumErro(empresa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_contratosTrabalho_vazio() {
+    	empresa.setContratosTrabalho(new HashSet<ContratoTrabalho>());
+    	assertTrue(procuraAlgumErro(empresa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_contratosTrabalho_com_pelo_menos_um_elemento_nulo() {
+    	empresa.getContratosTrabalho().add(null);
+    	assertTrue(procuraAlgumErro(empresa));
+    }
+       
+    @Test
+    public void nao_deve_aceitar_contratosTrabalho_com_elemento_invalido() {
+    	empresa.getContratosTrabalho().add(Fixture.from(ContratoTrabalho.class).gimme("dataInicioContratoFutura"));
     	assertTrue(procuraAlgumErro(empresa));
     }
 
     @Test
-    public void deve_aceitar_contratosTrabalho_valido() {
+    public void deve_aceitar_contratosTrabalho_nao_vazio_sem_elemento_nulo_apenas_elemento_valido() {
     	empresa.setContratosTrabalho(contratosTrabalho);
     	assertFalse(procuraAlgumErro(empresa));
     }
@@ -336,35 +298,29 @@ public class EmpresaTest {
     @Test
     public void nao_deve_aceitar_enderecos_nulo() {
     	empresa.setEnderecos(null);
-    	assertTrue(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    	assertTrue(procuraAlgumErro(empresa));
     }
-
+    
     @Test
     public void nao_deve_aceitar_enderecos_vazio() {
     	empresa.setEnderecos(new HashSet<Endereco>());
-    	assertTrue(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    	assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
     public void nao_deve_aceitar_enderecos_com_pelo_menos_um_elemento_nulo() {
     	empresa.getEnderecos().add(null);
-    	assertTrue(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
+    	assertTrue(procuraAlgumErro(empresa));
     }
     
     @Test
-    public void deve_aceitar_enderecos_nao_nulo_e_nao_vazio_e_sem_elementos_nulos() {
-    	empresa.setEnderecos(enderecos);
-    	assertFalse(verificaErro(empresa, VALOR_NULO_COLLECTION_VAZIA_OU_COM_ELEMENTO_NULO));
-    }
-    
-    @Test
-    public void nao_deve_aceitar_enderecos_invalido() {
-    	empresa.setEnderecos(enderecosInvalido);
+    public void nao_deve_aceitar_enderecos_com_elemento_invalido() {
+    	empresa.getEnderecos().add(Fixture.from(Endereco.class).gimme("comUmCaractereInvalidoCep"));
     	assertTrue(procuraAlgumErro(empresa));
     }
 
     @Test
-    public void deve_aceitar_enderecos_valido() {
+    public void deve_aceitar_enderecos_nao_vazio_sem_elemento_nulo_apenas_elemento_valido() {
     	empresa.setEnderecos(enderecos);
     	assertFalse(procuraAlgumErro(empresa));
     }
@@ -372,13 +328,31 @@ public class EmpresaTest {
     //telefonesFixo
     
     @Test
-    public void nao_deve_aceitar_telefonesFixo_invalido() {
-    	empresa.setTelefonesFixo(telefonesFixoInvalido);
+    public void deve_aceitar_telefonesFixo_nulo() {
+    	empresa.setTelefonesFixo(null);
+    	assertFalse(procuraAlgumErro(empresa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_telefonesFixo_vazio() {
+    	empresa.setTelefonesFixo(new HashSet<TelefoneFixo>());
+    	assertTrue(procuraAlgumErro(empresa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_telefonesFixo_com_pelo_menos_um_elemento_nulo() {
+    	empresa.getTelefonesFixo().add(null);
+    	assertTrue(procuraAlgumErro(empresa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_telefonesFixo_com_elemento_invalido() {
+    	empresa.getTelefonesFixo().add(Fixture.from(TelefoneFixo.class).gimme("comUmCaractereInvalidoNumero"));
     	assertTrue(procuraAlgumErro(empresa));
     }
 
     @Test
-    public void deve_aceitar_telefonesFixo_valido() {
+    public void deve_aceitar_telefonesFixo_nao_vazio_sem_elemento_nulo_apenas_elemento_valido() {
     	empresa.setTelefonesFixo(telefonesFixo);
     	assertFalse(procuraAlgumErro(empresa));
     }
@@ -386,13 +360,31 @@ public class EmpresaTest {
     //emails
     
     @Test
-    public void nao_deve_aceitar_emails_invalido() {
-    	empresa.setEmails(emailsInvalido);
+    public void deve_aceitar_emails_nulo() {
+    	empresa.setEmails(null);
+    	assertFalse(procuraAlgumErro(empresa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_emails_vazio() {
+    	empresa.setEmails(new HashSet<Email>());
+    	assertTrue(procuraAlgumErro(empresa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_emails_com_pelo_menos_um_elemento_nulo() {
+    	empresa.getEmails().add(null);
+    	assertTrue(procuraAlgumErro(empresa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_emails_com_elemento_invalido() {
+    	empresa.getEmails().add(Fixture.from(Email.class).gimme("comUmCaractereInvalidoAntesArrobaEndereco"));
     	assertTrue(procuraAlgumErro(empresa));
     }
 
     @Test
-    public void deve_aceitar_emails_valido() {
+    public void deve_aceitar_emails_nao_vazio_sem_elemento_nulo_apenas_elemento_valido() {
     	empresa.setEmails(emails);
     	assertFalse(procuraAlgumErro(empresa));
     }
@@ -400,13 +392,31 @@ public class EmpresaTest {
     //celulares
     
     @Test
-    public void nao_deve_aceitar_celulares_invalido() {
-    	empresa.setCelulares(celularesInvalido);
+    public void deve_aceitar_celulares_nulo() {
+    	empresa.setCelulares(null);
+    	assertFalse(procuraAlgumErro(empresa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_celulares_vazio() {
+    	empresa.setCelulares(new HashSet<Celular>());
+    	assertTrue(procuraAlgumErro(empresa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_celulares_com_pelo_menos_um_elemento_nulo() {
+    	empresa.getCelulares().add(null);
+    	assertTrue(procuraAlgumErro(empresa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_celulares_com_elemento_invalido() {
+    	empresa.getCelulares().add(Fixture.from(Celular.class).gimme("comUmCaractereInvalidoNumero"));
     	assertTrue(procuraAlgumErro(empresa));
     }
 
     @Test
-    public void deve_aceitar_celulares_valido() {
+    public void deve_aceitar_celulares_nao_vazio_sem_elemento_nulo_apenas_elemento_valido() {
     	empresa.setCelulares(celulares);
     	assertFalse(procuraAlgumErro(empresa));
     }
@@ -414,13 +424,31 @@ public class EmpresaTest {
     //contas
     
     @Test
-    public void nao_deve_aceitar_contas_invalido() {
-    	empresa.setContas(contasInvalido);
+    public void deve_aceitar_contas_nulo() {
+    	empresa.setContas(null);
+    	assertFalse(procuraAlgumErro(empresa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_contas_vazio() {
+    	empresa.setContas(new HashSet<Conta>());
+    	assertTrue(procuraAlgumErro(empresa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_contas_com_pelo_menos_um_elemento_nulo() {
+    	empresa.getContas().add(null);
+    	assertTrue(procuraAlgumErro(empresa));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_contas_com_elemento_invalido() {
+    	empresa.getContas().add(Fixture.from(Conta.class).gimme("comUmCaractereInvalidoNumero"));
     	assertTrue(procuraAlgumErro(empresa));
     }
 
     @Test
-    public void deve_aceitar_contas_valido() {
+    public void deve_aceitar_contas_nao_vazio_sem_elemento_nulo_apenas_elemento_valido() {
     	empresa.setContas(contas);
     	assertFalse(procuraAlgumErro(empresa));
     }
@@ -430,13 +458,13 @@ public class EmpresaTest {
     @Test
     public void nao_deve_aceitar_tipoEmpresa_nulo() {
     	empresa.setTipoEmpresa(null);
-    	assertTrue(verificaErro(empresa, VALOR_NULO));
+    	assertTrue(procuraAlgumErro(empresa));
     }
 
     @Test
     public void deve_aceitar_tipoEmpresa_nao_nulo() {
     	empresa.setTipoEmpresa(TipoEmpresa.SOCIEDADE);
-    	assertFalse(verificaErro(empresa, VALOR_NULO));
+    	assertFalse(procuraAlgumErro(empresa));
     }
 
     //tipoPorteEmpresa
@@ -444,13 +472,13 @@ public class EmpresaTest {
     @Test
     public void nao_deve_aceitar_tipoPorteEmpresa_nulo() {
     	empresa.setTipoPorteEmpresa(null);
-    	assertTrue(verificaErro(empresa, VALOR_NULO));
+    	assertTrue(procuraAlgumErro(empresa));
     }
 
     @Test
     public void deve_aceitar_tipoPorteEmpresa_nao_nulo() {
     	empresa.setTipoPorteEmpresa(TipoPorteEmpresa.EPP);
-    	assertFalse(verificaErro(empresa, VALOR_NULO));
+    	assertFalse(procuraAlgumErro(empresa));
     }
     
     //getter e setter    
@@ -542,7 +570,7 @@ public class EmpresaTest {
     @Test
     public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
         Object[] valores = {"13282774000102", "Empresa SA", LocalDate.parse("1990-02-12"), responsaveis, enderecos, TipoEmpresa.SOCIEDADE, TipoPorteEmpresa.EPP};
-        assertTrue(verificaConstrutor(empresa, valores, String.class, String.class, LocalDate.class, Set.class, Set.class, TipoEmpresa.class, TipoPorteEmpresa.class));
+        assertTrue(verificaConstrutor(Empresa.class, valores, String.class, String.class, LocalDate.class, Set.class, Set.class, TipoEmpresa.class, TipoPorteEmpresa.class));
     }
     
     //equals e hashcode

@@ -1,23 +1,27 @@
 package br.com.contmatic.utilidades.templates.pessoa;
 
-import static br.com.contmatic.utilidades.ConstantesTesteNumericas.CAMPO_REGULAR;
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.CPF;
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.ELEMENTOS_ARRAY_GERADA;
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.EXCLUI_STRING_VAZIO;
-import static br.com.contmatic.utilidades.ConstantesTesteNumericas.INCLUI_STRING_VAZIO;
+import static br.com.contmatic.utilidades.ConstantesTesteNumericas.TAMANHO_REGULAR;
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS;
+
+import static br.com.contmatic.utilidades.ConstantesTesteString.APENAS_ESPACO;
 import static br.com.contmatic.utilidades.ConstantesTesteString.APENAS_NUMERAL;
+
 import static br.com.contmatic.utilidades.FuncoesRandomicas.apenasUmCaractere;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.cpfInvalido;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.cpfValido;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.localDateAleatoria;
-import static br.com.contmatic.utilidades.FuncoesRandomicas.naoCorresponde;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.somenteCaractere;
-import static br.com.contmatic.utilidades.FuncoesRandomicas.stringAleatoria;
+
 import static org.apache.commons.lang3.RandomUtils.nextInt;
+
 import java.util.HashSet;
 import java.util.Set;
+
 import org.joda.time.LocalDate;
+
 import br.com.contmatic.modelo.conta.Conta;
 import br.com.contmatic.modelo.contato.Celular;
 import br.com.contmatic.modelo.contato.Email;
@@ -27,11 +31,13 @@ import br.com.contmatic.modelo.pessoa.Pessoa;
 import br.com.contmatic.modelo.pessoa.TipoEstadoCivil;
 import br.com.contmatic.modelo.pessoa.TipoGrauInstrucao;
 import br.com.contmatic.modelo.pessoa.TipoSexo;
+
 import br.com.contmatic.utilidades.templates.conta.ContaTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.contato.CelularTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.contato.EmailTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.contato.TelefoneFixoTemplateFixtureFactory;
 import br.com.contmatic.utilidades.templates.endereco.EnderecoTemplateFixtureFactory;
+
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
@@ -72,7 +78,7 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
         
         Set<Conta> outroContas = new HashSet<Conta>();
         
-        for (int i = 0; i < ELEMENTOS_ARRAY_GERADA; i++) {
+        for (int i = 0; i < nextInt(1, ELEMENTOS_ARRAY_GERADA); i++) {
         	
         	enderecos.add(Fixture.from(Endereco.class).gimme("valido"));
         	
@@ -128,20 +134,12 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
         
         //cpf
         
-        Fixture.of(Pessoa.class).addTemplate("naoNuloCpf").inherits("valido", new Rule() {{
-            add("cpf", stringAleatoria(nextInt(INCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), false));
-        }});
-        
         Fixture.of(Pessoa.class).addTemplate("maiorTamanhoCpf").inherits("valido", new Rule() {{
-            add("cpf", stringAleatoria(nextInt(CPF + 1, VALOR_UNIVERSO_CHAR_GERADOS), false));
+            add("cpf", somenteCaractere(CPF + 1, APENAS_NUMERAL));
         }});
                 
         Fixture.of(Pessoa.class).addTemplate("menorTamanhoCpf").inherits("valido", new Rule() {{
-            add("cpf", stringAleatoria(nextInt(EXCLUI_STRING_VAZIO, CPF), false));
-        }});
-        
-        Fixture.of(Pessoa.class).addTemplate("comCaractereInvalidoCpf").inherits("valido", new Rule() {{
-            add("cpf", naoCorresponde(CPF, APENAS_NUMERAL));
+            add("cpf", somenteCaractere(CPF - 1, APENAS_NUMERAL));
         }});
         
         Fixture.of(Pessoa.class).addTemplate("comUmCaractereInvalidoCpf").inherits("valido", new Rule() {{
@@ -149,7 +147,7 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(Pessoa.class).addTemplate("numerosRepetidosCpf").inherits("valido", new Rule() {{
-            add("cpf", naoCorresponde(CPF, Integer.toString(nextInt(0, 10))));
+            add("cpf", somenteCaractere(CPF, Integer.toString(nextInt(0, 10))));
         }});
 
         Fixture.of(Pessoa.class).addTemplate("comUmDigitoVerificadorInvalidoCpf").inherits("valido", new Rule() {{
@@ -162,12 +160,12 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
         
         //nome
         
-        Fixture.of(Pessoa.class).addTemplate("naoNuloNome").inherits("valido", new Rule() {{
-            add("nome", stringAleatoria(nextInt(INCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), false));
+        Fixture.of(Pessoa.class).addTemplate("apenasEspacoNome").inherits("valido", new Rule() {{
+            add("nome", somenteCaractere(nextInt(EXCLUI_STRING_VAZIO, TAMANHO_REGULAR), APENAS_ESPACO));
         }});
         
         Fixture.of(Pessoa.class).addTemplate("maiorTamanhoNome").inherits("valido", new Rule() {{
-            add("nome", somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(CAMPO_REGULAR, VALOR_UNIVERSO_CHAR_GERADOS), "[a-z]"));
+            add("nome", somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(TAMANHO_REGULAR, VALOR_UNIVERSO_CHAR_GERADOS), "[a-z]"));
         }});
 
         Fixture.of(Pessoa.class).addTemplate("comPrimeiroCaractereInvalido").inherits("valido", new Rule() {{
@@ -190,15 +188,11 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
             add("nome", somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]") + "  " + somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]") + " ");
         }});
 
-        Fixture.of(Pessoa.class).addTemplate("nomeValido").inherits("valido", new Rule() {{
+        Fixture.of(Pessoa.class).addTemplate("validoNome").inherits("valido", new Rule() {{
             add("nome", name());
         }});
 
         //dataNascimento
-
-        Fixture.of(Pessoa.class).addTemplate("dataNascimentoQualquer").inherits("valido", new Rule() {{
-            add("dataNascimento", localDateAleatoria(LocalDate.parse("1900-01-01"), LocalDate.now().plusYears(nextInt(0, 200))));
-        }});
 
         Fixture.of(Pessoa.class).addTemplate("dataNascimentoFutura").inherits("valido", new Rule() {{
             add("dataNascimento", localDateAleatoria(LocalDate.now().plusYears(1), LocalDate.now().plusYears(10)));

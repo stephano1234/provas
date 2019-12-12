@@ -10,12 +10,12 @@ public class CollectionComElementoNaoNuloValidador implements ConstraintValidato
 	@Override
 	public boolean isValid(Collection<?> value, ConstraintValidatorContext constraintValidatorContext) {
 		if (value == null) {
-			return false;
+			return true;
 		}		
 		if (value.toArray().length == 0) {
 			return false;
 		}
-		for (int i = 0; i < value.size(); i++) {
+		for (int i = 0; i < value.toArray().length; i++) {
 			if (value.toArray()[i] == null) {
 				return false;
 			}

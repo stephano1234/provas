@@ -16,7 +16,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = CPFbrValidador.class)
 public @interface CPFbr {
     
-    String message() default MensagensErro.STRING_CPF_INVALIDO;
+    String message() default MensagensErro.CPF_INVALIDO;
 
     Class<?>[] groups() default {};
 

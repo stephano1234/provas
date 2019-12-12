@@ -1,18 +1,18 @@
 package br.com.contmatic.utilidades.templates.contato;
 
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.DDD;
-import static br.com.contmatic.utilidades.ConstantesTesteNumericas.EXCLUI_STRING_VAZIO;
-import static br.com.contmatic.utilidades.ConstantesTesteNumericas.INCLUI_STRING_VAZIO;
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.NUMERO_CELULAR;
-import static br.com.contmatic.utilidades.ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS;
+
 import static br.com.contmatic.utilidades.ConstantesTesteString.APENAS_NUMERAL;
+
 import static br.com.contmatic.utilidades.FuncoesRandomicas.apenasUmCaractere;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.somenteCaractere;
-import static br.com.contmatic.utilidades.FuncoesRandomicas.stringAleatoria;
+
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 import br.com.contmatic.modelo.contato.Celular;
 import br.com.contmatic.modelo.contato.TipoContatoCelular;
+
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
@@ -38,16 +38,12 @@ public class CelularTemplateFixtureFactory implements TemplateLoader {
         
         //ddd
         
-        Fixture.of(Celular.class).addTemplate("naoNuloDdd").inherits("valido", new Rule() {{
-            add("ddd", stringAleatoria(nextInt(INCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), false));
-        }});
-        
         Fixture.of(Celular.class).addTemplate("maiorTamanhoDdd").inherits("valido", new Rule() {{
-            add("ddd", stringAleatoria(nextInt(DDD + 1, VALOR_UNIVERSO_CHAR_GERADOS), false));
+            add("ddd", somenteCaractere(DDD + 1, APENAS_NUMERAL));
         }});
                 
         Fixture.of(Celular.class).addTemplate("menorTamanhoDdd").inherits("valido", new Rule() {{
-            add("ddd", stringAleatoria(nextInt(EXCLUI_STRING_VAZIO, DDD), false));
+            add("ddd", somenteCaractere(DDD - 1, APENAS_NUMERAL));
         }});
         
         Fixture.of(Celular.class).addTemplate("comUmCaractereInvalidoDdd").inherits("valido", new Rule() {{
@@ -60,16 +56,12 @@ public class CelularTemplateFixtureFactory implements TemplateLoader {
         
         //numero
         
-        Fixture.of(Celular.class).addTemplate("naoNuloNumero").inherits("valido", new Rule() {{
-            add("numero", stringAleatoria(nextInt(INCLUI_STRING_VAZIO, VALOR_UNIVERSO_CHAR_GERADOS), false));
-        }});
-        
         Fixture.of(Celular.class).addTemplate("maiorTamanhoNumero").inherits("valido", new Rule() {{
-            add("numero", stringAleatoria(nextInt(NUMERO_CELULAR + 1, VALOR_UNIVERSO_CHAR_GERADOS), false));
+            add("numero", somenteCaractere(NUMERO_CELULAR + 1, APENAS_NUMERAL));
         }});
         
         Fixture.of(Celular.class).addTemplate("menorTamanhoNumero").inherits("valido", new Rule() {{
-            add("numero", stringAleatoria(nextInt(EXCLUI_STRING_VAZIO, NUMERO_CELULAR), false));
+            add("numero", somenteCaractere(NUMERO_CELULAR - 1, APENAS_NUMERAL));
         }});
         
         Fixture.of(Celular.class).addTemplate("comUmCaractereInvalidoNumero").inherits("valido", new Rule() {{
