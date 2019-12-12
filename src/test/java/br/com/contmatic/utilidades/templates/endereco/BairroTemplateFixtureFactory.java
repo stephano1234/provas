@@ -1,19 +1,21 @@
 package br.com.contmatic.utilidades.templates.endereco;
 
-import org.apache.commons.lang3.RandomUtils;
+import static br.com.contmatic.utilidades.ConstantesTesteNumericas.TAMANHO_REGULAR;
+import static br.com.contmatic.utilidades.ConstantesTesteNumericas.EXCLUI_STRING_VAZIO;
+
+import static br.com.contmatic.utilidades.ConstantesTesteString.APENAS_ESPACO;
+
+import static br.com.contmatic.utilidades.FuncoesRandomicas.apenasUmCaractere;
+import static br.com.contmatic.utilidades.FuncoesRandomicas.somenteCaractere;
+
+import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 import br.com.contmatic.modelo.endereco.Bairro;
 import br.com.contmatic.modelo.endereco.Cidade;
-import br.com.contmatic.utilidades.ConstantesNumericas;
-import br.com.contmatic.utilidades.ConstantesTesteNumericas;
-import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
-import br.com.contmatic.utilidades.ExpressoesRegularesTesteRegra;
-import br.com.contmatic.utilidades.RandomizadorStringExpressaoRegular;
 
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
-
 
 public class BairroTemplateFixtureFactory implements TemplateLoader {
 
@@ -40,44 +42,36 @@ public class BairroTemplateFixtureFactory implements TemplateLoader {
         
         //nome
         
-        Fixture.of(Bairro.class).addTemplate("naoNuloNome").inherits("valido", new Rule() {{
-            add("nome", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
-        }});
-        
-        Fixture.of(Bairro.class).addTemplate("naoVazioNome").inherits("valido", new Rule() {{
-            add("nome", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
+        Fixture.of(Bairro.class).addTemplate("apenasEspacoNome").inherits("valido", new Rule() {{
+            add("nome", somenteCaractere(nextInt(EXCLUI_STRING_VAZIO, TAMANHO_REGULAR), APENAS_ESPACO));
         }});
         
         Fixture.of(Bairro.class).addTemplate("maiorTamanhoNome").inherits("valido", new Rule() {{
-            add("nome", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(ConstantesNumericas.CAMPO_REGULAR + 1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), false));
+            add("nome", somenteCaractere(1, "[A-Z]") + somenteCaractere(TAMANHO_REGULAR + 1, "[a-z]"));
         }});
-        
-        Fixture.of(Bairro.class).addTemplate("menorIgualTamanhoNome").inherits("valido", new Rule() {{
-            add("nome", RandomizadorStringExpressaoRegular.stringAleatoria(RandomUtils.nextInt(0, ConstantesNumericas.CAMPO_REGULAR + 1), false));
+
+        Fixture.of(Bairro.class).addTemplate("comPrimeiroCaractereInvalido").inherits("valido", new Rule() {{
+            add("nome", somenteCaractere(1, "[a-z]") + somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]") + " " + somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]"));
         }});
-        
-        Fixture.of(Bairro.class).addTemplate("somenteEspacoNome").inherits("valido", new Rule() {{
-            add("nome", RandomizadorStringExpressaoRegular.semCaractereInvalido(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
-        }});
-        
-        Fixture.of(Bairro.class).addTemplate("comNaoEspacoNome").inherits("valido", new Rule() {{
-            add("nome", RandomizadorStringExpressaoRegular.comCaractereInvalido(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
-        }});
-        
-        Fixture.of(Bairro.class).addTemplate("comUmNaoEspacoNome").inherits("valido", new Rule() {{
-            add("nome", RandomizadorStringExpressaoRegular.comUmCaractereInvalido(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesTesteRegra.APENAS_ESPACO));
-        }});
-        
-        Fixture.of(Bairro.class).addTemplate("comCaractereInvalidoNome").inherits("valido", new Rule() {{
-            add("nome", RandomizadorStringExpressaoRegular.comCaractereInvalido(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesRegraNegocio.SEM_CARACTERE_ESPECIAL));
-        }});
-        
+
         Fixture.of(Bairro.class).addTemplate("comUmCaractereInvalidoNome").inherits("valido", new Rule() {{
-            add("nome", RandomizadorStringExpressaoRegular.comUmCaractereInvalido(RandomUtils.nextInt(1, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesRegraNegocio.SEM_CARACTERE_ESPECIAL));
+            add("nome", somenteCaractere(1, "[A-Z]") + apenasUmCaractere(nextInt(1, 10), "\\d", "[a-z]") + " " + somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]"));
         }});
-        
-        Fixture.of(Bairro.class).addTemplate("semCaractereInvalidoNome").inherits("valido", new Rule() {{
-            add("nome", RandomizadorStringExpressaoRegular.semCaractereInvalido(RandomUtils.nextInt(0, ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS), ExpressoesRegularesRegraNegocio.SEM_CARACTERE_ESPECIAL));
+
+        Fixture.of(Bairro.class).addTemplate("comEspacoDuploNome").inherits("valido", new Rule() {{
+            add("nome", somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]") + "  " + somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]"));
+        }});
+
+        Fixture.of(Bairro.class).addTemplate("comEspacoInicioNome").inherits("valido", new Rule() {{
+            add("nome", " " + somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]") + "  " + somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]"));
+        }});
+
+        Fixture.of(Bairro.class).addTemplate("comEspacoFimNome").inherits("valido", new Rule() {{
+            add("nome", somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]") + "  " + somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(1, 10), "[a-z]") + " ");
+        }});
+
+        Fixture.of(Bairro.class).addTemplate("validoNome").inherits("valido", new Rule() {{
+            add("nome", name());
         }});
         
     }

@@ -1,16 +1,23 @@
 package br.com.contmatic.modelo.endereco;
 
-import static br.com.contmatic.utilidades.VerificadoresRegras.verificaConstrutor;
-import static br.com.contmatic.utilidades.VerificadoresRegras.verificaErro;
-import static br.com.contmatic.utilidades.VerificadoresRegras.verificaToStringJSONSTYLE;
+import static br.com.contmatic.utilidades.Verificadores.procuraAlgumErro;
+import static br.com.contmatic.utilidades.Verificadores.verificaConstrutor;
+import static br.com.contmatic.utilidades.Verificadores.verificaToStringJSONSTYLE;
+
+import static nl.jqno.equalsverifier.Warning.ALL_FIELDS_SHOULD_BE_USED;
+import static nl.jqno.equalsverifier.Warning.NONFINAL_FIELDS;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+import static pl.pojo.tester.api.assertion.Method.GETTER;
+import static pl.pojo.tester.api.assertion.Method.SETTER;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,15 +25,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contmatic.modelo.endereco.Cidade;
-import br.com.contmatic.utilidades.MensagensErro;
 import br.com.contmatic.utilidades.templates.endereco.CidadeTemplateFixtureFactory;
+
 import br.com.six2six.fixturefactory.Fixture;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
-
-import pl.pojo.tester.api.assertion.Method;
 
 public class CidadeTest {
     
@@ -58,73 +61,61 @@ public class CidadeTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_nome() {
         cidade.setNome(null);
-        assertTrue(verificaErro(cidade, MensagensErro.VALOR_NULO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_nulo_no_nome() {
-        cidade = Fixture.from(Cidade.class).gimme("naoNuloNome");
-        assertFalse(verificaErro(cidade, MensagensErro.VALOR_NULO));
+        assertTrue(procuraAlgumErro(cidade));
     }
     
     @Test
     public void nao_deve_aceitar_valor_vazio_no_nome() {
-        cidade.setNome("");
-        assertTrue(verificaErro(cidade, MensagensErro.STRING_VAZIO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_nao_vazio_no_nome() {
-        cidade = Fixture.from(Cidade.class).gimme("naoVazioNome");
-        assertFalse(verificaErro(cidade, MensagensErro.STRING_VAZIO));
+    	cidade.setNome("");
+        assertTrue(procuraAlgumErro(cidade));
     }
     
     @Test
     public void nao_deve_aceitar_valor_maior_que_tamanho_no_nome() {
         cidade = Fixture.from(Cidade.class).gimme("maiorTamanhoNome");
-        assertTrue(verificaErro(cidade, MensagensErro.STRING_MAX));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_menor_ou_igual_que_tamanho_no_nome() {
-        cidade = Fixture.from(Cidade.class).gimme("menorIgualTamanhoNome");
-        assertFalse(verificaErro(cidade, MensagensErro.STRING_MAX));
-    }
-    
-    @Test
-    public void nao_deve_aceitar_valor_com_apenas_espaco_no_nome() {
-        cidade = Fixture.from(Cidade.class).gimme("somenteEspacoNome");
-        assertTrue(verificaErro(cidade, MensagensErro.STRING_APENAS_ESPACO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_com_caractere_nao_espaco_no_nome() {
-        cidade = Fixture.from(Cidade.class).gimme("comNaoEspacoNome");
-        assertFalse(verificaErro(cidade, MensagensErro.STRING_APENAS_ESPACO));
-    }
-    
-    @Test
-    public void deve_aceitar_valor_com_um_caractere_nao_espaco_no_nome() {
-        cidade = Fixture.from(Cidade.class).gimme("comUmNaoEspacoNome");
-        assertFalse(verificaErro(cidade, MensagensErro.STRING_APENAS_ESPACO));
+        assertTrue(procuraAlgumErro(cidade));
     }
 
     @Test
-    public void nao_deve_aceitar_valor_com_caractere_invalido_no_nome() {
-        cidade = Fixture.from(Cidade.class).gimme("comCaractereInvalidoNome");
-        assertTrue(verificaErro(cidade, MensagensErro.STRING_CARACTERE_ESPECIAL));
+    public void nao_deve_aceitar_valor_com_apenas_espaco_no_nome() {
+        cidade = Fixture.from(Cidade.class).gimme("apenasEspacoNome");
+        assertTrue(procuraAlgumErro(cidade));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_com_primeiro_caractere_invalido_no_nome() {
+        cidade = Fixture.from(Cidade.class).gimme("comPrimeiroCaractereInvalido");
+        assertTrue(procuraAlgumErro(cidade));
     }
     
     @Test
     public void nao_deve_aceitar_valor_com_um_caractere_invalido_no_nome() {
         cidade = Fixture.from(Cidade.class).gimme("comUmCaractereInvalidoNome");
-        assertTrue(verificaErro(cidade, MensagensErro.STRING_CARACTERE_ESPECIAL));
+        assertTrue(procuraAlgumErro(cidade));
     }
     
     @Test
-    public void deve_aceitar_valor_sem_caractere_invalido_no_nome() {
-        cidade = Fixture.from(Cidade.class).gimme("semCaractereInvalidoNome");
-        assertFalse(verificaErro(cidade, MensagensErro.STRING_CARACTERE_ESPECIAL));
+    public void nao_deve_aceitar_valor_com_dois_espacos_juntos_no_nome() {
+        cidade = Fixture.from(Cidade.class).gimme("comEspacoDuploNome");
+        assertTrue(procuraAlgumErro(cidade));
+    }
+    
+    @Test
+    public void nao_deve_aceitar_valor_com_primeiro_caractere_espaco_no_nome() {
+        cidade = Fixture.from(Cidade.class).gimme("comEspacoInicioNome");
+        assertTrue(procuraAlgumErro(cidade));
+    }
+
+    @Test
+    public void nao_deve_aceitar_valor_com_ultimo_caractere_espaco_no_nome() {
+        cidade = Fixture.from(Cidade.class).gimme("comEspacoFimNome");
+        assertTrue(procuraAlgumErro(cidade));
+    }
+
+    @Test
+    public void deve_aceitar_nome_valido() {
+        cidade = Fixture.from(Cidade.class).gimme("validoNome");
+        assertFalse(procuraAlgumErro(cidade));
     }
     
     //tipoUf
@@ -132,13 +123,13 @@ public class CidadeTest {
     @Test
     public void nao_deve_aceitar_valor_nulo_no_tipoUf() {
         cidade.setTipoUf(null);
-        assertTrue(verificaErro(cidade, MensagensErro.VALOR_NULO));
+        assertTrue(procuraAlgumErro(cidade));
     }
     
     @Test
     public void deve_aceitar_valor_nao_nulo_no_tipoUf() {
         cidade.setTipoUf(TipoUf.AC);
-        assertFalse(verificaErro(cidade, MensagensErro.VALOR_NULO));
+        assertFalse(procuraAlgumErro(cidade));
     }
     
     //getter e setter    
@@ -157,12 +148,12 @@ public class CidadeTest {
     
     @Test
     public void deve_haver_metodo_get_publico_para_cada_atributo() {
-        assertPojoMethodsFor(Cidade.class).testing(Method.GETTER).areWellImplemented();
+        assertPojoMethodsFor(Cidade.class).testing(GETTER).areWellImplemented();
     }
     
     @Test
     public void deve_haver_metodo_set_publico_para_cada_atributo() {
-        assertPojoMethodsFor(Cidade.class).testing(Method.SETTER).areWellImplemented();
+        assertPojoMethodsFor(Cidade.class).testing(SETTER).areWellImplemented();
     }
     
     //construtor
@@ -170,7 +161,7 @@ public class CidadeTest {
     @Test
     public void verifica_construtor_publico_com_argumentos_especificados_e_implementacao_correta() {
         Object[] valores = {"Goiania", TipoUf.AC};
-        assertTrue(verificaConstrutor(cidade, valores, String.class, TipoUf.class));
+        assertTrue(verificaConstrutor(Cidade.class, valores, String.class, TipoUf.class));
     }
     
     //equals e hashcode
@@ -225,7 +216,7 @@ public class CidadeTest {
     
     @Test
     public void verifica_consistencia_da_implementacao_do_metodo_equals_de_acordo_com_a_regra_estabelecida_de_comparacao() {
-        EqualsVerifier.forClass(Cidade.class).suppress(Warning.NONFINAL_FIELDS, Warning.ALL_FIELDS_SHOULD_BE_USED).verify();
+        EqualsVerifier.forClass(Cidade.class).suppress(NONFINAL_FIELDS, ALL_FIELDS_SHOULD_BE_USED).verify();
     }
     
     //toString

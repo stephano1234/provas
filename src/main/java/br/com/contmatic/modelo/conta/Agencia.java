@@ -1,33 +1,33 @@
 package br.com.contmatic.modelo.conta;
 
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import static br.com.contmatic.utilidades.ConstantesString.CODIGO_BANCO;
+import static br.com.contmatic.utilidades.ConstantesString.NUMERO_AGENCIA;
 
-import br.com.contmatic.utilidades.ConstantesNumericas;
-import br.com.contmatic.utilidades.ExpressoesRegularesRegraNegocio;
-import br.com.contmatic.utilidades.MensagensErro;
-import br.com.contmatic.utilidades.validacoes.NaoVazio;
+import static br.com.contmatic.utilidades.MensagensErro.DDD_INVALIDO;
+import static br.com.contmatic.utilidades.MensagensErro.NUMERO_AGENCIA_INVALIDO;
+import static br.com.contmatic.utilidades.MensagensErro.VALOR_NULO;
+
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
+import javax.validation.constraints.*;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class Agencia {
     
-    @NotNull(message = MensagensErro.VALOR_NULO)
-    @NaoVazio(message = MensagensErro.STRING_VAZIO)
-    @Size(max = ConstantesNumericas.MAX_NUMERO_AGENCIA, message = MensagensErro.STRING_MAX)
-    @Pattern(regexp = ExpressoesRegularesRegraNegocio.SEM_ESPACO, message = MensagensErro.STRING_CARACTERE_ESPECIAL)
+    @NotNull(message = VALOR_NULO)
+    @Pattern(regexp = NUMERO_AGENCIA, message = NUMERO_AGENCIA_INVALIDO)
     private String numero;
     
-    @NotNull(message = MensagensErro.VALOR_NULO)
-    @Valid
-    private Banco banco;
+    @NotNull(message = VALOR_NULO)
+    @Pattern(regexp = CODIGO_BANCO, message = DDD_INVALIDO)
+    private String codigoBanco;
 
-    public Agencia(String numero, Banco banco) {
+    public Agencia(String numero, String codigoBanco) {
         this.numero = numero;     
-        this.banco = banco;
+        this.codigoBanco = codigoBanco;
     }
 
     public String getNumero() {
@@ -38,19 +38,19 @@ public class Agencia {
         this.numero = numero;
     }
 
-    public Banco getBanco() {
-        return banco;
-    }
+    public String getCodigoBanco() {
+		return codigoBanco;
+	}
 
-    public void setBanco(Banco banco) {
-        this.banco = banco;
-    }
+	public void setCodigoBanco(String codigoBanco) {
+		this.codigoBanco = codigoBanco;
+	}
 
-    @Override
+	@Override
     public final int hashCode() {
         return new HashCodeBuilder()
                 .append(numero)
-                .append(banco)
+                .append(codigoBanco)
                 .toHashCode();
     }
     
@@ -65,15 +65,15 @@ public class Agencia {
         final Agencia outroAgencia = (Agencia) objeto;
         return new EqualsBuilder()
                 .append(numero, outroAgencia.numero)
-                .append(banco, outroAgencia.banco)
+                .append(codigoBanco, outroAgencia.codigoBanco)
                 .isEquals();
     }
     
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+        return new ToStringBuilder(this, JSON_STYLE)
                 .append("numero", numero)              
-                .append("banco", banco)
+                .append("codigoBanco", codigoBanco)
                 .toString();
     }
     
