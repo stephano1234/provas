@@ -1,7 +1,5 @@
 package br.com.contmatic.utilidades.templates.pessoa;
 
-import static br.com.contmatic.utilidades.FuncoesRandomicas.localDateAleatoria;
-
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 import org.joda.time.LocalDate;
@@ -30,23 +28,23 @@ public class ContratoTrabalhoTemplateFixtureFactory implements TemplateLoader {
         Fixture.of(ContratoTrabalho.class).addTemplate("valido", new Rule() {{
             add("pessoa", pessoa);
             add("tipoContratoTrabalho", TipoContratoTrabalho.values()[nextInt(0, TipoContratoTrabalho.values().length)]);
-            add("dataInicioContrato", localDateAleatoria(LocalDate.parse("1900-01-01"), LocalDate.now()));
+            add("dataInicioContrato", LocalDate.now().minusYears(nextInt(1, 5)));
         }});
         
         Fixture.of(ContratoTrabalho.class).addTemplate("outroValido", new Rule() {{
         	add("pessoa", outroPessoa);
             add("tipoContratoTrabalho", TipoContratoTrabalho.values()[nextInt(0, TipoContratoTrabalho.values().length)]);
-            add("dataInicioContrato", localDateAleatoria(LocalDate.parse("1900-01-01"), LocalDate.now()));
+            add("dataInicioContrato", LocalDate.now().minusYears(nextInt(1, 5)));
         }});
         
         //dataInicioContrato
 
         Fixture.of(ContratoTrabalho.class).addTemplate("dataInicioContratoFutura").inherits("valido", new Rule() {{
-            add("dataInicioContrato", localDateAleatoria(LocalDate.now().plusYears(1), LocalDate.now().plusYears(10)));
+            add("dataInicioContrato", LocalDate.now().plusYears(nextInt(1, 5)));
         }});
 
         Fixture.of(ContratoTrabalho.class).addTemplate("dataInicioContratoPassada").inherits("valido", new Rule() {{
-            add("dataInicioContrato", localDateAleatoria(LocalDate.now().minusYears(100), LocalDate.now().minusDays(1)));
+            add("dataInicioContrato", LocalDate.now().minusYears(nextInt(1, 5)));
         }});
         
     }

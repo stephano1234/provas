@@ -1,7 +1,6 @@
 package br.com.contmatic.utilidades;
 
 import org.apache.commons.lang3.RandomUtils;
-import org.joda.time.LocalDate;
 
 import com.google.common.base.Preconditions;
 
@@ -11,10 +10,10 @@ public class FuncoesRandomicas {
 		Preconditions.checkArgument(tamanho >= 0,
 				"O tamanho da string gerada não pode ser um número inteiro negativo.");
 		Preconditions.checkNotNull(expressaoRegular, "A expressão regular deve ser informada.");
-		StringBuilder stringComCharInvalido = new StringBuilder(stringAleatoria(tamanho, false));
+		StringBuilder stringComCharInvalido = new StringBuilder(stringAleatoria(tamanho));
 		while (stringComCharInvalido.toString().matches(expressaoRegular)) {
 			stringComCharInvalido.delete(0, tamanho);
-			stringComCharInvalido.append(stringAleatoria(tamanho, false));
+			stringComCharInvalido.append(stringAleatoria(tamanho));
 		}
 		return stringComCharInvalido.toString();
 	}
@@ -43,14 +42,6 @@ public class FuncoesRandomicas {
 		return stringSemCaractereInvalido.toString();
 	}
 
-	public static String ANTIGAcomUmCaractereNaoEspecificadoExpressaoRegular(int tamanho, String expressaoRegular) {
-		Preconditions.checkArgument(tamanho >= 1, "O tamanho da string gerada deve ser maior ou igual a um.");
-		Preconditions.checkNotNull(expressaoRegular, "A expressão regular deve ser informada.");
-		int posicaoCaractereInvalido = RandomUtils.nextInt(0, tamanho - 1);
-		return somenteCaractere(posicaoCaractereInvalido, expressaoRegular) + naoCorresponde(1, expressaoRegular)
-				+ somenteCaractere((tamanho - 1) - posicaoCaractereInvalido, expressaoRegular);
-	}
-
 	public static String apenasUmCaractere(int tamanho, String regexCaractere, String regexCaracteres) {
 		Preconditions.checkArgument(tamanho >= 1,
 				"O tamanho da string gerada por apenasUmCaractere deve ser maior ou igual a um.");
@@ -61,19 +52,15 @@ public class FuncoesRandomicas {
 				+ somenteCaractere((tamanho - 1) - posicaoCaractere, regexCaracteres);
 	}
 
-	public static String stringAleatoria(int tamanho, boolean incluiNulo) {
+	public static String stringAleatoria(int tamanho) {
 		Preconditions.checkArgument(tamanho >= 0,
 				"O tamanho da string gerada não pode ser um número inteiro negativo.");
-		if (incluiNulo && RandomUtils.nextInt(1, 100) <= ConstantesTesteNumericas.PERCENTUAL_NULO_GERADO) {
-			return null;
-		} else {
-			StringBuilder randomString = new StringBuilder("");
-			for (int i = 0; i < tamanho; i++) {
-				randomString.append(ConstantesTesteString.UNVIVERSO_CARACTERES
-						.charAt(RandomUtils.nextInt(0, ConstantesTesteString.UNVIVERSO_CARACTERES.length())));
-			}
-			return randomString.toString();
+		StringBuilder randomString = new StringBuilder("");
+		for (int i = 0; i < tamanho; i++) {
+			randomString.append(ConstantesTesteString.UNVIVERSO_CARACTERES
+					.charAt(RandomUtils.nextInt(0, ConstantesTesteString.UNVIVERSO_CARACTERES.length())));
 		}
+		return randomString.toString();
 	}
 
 	public static String emailAleatorio() {
@@ -122,7 +109,7 @@ public class FuncoesRandomicas {
 		StringBuilder cnpjRandom = new StringBuilder();
 		cnpjRandom.append(somenteCaractere(8, ConstantesTesteString.APENAS_NUMERAL));
 		cnpjRandom.append("0001");
-		int[] multiplicadores = {6, 5, 4, 3, 2, 9, 8, 7};
+		int[] multiplicadores = { 6, 5, 4, 3, 2, 9, 8, 7 };
 		int soma = 0;
 		for (int i = 0; i < ConstantesTesteNumericas.CNPJ - 2; i++) {
 			soma += Integer.parseInt(cnpjRandom.substring(i, i + 1)) * multiplicadores[(i + 1) % 8];
@@ -135,10 +122,9 @@ public class FuncoesRandomicas {
 		cnpjRandom.append((((11 - (soma % 11)) % 11) % 10));
 		return cnpjRandom.toString();
 	}
-	
-	public static String cpfInvalido() {
+
+	public static String cpfInvalido(int posicaoDigitoVerificador) {
 		StringBuilder cpfInvalidoRandom = new StringBuilder(cpfValido());
-		int posicaoDigitoVerificador = RandomUtils.nextInt(9, 11);
 		Integer digitoVerificadorValido = Integer
 				.parseInt(cpfInvalidoRandom.substring(posicaoDigitoVerificador, posicaoDigitoVerificador + 1));
 		Integer digitoVerificadorInvalido = RandomUtils.nextInt(0, 10);
@@ -150,9 +136,8 @@ public class FuncoesRandomicas {
 		return cpfInvalidoRandom.toString();
 	}
 
-	public static String cnpjInvalido() {
+	public static String cnpjInvalido(int posicaoDigitoVerificador) {
 		StringBuilder cnpjInvalidoRandom = new StringBuilder(cnpjValido());
-		int posicaoDigitoVerificador = RandomUtils.nextInt(12, 14);
 		Integer digitoVerificadorValido = Integer
 				.parseInt(cnpjInvalidoRandom.substring(posicaoDigitoVerificador, posicaoDigitoVerificador + 1));
 		Integer digitoVerificadorInvalido = RandomUtils.nextInt(0, 10);
@@ -162,37 +147,6 @@ public class FuncoesRandomicas {
 		cnpjInvalidoRandom.deleteCharAt(posicaoDigitoVerificador);
 		cnpjInvalidoRandom.insert(posicaoDigitoVerificador, digitoVerificadorInvalido.toString());
 		return cnpjInvalidoRandom.toString();
-	}
-	
-	public static LocalDate localDateAleatoria(LocalDate dataInicio, LocalDate dataFim) {
-		Preconditions.checkArgument(dataInicio.isBefore(dataFim), "A data inicial deve ser anterior à data de final.");
-		StringBuilder stringData = new StringBuilder();
-		if (dataInicio.equals(dataFim)) {
-			return dataInicio;
-		}
-		if (dataInicio.getYear() == dataFim.getYear() && dataInicio.getMonthOfYear() == dataFim.getMonthOfYear()) {
-			stringData.append(dataInicio.getYear());
-			stringData.append("-");
-			stringData.append(dataInicio.getMonthOfYear());
-			stringData.append("-");
-			stringData.append(RandomUtils.nextInt(dataInicio.getDayOfMonth() <= 28 ? dataInicio.getDayOfMonth() : 28,
-					dataFim.getDayOfMonth() <= 28 ? dataFim.getDayOfMonth() : 28));
-			return LocalDate.parse(stringData.toString());
-		}
-		if (dataInicio.getYear() == dataFim.getYear()) {
-			stringData.append(dataInicio.getYear());
-			stringData.append("-");
-			stringData.append(RandomUtils.nextInt(dataInicio.getMonthOfYear(), dataFim.getMonthOfYear() + 1));
-			stringData.append("-");
-			stringData.append("01");
-			return LocalDate.parse(stringData.toString());
-		}
-		stringData.append(RandomUtils.nextInt(dataInicio.getYear(), dataFim.getYear() + 1));
-		stringData.append("-");
-		stringData.append("01");
-		stringData.append("-");
-		stringData.append("01");
-		return LocalDate.parse(stringData.toString());
 	}
 
 }

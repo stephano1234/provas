@@ -128,8 +128,14 @@ public class PessoaTest {
     }
     
     @Test
-    public void nao_deve_aceitar_cpf_com_um_digito_verificador_invalido() {
-        pessoa = Fixture.from(Pessoa.class).gimme("comUmDigitoVerificadorInvalidoCpf");
+    public void nao_deve_aceitar_cpf_com_primeiro_digito_verificador_invalido() {
+        pessoa = Fixture.from(Pessoa.class).gimme("comPrimeiroDigitoVerificadorInvalidoCpf");
+        assertTrue(procuraAlgumErro(pessoa));
+    }    
+
+    @Test
+    public void nao_deve_aceitar_cpf_com_segundo_digito_verificador_invalido() {
+        pessoa = Fixture.from(Pessoa.class).gimme("comSegundoDigitoVerificadorInvalidoCpf");
         assertTrue(procuraAlgumErro(pessoa));
     }    
     

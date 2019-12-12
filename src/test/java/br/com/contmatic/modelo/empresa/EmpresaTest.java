@@ -142,11 +142,17 @@ public class EmpresaTest {
     }
     
     @Test
-    public void nao_deve_aceitar_cnpj_com_um_digito_verificador_invalido() {
-        empresa = Fixture.from(Empresa.class).gimme("comUmDigitoVerificadorInvalidoCnpj");
+    public void nao_deve_aceitar_cnpj_com_primeiro_digito_verificador_invalido() {
+        empresa = Fixture.from(Empresa.class).gimme("comPrimeiroDigitoVerificadorInvalidoCnpj");
         assertTrue(procuraAlgumErro(empresa));
     }    
-    
+
+    @Test
+    public void nao_deve_aceitar_cnpj_com_segundo_digito_verificador_invalido() {
+        empresa = Fixture.from(Empresa.class).gimme("comSegundoDigitoVerificadorInvalidoCnpj");
+        assertTrue(procuraAlgumErro(empresa));
+    }    
+
     @Test
     public void deve_aceitar_cnpj_valido() {
         empresa = Fixture.from(Empresa.class).gimme("cnpjValido");
@@ -251,7 +257,7 @@ public class EmpresaTest {
     
     @Test
     public void nao_deve_aceitar_responsaveis_com_elemento_invalido() {
-    	empresa.getResponsaveis().add(Fixture.from(Pessoa.class).gimme("comUmDigitoVerificadorInvalidoCpf"));
+    	empresa.getResponsaveis().add(Fixture.from(Pessoa.class).gimme("comSegundoDigitoVerificadorInvalidoCpf"));
     	assertTrue(procuraAlgumErro(empresa));
     }
 
@@ -283,7 +289,8 @@ public class EmpresaTest {
        
     @Test
     public void nao_deve_aceitar_contratosTrabalho_com_elemento_invalido() {
-    	empresa.getContratosTrabalho().add(Fixture.from(ContratoTrabalho.class).gimme("dataInicioContratoFutura"));
+    	empresa.getContratosTrabalho().add(new ContratoTrabalho(Fixture.from(Pessoa.class)
+    	.gimme("comSegundoDigitoVerificadorInvalidoCpf"), null, null));
     	assertTrue(procuraAlgumErro(empresa));
     }
 

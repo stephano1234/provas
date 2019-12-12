@@ -3,8 +3,6 @@ package br.com.contmatic.utilidades;
 public class ConstantesTesteNumericas {
     
     //teste
-    public static final int VALOR_UNIVERSO_CHAR_GERADOS = 200;
-    public static final int PERCENTUAL_NULO_GERADO = 5;
     public static final int ELEMENTOS_ARRAY_GERADA = 10;
     public static final int INCLUI_STRING_VAZIO = 0;
     public static final int EXCLUI_STRING_VAZIO = 1;

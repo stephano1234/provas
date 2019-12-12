@@ -4,7 +4,6 @@ import static br.com.contmatic.utilidades.ConstantesTesteNumericas.CPF;
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.ELEMENTOS_ARRAY_GERADA;
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.EXCLUI_STRING_VAZIO;
 import static br.com.contmatic.utilidades.ConstantesTesteNumericas.TAMANHO_REGULAR;
-import static br.com.contmatic.utilidades.ConstantesTesteNumericas.VALOR_UNIVERSO_CHAR_GERADOS;
 
 import static br.com.contmatic.utilidades.ConstantesTesteString.APENAS_ESPACO;
 import static br.com.contmatic.utilidades.ConstantesTesteString.APENAS_NUMERAL;
@@ -12,7 +11,6 @@ import static br.com.contmatic.utilidades.ConstantesTesteString.APENAS_NUMERAL;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.apenasUmCaractere;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.cpfInvalido;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.cpfValido;
-import static br.com.contmatic.utilidades.FuncoesRandomicas.localDateAleatoria;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.somenteCaractere;
 
 import static org.apache.commons.lang3.RandomUtils.nextInt;
@@ -108,7 +106,7 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
             add("cpf", random("39270773809", "90563441887", "38325120398", "04759868496"));
             add("nome", random("Carlos Alberto", "José César", "Maria Paula", "Ana Duarte"));            
             add("enderecos", enderecos);
-            add("dataNascimento", localDateAleatoria(LocalDate.parse("1900-01-01"), LocalDate.now()));
+            add("dataNascimento", LocalDate.now().minusYears(nextInt(1, 30)));
             add("celulares", celulares);
             add("telefonesFixo", telefonesFixo);
             add("emails", emails);
@@ -122,7 +120,7 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
             add("cpf", random("60421184124", "65490465727", "01351417029", "87841587511"));
             add("nome", random("Carlos Alberto", "José César", "Maria Paula", "Ana Duarte"));            
             add("enderecos", enderecos);
-            add("dataNascimento", localDateAleatoria(LocalDate.parse("1900-01-01"), LocalDate.now()));
+            add("dataNascimento", LocalDate.now().minusYears(nextInt(1, 30)));
             add("celulares", celulares);
             add("telefonesFixo", outroTelefonesFixo);
             add("emails", emails);
@@ -150,8 +148,12 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
             add("cpf", somenteCaractere(CPF, Integer.toString(nextInt(0, 10))));
         }});
 
-        Fixture.of(Pessoa.class).addTemplate("comUmDigitoVerificadorInvalidoCpf").inherits("valido", new Rule() {{
-            add("cpf", cpfInvalido());
+        Fixture.of(Pessoa.class).addTemplate("comPrimeiroDigitoVerificadorInvalidoCpf").inherits("valido", new Rule() {{
+            add("cpf", cpfInvalido(9));
+        }});
+
+        Fixture.of(Pessoa.class).addTemplate("comSegundoDigitoVerificadorInvalidoCpf").inherits("valido", new Rule() {{
+            add("cpf", cpfInvalido(10));
         }});
         
         Fixture.of(Pessoa.class).addTemplate("cpfValido").inherits("valido", new Rule() {{
@@ -165,7 +167,7 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
         }});
         
         Fixture.of(Pessoa.class).addTemplate("maiorTamanhoNome").inherits("valido", new Rule() {{
-            add("nome", somenteCaractere(1, "[A-Z]") + somenteCaractere(nextInt(TAMANHO_REGULAR, VALOR_UNIVERSO_CHAR_GERADOS), "[a-z]"));
+            add("nome", somenteCaractere(1, "[A-Z]") + somenteCaractere(TAMANHO_REGULAR + 1, "[a-z]"));
         }});
 
         Fixture.of(Pessoa.class).addTemplate("comPrimeiroCaractereInvalido").inherits("valido", new Rule() {{
@@ -195,11 +197,11 @@ public class PessoaTemplateFixtureFactory implements TemplateLoader {
         //dataNascimento
 
         Fixture.of(Pessoa.class).addTemplate("dataNascimentoFutura").inherits("valido", new Rule() {{
-            add("dataNascimento", localDateAleatoria(LocalDate.now().plusYears(1), LocalDate.now().plusYears(10)));
+            add("dataNascimento", LocalDate.now().plusYears(nextInt(1, 5)));
         }});
 
         Fixture.of(Pessoa.class).addTemplate("dataNascimentoPassada").inherits("valido", new Rule() {{
-            add("dataNascimento", localDateAleatoria(LocalDate.now().minusYears(100), LocalDate.now().minusDays(1)));
+            add("dataNascimento", LocalDate.now().minusYears(nextInt(1, 30)));
         }});
 
     }

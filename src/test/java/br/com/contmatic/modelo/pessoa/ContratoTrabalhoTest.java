@@ -78,7 +78,7 @@ public class ContratoTrabalhoTest {
     
     @Test
     public void nao_deve_aceitar_pessoa_invalido() {
-    	contratoTrabalho.setPessoa(Fixture.from(Pessoa.class).gimme("comUmDigitoVerificadorInvalidoCpf"));
+    	contratoTrabalho.setPessoa(Fixture.from(Pessoa.class).gimme("comSegundoDigitoVerificadorInvalidoCpf"));
     	assertTrue(procuraAlgumErro(contratoTrabalho));
     }
 

@@ -9,7 +9,6 @@ import static br.com.contmatic.utilidades.ConstantesTesteString.APENAS_NUMERAL;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.apenasUmCaractere;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.cnpjInvalido;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.cnpjValido;
-import static br.com.contmatic.utilidades.FuncoesRandomicas.localDateAleatoria;
 import static br.com.contmatic.utilidades.FuncoesRandomicas.somenteCaractere;
 
 import static org.apache.commons.lang3.RandomUtils.nextInt;
@@ -129,7 +128,7 @@ public class EmpresaTemplateFixtureFactory implements TemplateLoader {
             add("razaoSocial", random("Contmatic Phoenix", "José César Ltda.", "Manufaturas EPP", "Fomentos Latino-Americanos S.A."));            
             add("responsaveis", responsaveis);
             add("contratosTrabalho", contratosTrabalho);
-            add("dataAbertura", localDateAleatoria(LocalDate.parse("1900-01-01"), LocalDate.now()));
+            add("dataAbertura", LocalDate.now().minusYears(nextInt(1, 30)));
             add("enderecos", enderecos);
             add("telefonesFixo", telefonesFixo);
             add("emails", emails);
@@ -144,7 +143,7 @@ public class EmpresaTemplateFixtureFactory implements TemplateLoader {
             add("razaoSocial", random("Maria dos Santos", "Carlos Augusto ME", "Super Esporte Artigos Esportivos Ltda.", "Itaú SA"));            
             add("responsaveis", outroResponsaveis);
             add("contratosTrabalho", outroContratosTrabalho);
-            add("dataAbertura", localDateAleatoria(LocalDate.parse("1900-01-01"), LocalDate.now()));
+            add("dataAbertura", LocalDate.now().minusYears(nextInt(1, 30)));
             add("enderecos", outroEnderecos);
             add("telefonesFixo", outroTelefonesFixo);
             add("emails", outroEmails);
@@ -172,10 +171,14 @@ public class EmpresaTemplateFixtureFactory implements TemplateLoader {
             add("cnpj", somenteCaractere(CNPJ, Integer.toString(nextInt(0, 10))));
         }});
 
-        Fixture.of(Empresa.class).addTemplate("comUmDigitoVerificadorInvalidoCnpj").inherits("valido", new Rule() {{
-            add("cnpj", cnpjInvalido());
+        Fixture.of(Empresa.class).addTemplate("comPrimeiroDigitoVerificadorInvalidoCnpj").inherits("valido", new Rule() {{
+            add("cnpj", cnpjInvalido(12));
         }});
-        
+
+        Fixture.of(Empresa.class).addTemplate("comSegundoDigitoVerificadorInvalidoCnpj").inherits("valido", new Rule() {{
+            add("cnpj", cnpjInvalido(13));
+        }});
+
         Fixture.of(Empresa.class).addTemplate("cnpjValido").inherits("valido", new Rule() {{
             add("cnpj", cnpjValido());
         }});
@@ -213,11 +216,11 @@ public class EmpresaTemplateFixtureFactory implements TemplateLoader {
         //dataAbertura
 
         Fixture.of(Empresa.class).addTemplate("dataAberturaFutura").inherits("valido", new Rule() {{
-            add("dataAbertura", localDateAleatoria(LocalDate.now().plusYears(1), LocalDate.now().plusYears(10)));
+            add("dataAbertura", LocalDate.now().plusYears(nextInt(1, 5)));
         }});
 
         Fixture.of(Empresa.class).addTemplate("dataAberturaPassada").inherits("valido", new Rule() {{
-            add("dataAbertura", localDateAleatoria(LocalDate.now().minusYears(100), LocalDate.now().minusDays(1)));
+            add("dataAbertura", LocalDate.now().minusYears(nextInt(1, 30)));
         }});
 
     }

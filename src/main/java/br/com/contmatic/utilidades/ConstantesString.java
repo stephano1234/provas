@@ -1,13 +1,9 @@
 package br.com.contmatic.utilidades;
 
 public class ConstantesString {
-    
-    //não permite determinados caracteres
-    public static final String SEM_ESPACO = "\\S*";
-    
-    //permite apenas determinados caracteres
+        
+    //regex simples
     public static final String NUMERAL = "[0-9]";
-    public static final String APENAS_LETRA_MAIUSCULA = "[A-Z]";
     public static final String APENAS_LETRA_NUMERAL = "[A-Za-z0-9]";
     
     //regex complexa
