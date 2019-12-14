@@ -18,11 +18,24 @@ import org.apache.commons.collections4.map.LinkedMap;
 
 import com.google.common.base.Preconditions;
 
+/**
+ * The Class Verificadores.
+ */
 public class Verificadores {
 
+	/** The validator. */
 	private static Validator validator;
+	
+	/** The factory. */
 	private static ValidatorFactory factory;
 
+	/**
+	 * Verifica erro.
+	 *
+	 * @param objetoTestado the objeto testado
+	 * @param mensagem the mensagem
+	 * @return true, if successful
+	 */
 	public static boolean verificaErro(Object objetoTestado, String mensagem) {
 		Preconditions.checkNotNull(objetoTestado, "O objeto testado não pode ser nulo.");
 		Preconditions.checkNotNull(mensagem, "A mensagem do erro procurado deve ser informada.");
@@ -38,6 +51,12 @@ public class Verificadores {
 		return possuiErro;
 	}
 
+	/**
+	 * Procura algum erro.
+	 *
+	 * @param objetoTestado the objeto testado
+	 * @return true, if successful
+	 */
 	public static boolean procuraAlgumErro(Object objetoTestado) {
 		Preconditions.checkNotNull(objetoTestado, "O objeto testado não pode ser nulo.");
 		factory = Validation.buildDefaultValidatorFactory();
@@ -46,6 +65,12 @@ public class Verificadores {
 		return !violacoes.isEmpty();
 	}
 
+	/**
+	 * Verifica to string JSONSTYLE.
+	 *
+	 * @param objetoTestado the objeto testado
+	 * @return true, if successful
+	 */
 	public static boolean verificaToStringJSONSTYLE(Object objetoTestado) {
 		Preconditions.checkNotNull(objetoTestado, "O objeto testado não pode ser nulo.");
 		StringBuilder formatoEsperado = new StringBuilder("{");
@@ -91,6 +116,12 @@ public class Verificadores {
 		return objetoTestado.toString().equals(formatoEsperado.toString());
 	}
 
+	/**
+	 * Transforma caractere em unicode.
+	 *
+	 * @param string the string
+	 * @return the string
+	 */
 	public static String transformaCaractereEmUnicode(String string) {
 		String letrasAcentuadas = "ÁáÉéÍíÓóÚúÀàÂâÊêÔôÃãÕõªºç";
 		Map<String, String> tabelaAcentos = new LinkedMap<String, String>();
@@ -130,6 +161,14 @@ public class Verificadores {
 		return stringTransformada.toString();
 	}
 
+	/**
+	 * Verifica construtor.
+	 *
+	 * @param classe the classe
+	 * @param valores the valores
+	 * @param tiposArgumentos the tipos argumentos
+	 * @return true, if successful
+	 */
 	public static boolean verificaConstrutor(Class<?> classe, Object[] valores, Class<?>... tiposArgumentos) {
 		Preconditions.checkNotNull(classe, "A classe deve ser informada.");
 		Preconditions.checkNotNull(valores, "Os valores de inicialização do construtor devem ser informados.");
@@ -162,6 +201,12 @@ public class Verificadores {
 		return true;
 	}
 
+	/**
+	 * Traz metodos getters.
+	 *
+	 * @param classe the classe
+	 * @return the sets the
+	 */
 	public static Set<Method> trazMetodosGetters(Class<?> classe) {
 		Set<Method> metodosGet = new HashSet<Method>();
 		for (int i = 0; i < classe.getDeclaredMethods().length; i++) {
