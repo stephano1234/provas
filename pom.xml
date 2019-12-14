@@ -4,7 +4,7 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.contmatic</groupId>
-	<artifactId>modelo-empresa</artifactId>
+	<artifactId>empresa-model</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
