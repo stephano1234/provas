@@ -6,8 +6,18 @@ import static br.com.contmatic.utilidades.ConstantesString.NUMERAL;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * The Class CNPJbrValidador.
+ */
 public class CNPJbrValidador implements ConstraintValidator<CNPJbr, String> {
 	
+	/**
+	 * Checks if is valid.
+	 *
+	 * @param value the value
+	 * @param constraintValidatorContext the constraint validator context
+	 * @return true, if is valid
+	 */
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
 		if (value == null) {
@@ -19,6 +29,12 @@ public class CNPJbrValidador implements ConstraintValidator<CNPJbr, String> {
 		return verificaNumerosTodosIguais(value) && verificaDigitosValidadores(value);
 	}
 
+	/**
+	 * Verifica digitos validadores.
+	 *
+	 * @param value the value
+	 * @return true, if successful
+	 */
 	private boolean verificaDigitosValidadores(String value) {
 		int dig1 = Integer.parseInt(value.substring(CNPJ - 2, CNPJ - 1));
 		int dig2 = Integer.parseInt(value.substring(CNPJ - 1, CNPJ));
@@ -37,6 +53,12 @@ public class CNPJbrValidador implements ConstraintValidator<CNPJbr, String> {
 		return (((11 - (soma % 11)) % 11) % 10) == dig2;
 	}
 
+	/**
+	 * Verifica numeros todos iguais.
+	 *
+	 * @param value the value
+	 * @return true, if successful
+	 */
 	private boolean verificaNumerosTodosIguais(String value) {
 		boolean possuiNumeroDiferente;
 		for (Integer numeroRepetido = 0; numeroRepetido < 10; numeroRepetido++) {
